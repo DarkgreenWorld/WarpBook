@@ -17,11 +17,15 @@
   "warp_book.gui.button.cancel.title": "取消",
 
   "warp_book.message.error.no_pages": "这本书里没有书页。Shift+右键单击添加绑定的传送书页",
-  "help.nowaypointsfound": "未找到路径点",
-  "help.noplayerspecified": "必须指定玩家名称",
-  "help.waypointdoesnotexist": "路径点 “ %s ” 不存在",
-  "help.waypointdelete": "嗖！",
-  "help.notawaypoint": "'%s' 不是一个路径点",
-  "help.waypointcreated": "路径点已创建",
-  "help.selfaport": "祝贺！你刚刚传送到自己身边"
+  "warp_book.message.error.notfound": "目标未找到",
+  "warp_book.message.error.player_notfound": "目标玩家未找到",
+  "warp_book.message.error.invalid_position":"无效的位置",
+  
+  "warp_book.help.nowaypointsfound": "未找到路径点",
+  "warp_book.help.noplayerspecified": "必须指定玩家名称",
+  "warp_book.help.waypointdoesnotexist": "路径点 “ %s ” 不存在",
+  "warp_book.help.waypointdelete": "嗖！",
+  "warp_book.help.notawaypoint": "'%s' 不是一个路径点",
+  "warp_book.help.waypointcreated": "路径点已创建",
+  "warp_book.help.selfaport": "祝贺！你刚刚传送到自己身边"
 }

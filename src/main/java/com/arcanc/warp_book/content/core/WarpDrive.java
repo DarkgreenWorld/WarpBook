@@ -25,17 +25,31 @@ public class WarpDrive
 	
 	public void processWarp(@NotNull Player player, @NotNull GlobalPos globalPos)
 	{
+		if (globalPos == null || globalPos.pos() == null)
+		{
+		    player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+		    return;
+		}
+		
 		Level level = player.level();
 		S2CPacketEffect oldDim = new S2CPacketEffect(false, (int)player.getX(), (int)player.getY(), (int)player.getZ());
 		S2CPacketEffect newDim = new S2CPacketEffect(true, globalPos.pos().getX(), globalPos.pos().getY(), globalPos.pos().getZ());
 		Vec3 oldPoint = player.position();
 		
-		boolean crossDim = level.dimension().equals(globalPos.dimension());
+		boolean sameDim = level.dimension().equals(globalPos.dimension());
 		
 		if (!level.isClientSide())
 		{
 			ServerLevel serverLevel = level.getServer().getLevel(globalPos.dimension());
-			teleportToPos(player, serverLevel, globalPos.pos().getCenter(), null);
+			if(serverLevel != null) 
+			{
+				teleportToPos(player, serverLevel, globalPos.pos().getCenter(), null);
+			}
+			else 
+			{
+				player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+			    return;
+			}
 		}
 
 		double dx = globalPos.pos().getCenter().x - oldPoint.x;
@@ -43,7 +57,7 @@ public class WarpDrive
 		double dz = globalPos.pos().getCenter().z - oldPoint.z;
 		double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 		
-		if(crossDim)
+		if(!sameDim)
 			distance = Double.POSITIVE_INFINITY;
 
 		

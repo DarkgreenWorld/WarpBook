@@ -34,9 +34,14 @@ public record C2SWarpPacket(UUID uuid, GlobalPos pos) implements IPacket
 			return;
 		ctx.enqueueWork(() ->
 		{
-			Player teleportedPlayer = player.serverLevel().getPlayerByUUID(uuid);
+			Player teleportedPlayer = player.getServer().getPlayerList().getPlayer(uuid);
 			if (teleportedPlayer != null)
-				WarpBook.warpDrive.processWarp(teleportedPlayer, pos);
+			{
+				if(pos != null)
+				{
+					WarpBook.warpDrive.processWarp(teleportedPlayer, pos);
+				}
+			}	
 		});
 	}
 

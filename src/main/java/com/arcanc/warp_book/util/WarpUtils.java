@@ -27,7 +27,7 @@ public class WarpUtils
 	public static @NotNull ItemStack bindItemStackToPlayer(@NotNull ItemStack stack, @NotNull Player toPlayer)
 	{
 		stack.set(Registration.DataComponentRegistry.TARGET_UUID, toPlayer.getUUID());
-		stack.set(Registration.DataComponentRegistry.NAME_IN_BOOK, toPlayer.getScoreboardName());
+		stack.set(Registration.DataComponentRegistry.NAME_IN_BOOK, toPlayer.getGameProfile().getName());
 		return stack;
 	}
 }

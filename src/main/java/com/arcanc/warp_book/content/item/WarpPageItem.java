@@ -1,8 +1,14 @@
 package com.arcanc.warp_book.content.item;
 
+import com.arcanc.warp_book.Database;
 import com.arcanc.warp_book.WarpBook;
 import com.arcanc.warp_book.content.core.WarpColors;
+import com.arcanc.warp_book.content.network.NetworkEngine;
+import com.arcanc.warp_book.content.network.packet.C2SWarpPacket;
 import com.arcanc.warp_book.warps.Warp;
+
+import net.minecraft.core.GlobalPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -36,10 +42,23 @@ public class WarpPageItem extends WarpItem
 			@NotNull InteractionHand usedHand)
 	{
 		ItemStack itemStack = player.getItemInHand(usedHand);
-		if (itemStack.getItem() instanceof WarpItem item)
+		if(!level.isClientSide())
 		{
-			WarpBook.warpDrive.processWarp(player, item.getWaypoint(player, itemStack));
-			player.getItemInHand(usedHand).shrink(1);
+			if (itemStack.getItem() instanceof WarpItem item)
+			{
+				GlobalPos pos = item.getWaypoint(player, itemStack);
+				if(pos != null)
+				{
+					C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), pos);
+					NetworkEngine.sendToServer(packet);
+			
+					player.getItemInHand(usedHand).shrink(1);
+				}
+				else
+				{
+					player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_NOTFOUND));
+				}
+			}
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);

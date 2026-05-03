@@ -17,11 +17,15 @@
   "warp_book.gui.button.cancel.title": "Cancel",
 
   "warp_book.message.error.no_pages": "There are no pages in this book.  Shift+right click to add bound pages",
-  "help.nowaypointsfound": "No waypoints found",
-  "help.noplayerspecified": "Must specify player name",
-  "help.waypointdoesnotexist": "Waypoint '%s' does not exist",
-  "help.waypointdelete": "Poof!",
-  "help.notawaypoint": "'%s' is not a waypoint",
-  "help.waypointcreated": "Waypoint created",
-  "help.selfaport": "Congratulations!  You just teleported to yourself"
+  "warp_book.message.error.notfound": "Target not found",
+  "warp_book.message.error.player_notfound": "Target player not found",
+  "warp_book.message.error.invalid_position":"Invalid position",
+  
+  "warp_book.help.nowaypointsfound": "No waypoints found",
+  "warp_book.help.noplayerspecified": "Must specify player name",
+  "warp_book.help.waypointdoesnotexist": "Waypoint '%s' does not exist",
+  "warp_book.help.waypointdelete": "Poof!",
+  "warp_book.help.notawaypoint": "'%s' is not a waypoint",
+  "warp_book.help.waypointcreated": "Waypoint created",
+  "warp_book.help.selfaport": "Congratulations!  You just teleported to yourself"
 }

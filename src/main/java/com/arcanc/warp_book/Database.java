@@ -40,6 +40,8 @@ public class Database
 
 	public static final String MESSAGE_ERROR_NO_PAGES = rl("message.error.no_pages").toLanguageKey();
 	public static final String MESSAGE_ERROR_INVALID_POSITION = rl("message.error.invalid_position").toLanguageKey();
+	public static final String MESSAGE_ERROR_NOTFOUND = rl("message.error.notfound").toLanguageKey();
+	public static final String MESSAGE_ERROR_PLAYER_NOTFOUND = rl("message.error.player_notfound").toLanguageKey();
 
 	public static final String SAVED_DATA_FILE_NAME = rl("saved_data").toDebugFileName();
 	public static final String SAVED_DATA_INFO_LIST = "info_list";

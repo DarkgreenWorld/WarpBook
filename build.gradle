@@ -170,8 +170,16 @@ publishing {
         }
     }
     repositories {
+		mavenLocal()
+		maven {
+			url 'https://maven.aliyun.com/repository/public'
+		}
+		maven {
+			url 'https://maven.aliyun.com/repository/central'
+		}
         maven {
             url "file://${project.projectDir}/repo"
+        mavenCentral()
         }
     }
 }

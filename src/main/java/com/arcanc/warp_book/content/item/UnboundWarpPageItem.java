@@ -33,14 +33,19 @@ public class UnboundWarpPageItem extends WarpPageItem
 		{
 			if(!level.isClientSide())
 			{
-				stack.shrink(1);
-
 				ItemStack newPage = WarpUtils.bindItemStackToPlayer(new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_PLAYER.get()), player);
+				if(newPage == null || newPage.isEmpty())
+				{
+					return InteractionResultHolder.fail(stack);
+				}
+				
 				if (!player.addItem(newPage))
 				{
 					ItemEntity entityItem = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), newPage);
 					player.level().addFreshEntity(entityItem);
 				}
+				
+				stack.shrink(1);
 			}
 			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
 		}

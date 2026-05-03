@@ -1,5 +1,6 @@
 package com.arcanc.warp_book.warps;
 
+import com.arcanc.warp_book.Database;
 import com.arcanc.warp_book.content.core.WarpColors;
 import com.arcanc.warp_book.registration.Registration;
 import net.minecraft.core.BlockPos;
@@ -36,7 +37,7 @@ public class WarpPlayer extends Warp
 		{
 			UUID playerID = stack.get(Registration.DataComponentRegistry.TARGET_UUID);
 
-			Player targetPlayer = player.level().getPlayerByUUID(playerID);
+			Player targetPlayer = player.getServer().getPlayerList().getPlayer(playerID);
 
 			if (targetPlayer != null)
 			{
