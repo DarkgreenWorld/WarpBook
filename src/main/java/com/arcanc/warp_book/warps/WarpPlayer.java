@@ -43,6 +43,10 @@ public class WarpPlayer extends Warp
 			{
 				return new GlobalPos(targetPlayer.level().dimension(), new BlockPos((int)targetPlayer.getX(), (int)targetPlayer.getEyeY(), (int)targetPlayer.getZ()));
 			}
+			else
+			{
+				player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_PLAYER_NOTFOUND));
+			}
 		}
 
 		return null;

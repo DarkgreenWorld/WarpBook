@@ -34,6 +34,10 @@ public class WarpLocus extends Warp
 		{
 			return stack.get(Registration.DataComponentRegistry.TARGET_POSITION);
 		}
+		else
+		{
+			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+		}
 		return null;
 	}
 	

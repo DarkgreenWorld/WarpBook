@@ -24,10 +24,13 @@ public class ContainerWarpBook implements Container, Nameable
 
 	public ContainerWarpBook(ItemStack heldItem)
 	{
-		content = WarpBookItem.getContent(heldItem).stream().collect(Collectors.toList());
-
-		if (content.isEmpty())
-			content = NonNullList.withSize(54, ItemStack.EMPTY);
+		ItemContainerContents contents = WarpBookItem.getContent(heldItem);
+		content = NonNullList.withSize(54, ItemStack.EMPTY);
+		
+		for(int i = 0; i < contents.getSlots();i++)
+		{
+			content.set(i, contents.getStackInSlot(i));
+		}
 
         this.heldStack = heldItem;
     }

@@ -94,19 +94,11 @@ public class GuiBook extends Screen
 		{
 			WarpButton but = new WarpButton(i, x, y + (14 * i), 96, 12, button ->
 			{
-				ItemStack stack = items.get(pos.get(((WarpButton)button).getIndex() + (page * warpsPerPage)).id());
-				if(!player.level().isClientSide())
-				{
-					if (stack.getItem() instanceof IDeclareWarp warp)
-					{
-						if (!warp.hasValidData(stack))
-							return;
+				int index = pos.get(((WarpButton)button).getIndex() + (page*warpsPerPage)).id();
 
-						C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), warp.getWaypoint(player, stack));
-						NetworkEngine.sendToServer(packet);
-						GuiBook.this.onClose();
-					}
-				}
+				C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), index);
+				NetworkEngine.sendToServer(packet);
+				GuiBook.this.onClose();
 			});
 			addRenderableWidget(but);
 			warps.add(but);
