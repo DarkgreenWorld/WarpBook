@@ -30,6 +30,7 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +41,7 @@ public class EventHandler
 {
     public static void initEvents(@NotNull final IEventBus modEventBus)
     {
-        NeoForge.EVENT_BUS.addListener(EventHandler :: onHurt);
+        NeoForge.EVENT_BUS.addListener(EventHandler :: onDeath);
         NeoForge.EVENT_BUS.addListener(EventHandler :: onPlayerRespawn);
         modEventBus.addListener(NetworkEngine :: setupMessages);
 
@@ -52,34 +53,45 @@ public class EventHandler
 
     }
 
-    public static void onHurt(@NotNull final LivingDamageEvent.Post event)
+    public static void onDeath(@NotNull final LivingDeathEvent event)
     {
         if (!WarpBook.deathPagesEnabled || !(event.getEntity() instanceof Player player))
             return;
+        
         Level level = player.level();
-        if (event.getSource() == level.damageSources().fellOutOfWorld() || player.getHealth() > event.getOriginalDamage())
-            return;
-        if (!player.getInventory().contains(stack -> stack.is(Registration.ItemRegistry.WARP_BOOK) && WarpBookItem.getRespawnsLeft(stack) > 0))
-            return;
-        for (NonNullList<ItemStack> list : List.of(player.getInventory().items, player.getInventory().offhand))
+        if(!level.isClientSide)
         {
-            for (int q = 0; q < list.size(); q++)
-            {
-                ItemStack item = list.get(q);
-                if (item.is(Registration.ItemRegistry.WARP_BOOK) && WarpBookItem.getRespawnsLeft(item) > 0)
-                {
-                    WarpBookItem.decrRespawnsLeft(item);
-                    if (!player.level().isClientSide())
-                    {
-                        DeathSavedData data = DeathSavedData.getInstance();
-                        data.POSITIONS.put(player.getGameProfile().getId(), new GlobalPos(player.level().dimension(), player.getOnPos()));
-                        data.setDirty();
-                    }
-                    break;
-                }
-            }
-        }
+            if (!player.getInventory().contains(stack -> 
+            		(stack.is(Registration.ItemRegistry.WARP_BOOK) && WarpBookItem.getRespawnsLeft(stack) > 0) 
+            		 || stack.is(Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY)
+               )) return;
 
+            outer:
+            for (NonNullList<ItemStack> list : List.of(player.getInventory().items, player.getInventory().offhand))
+            {
+                for (int q = 0; q < list.size(); q++)
+                {
+                    ItemStack item = list.get(q);
+                    if (item.is(Registration.ItemRegistry.WARP_BOOK) && WarpBookItem.getRespawnsLeft(item) > 0)
+                    {
+
+                    	WarpBookItem.decrRespawnsLeft(item);
+                    }
+                    else if(item.is(Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY))
+                    {
+                    	item.shrink(1);
+                    }
+                    else continue;
+
+                    DeathSavedData data = DeathSavedData.getInstance();
+                    GlobalPos pos = new GlobalPos(player.level().dimension(),player.blockPosition());
+                    data.POSITIONS.put(player.getUUID(),pos);
+                    data.setDirty();
+                        
+                    break outer;
+                }
+            } 
+        }
     }
 
     public static void onPlayerRespawn(@NotNull final PlayerEvent.PlayerRespawnEvent event)
@@ -89,14 +101,16 @@ public class EventHandler
             if (!player.level().isClientSide())
             {
                 DeathSavedData data = DeathSavedData.getInstance();
-                GlobalPos death = data.POSITIONS.getOrDefault(player.getGameProfile().getId(), new GlobalPos(Level.OVERWORLD, BlockPos.ZERO));
-
-                data.removeDeath(player.getGameProfile().getId());
-                ItemStack page = new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get(), 1);
-                WarpUtils.bindItemStackToLocation(page, "Death...", death);
-                if (!player.addItem(page))
+                GlobalPos death = data.POSITIONS.get(player.getUUID());
+                if(death != null)
                 {
-                    EntityType.ITEM.spawn((ServerLevel) player.level(), itemEntity -> itemEntity.setItem(page), player.getOnPos(), MobSpawnType.EVENT, false, false);
+                	ItemStack page = new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get(), 1);
+                	WarpUtils.bindItemStackToLocation(page, "Death...", death);
+                	if (!player.addItem(page))
+                	{
+                		EntityType.ITEM.spawn((ServerLevel) player.level(), itemEntity -> itemEntity.setItem(page), player.getOnPos(), MobSpawnType.EVENT, false, false);
+                	}
+                	data.removeDeath(player.getGameProfile().getId());
                 }
             }
         }

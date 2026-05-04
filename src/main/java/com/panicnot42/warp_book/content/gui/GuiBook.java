@@ -13,6 +13,9 @@ import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -214,6 +217,13 @@ public class GuiBook extends Screen
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
+		KeyMapping inventoryKey = Minecraft.getInstance().options.keyInventory;
+	    if (inventoryKey.matches(keyCode, scanCode))
+	    {
+	        this.onClose();
+	        return true;
+	    }
+		
 		boolean result = super.keyPressed(keyCode, scanCode, modifiers);
 
 		switch (keyCode)

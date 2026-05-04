@@ -61,11 +61,8 @@ public record C2SWarpPacket(UUID uuid, int index) implements IPacket
 					ItemStack page = item.getStackInSlot(index);
 					if(page.getItem() instanceof IDeclareWarp warp)
 					{
-						if(warp.hasValidData(page))
-						{
-							GlobalPos pos = warp.getWaypoint(targetPlayer, page);
-							if(pos != null) WarpBook.warpDrive.processWarp(targetPlayer, pos);
-						}
+						GlobalPos pos = warp.getWaypoint(targetPlayer, page);
+						if(pos != null) WarpBook.warpDrive.processWarp(targetPlayer, pos);
 					}
 				}
 			}	

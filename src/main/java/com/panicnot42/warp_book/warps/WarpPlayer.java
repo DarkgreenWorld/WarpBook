@@ -55,6 +55,10 @@ public class WarpPlayer extends Warp
 				player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_PLAYER_NOTFOUND));
 			}
 		}
+		else
+		{
+			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_PLAYER));
+		}
 
 		return null;
 	}
