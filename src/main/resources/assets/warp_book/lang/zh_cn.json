@@ -17,9 +17,9 @@
   "warp_book.gui.button.cancel.title": "取消",
 
   "warp_book.message.error.no_pages": "这本书里没有书页。Shift+右键单击添加绑定的传送书页",
-  "warp_book.message.error.notfound": "目标未找到",
   "warp_book.message.error.player_notfound": "目标玩家未找到",
   "warp_book.message.error.invalid_position":"无效的位置",
+  "warp_book.message.error.invalid_player": "无效的玩家",
   
   "warp_book.help.nowaypointsfound": "未找到路径点",
   "warp_book.help.noplayerspecified": "必须指定玩家名称",

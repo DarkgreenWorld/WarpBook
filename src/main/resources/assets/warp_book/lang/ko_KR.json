@@ -1,0 +1,32 @@
+{
+  "warp_book.the_author_of_this_lang":"TeamMMKP(claywweb, puyo061)",
+  "warp_book.item.warp_book": "순간이동의 책",
+  "warp_book.item.warp_page_unbound": "순간이동 페이지 연결 해제",
+  "warp_book.item.warp_page_location": "순간이동 페이지 연결",
+  "warp_book.item.warp_page_player": "플레이어 페이지",
+  "warp_book.item.warp_page_deathly": "죽음의 순간이동 페이지",
+
+  "warp_book.creative_tab.title": "순간이동의 책",
+
+  "warp_book.gui.text.do_warp": "웨이포인트로 순간이동",
+  "warp_book.gui.text.bind_page": "페이지 연결",
+  "warp_book.gui.text.name_waypoint": "웨이포인트의 이름을 입력하십시오",
+  "warp_book.gui.tooltip_warp_book": "%d/54 페이지",
+  "warp_book.gui.text.warp_book.inventory.title": "순간이동의 책",
+  "warp_book.gui.text.bind_msg.tooltip": "%d 차원에 (%.0f, %.0f, %.0f)로 연결되었습니다.",
+  "warp_book.gui.button.done.title": "끝",
+  "warp_book.gui.button.cancel.title": "취소",
+
+  "warp_book.message.error.no_pages": "책에 페이지가 없습니다. 쉬프트+오른쪽 클릭으로 페이지를 연결하십시오.",
+  "warp_book.message.error.player_notfound": "목표 플레이어를 찾을 수 없습니다.",
+  "warp_book.message.error.invalid_position":"잘못된 위치",
+  "warp_book.message.error.invalid_player": "잘못된 플레이어",
+  
+  "warp_book.help.nowaypointsfound": "웨이포인트를 찾을 수 없습니다.",
+  "warp_book.help.noplayerspecified": "Must specify player name",
+  "warp_book.help.waypointdoesnotexist": "웨이포인트 '%s' 이(가) 존재하지 않습니다.",
+  "warp_book.help.waypointdelete": "휙!",
+  "warp_book.help.notawaypoint": "'%s' 은(는) 웨이포인트가 아닙니다.",
+  "warp_book.help.waypointcreated": "웨이포인트가 생성되었습니다.",
+  "warp_book.help.selfaport": "Congratulations!  You just teleported to yourself"
+}
