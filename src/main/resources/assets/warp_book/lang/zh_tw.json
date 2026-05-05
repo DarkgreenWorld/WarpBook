@@ -17,9 +17,9 @@
   "warp_book.gui.button.cancel.title": "取消",
 
   "warp_book.message.error.no_pages": "這本書裡沒有書頁。Shift+右鍵單擊添加綁定的傳送書頁",
-  "warp_book.message.error.notfound": "目標未找到",
   "warp_book.message.error.player_notfound": "目標玩家未找到",
   "warp_book.message.error.invalid_position":"無效的位置",
+  "warp_book.message.error.invalid_player": "無效的玩家",
   
   "warp_book.help.nowaypointsfound": "未找到航路點",
   "warp_book.help.noplayerspecified": "必須指定玩家名稱",

@@ -66,7 +66,7 @@ public class UnboundWarpPageItem extends WarpPageItem
 	}
 
 	@Override
-	public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag)
+	public void appendHoverText(@NotNull ItemStack stack, @NotNull Level level, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag)
 	{
 	}
 

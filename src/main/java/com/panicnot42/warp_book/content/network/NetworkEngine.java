@@ -14,78 +14,73 @@ import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.IPacket;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
+
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.PacketFlow;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class NetworkEngine
-{
-    public static void setupMessages(final @NotNull RegisterPayloadHandlersEvent event)
-    {
-        final PayloadRegistrar registrar = event.registrar(Database.MOD_ID);
+public class NetworkEngine {
 
-        registerMessage(registrar, S2CPacketEffect.STREAM_CODEC, S2CPacketEffect.TYPE, PacketFlow.CLIENTBOUND);
-        registerMessage(registrar, C2SWarpPacket.STREAM_CODEC, C2SWarpPacket.TYPE, PacketFlow.SERVERBOUND);
-        registerMessage(registrar, C2SCoordsNamePacket.STREAM_CODEC, C2SCoordsNamePacket.TYPE, PacketFlow.SERVERBOUND);
+    private static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation("warp_book", "network"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
+
+    private static int id = 0;
+
+    public static void register() {
+        CHANNEL.registerMessage(id++,
+                C2SWarpPacket.class,
+                (msg, buf) -> C2SWarpPacket.encode(msg, buf),
+                C2SWarpPacket::decode,
+                (msg, ctx) -> C2SWarpPacket.handle(msg, ctx)
+        );
+
+        CHANNEL.registerMessage(id++,
+                C2SCoordsNamePacket.class,
+                (msg, buf) -> C2SCoordsNamePacket.encode(msg, buf),
+                C2SCoordsNamePacket::decode,
+                (msg, ctx) -> C2SCoordsNamePacket.handle(msg, ctx)
+        );
+
+        CHANNEL.registerMessage(id++,
+                S2CPacketEffect.class,
+                (msg, buf) -> S2CPacketEffect.encode(msg, buf),
+                S2CPacketEffect::decode,
+                (msg, ctx) -> S2CPacketEffect.handle(msg, ctx)
+        );
     }
 
-    private <T extends IPacket> void registerMessage(
-            PayloadRegistrar registrar, StreamCodec<? super RegistryFriendlyByteBuf,T> reader, CustomPacketPayload.Type<T> type
-    )
-    {
-        registerMessage(registrar, reader, type, Optional.empty());
+    public static <T> void sendToServer(T msg) {
+        CHANNEL.sendToServer(msg);
     }
 
-    private static <T extends IPacket> void registerMessage(
-            PayloadRegistrar registrar, StreamCodec<? super RegistryFriendlyByteBuf,T> reader, CustomPacketPayload.Type<T> type, @NotNull PacketFlow direction
-    )
-    {
-        registerMessage(registrar, reader, type, Optional.of(direction));
+    public static <T> void sendToPlayer(T msg, ServerPlayer player) {
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), msg);
     }
 
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private static <T extends IPacket> void registerMessage(
-            PayloadRegistrar registrar, StreamCodec<? super RegistryFriendlyByteBuf, T> reader, CustomPacketPayload.Type<T> type, @NotNull Optional<PacketFlow> direction
-    )
-    {
-        if(direction.isPresent())
-            if (direction.get() == PacketFlow.CLIENTBOUND)
-                registrar.playToClient(type, reader, T :: handle);
-            else
-                registrar.playToServer(type, reader, T :: handle);
-        else
-            registrar.playBidirectional(type, reader, T :: handle);
-
-    }
-
-    public static void sendToServer(@NotNull final IPacket packet)
-    {
-        PacketDistributor.sendToServer(packet);
-    }
-
-    public static void sendToAllClients(@NotNull final IPacket packet)
-    {
-        PacketDistributor.sendToAllPlayers(packet);
-    }
-
-    public static void sendToPlayer(@NotNull ServerPlayer player, @NotNull final IPacket packet)
-    {
-        PacketDistributor.sendToPlayer(player, packet);
-    }
-
-    public static void sendToPlayerNear(@NotNull ServerLevel level, @Nullable ServerPlayer exclude, @NotNull Vec3 position, double radius, @NotNull IPacket packet)
-    {
-        PacketDistributor.sendToPlayersNear(level, exclude, position.x(), position.y(), position.z(), radius, packet);
+    public static <T> void sendToTracking(T msg, Level level, BlockPos pos, double radius) {
+        CHANNEL.send(PacketDistributor.NEAR.with(() ->
+                new PacketDistributor.TargetPoint(
+                        pos.getX(), pos.getY(), pos.getZ(),
+                        radius,
+                        level.dimension()
+                )
+        ), msg);
     }
 }

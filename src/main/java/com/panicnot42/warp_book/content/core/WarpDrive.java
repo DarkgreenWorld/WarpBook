@@ -27,125 +27,102 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class WarpDrive
-{
-	
-	public void processWarp(@NotNull Player player, @NotNull GlobalPos globalPos)
-	{
-		if (globalPos == null || globalPos.pos() == null)
-		{
-		    player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
-		    return;
-		}
-		
-		Level level = player.level();
-		S2CPacketEffect oldDim = new S2CPacketEffect(false, (int)player.getX(), (int)player.getY(), (int)player.getZ());
-		S2CPacketEffect newDim = new S2CPacketEffect(true, globalPos.pos().getX(), globalPos.pos().getY(), globalPos.pos().getZ());
-		Vec3 oldPoint = player.position();
-		
-		boolean sameDim = level.dimension().equals(globalPos.dimension());
-		
-		if (!level.isClientSide())
-		{
-			ServerLevel serverLevel = level.getServer().getLevel(globalPos.dimension());
-			if(serverLevel != null) 
-			{
-				teleportToPos(player, serverLevel, globalPos.pos().getCenter(), null);
-			}
-			else 
-			{
-				player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
-			    return;
-			}
-		}
+public class WarpDrive {
 
-		double dx = globalPos.pos().getCenter().x - oldPoint.x;
-		double dy = globalPos.pos().getCenter().y - oldPoint.y;
-		double dz = globalPos.pos().getCenter().z - oldPoint.z;
-		double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-		
-		if(!sameDim)
-			distance = Double.POSITIVE_INFINITY;
+    public void processWarp(Player player, GlobalPos globalPos) {
 
-		
-		//Update player
-		player.causeFoodExhaustion((float)calculateExhaustion(player.level().getDifficulty(), distance));
+        if (globalPos == null || globalPos.pos() == null) {
+            player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+            return;
+        }
 
-		//Send effect packets
-		if (!level.isClientSide())
-		{
-			ServerLevel serverLevel = level.getServer().getLevel(globalPos.dimension());
-			NetworkEngine.sendToPlayerNear((ServerLevel) level, null, oldPoint, 64, oldDim);
-			NetworkEngine.sendToPlayerNear(serverLevel, null, globalPos.pos().getCenter(), 64, newDim);
-		}
-	}
+        Level level = player.level();
 
-	private static void teleportToPos(
-			Player target,
-			ServerLevel level,
-			@NotNull Vec3 position,
-			@Nullable Vec2 rotation
-	)
-	{
-		if (rotation == null)
-		{
-			performTeleport(target, level, position.x, position.y, position.z, target.getYRot(), target.getXRot());
-		}
-		else
-		{
-			performTeleport(target, level, position.x, position.y, position.z, rotation.y, rotation.x);
-		}
-	}
+        if (level.isClientSide()) {
+            return;
+        }
 
-	private static void performTeleport(
-			Player player,
-			ServerLevel level,
-			double x,
-			double y,
-			double z,
-			float yaw,
-			float pitch
-	)
-	{
-		net.neoforged.neoforge.event.entity.EntityTeleportEvent.TeleportCommand event = net.neoforged.neoforge.event.EventHooks.onEntityTeleportCommand(player, x, y, z);
-		if (event.isCanceled())
-		{
-			return;
-		}
-		x = event.getTargetX();
-		y = event.getTargetY();
-		z = event.getTargetZ();
+        ServerLevel currentLevel = (ServerLevel) level;
+        ServerLevel targetLevel = currentLevel.getServer().getLevel(globalPos.dimension());
 
-		BlockPos blockpos = BlockPos.containing(x, y, z);
-		if (!Level.isInSpawnableBounds(blockpos))
-			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
-		else {
-			float f = Mth.wrapDegrees(yaw);
-			float f1 = Mth.wrapDegrees(pitch);
-			if (player.teleportTo(level, x, y, z, EnumSet.noneOf(RelativeMovement.class), f, f1))
-			{
+        if (targetLevel == null) {
+            player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+            return;
+        }
 
-				player.setDeltaMovement(player.getDeltaMovement().multiply(1.0, 0.0, 1.0));
-				player.setOnGround(true);
-			}
-		}
-	}
+        Vec3 oldPos = player.position();
+        Vec3 newPos = globalPos.pos().getCenter();
 
-	private static double calculateExhaustion(@NotNull Difficulty difficultySetting, double distance)
-	{
-		
-		distance = Mth.clamp(distance, WarpBook.minExhaustionDistance, WarpBook.maxExhaustionDistance);
-		double distanceFactor = distance * WarpBook.distanceCoefficient;
-		
-		float scaleFactor = switch (difficultySetting)
-		{
+        boolean sameDim = currentLevel.dimension().equals(globalPos.dimension());
+
+        NetworkEngine.sendToTracking(
+                new S2CPacketEffect(false, (int) oldPos.x, (int) oldPos.y, (int) oldPos.z),
+                currentLevel,
+                BlockPos.containing(oldPos),
+                64
+        );
+
+        teleport(player, targetLevel, newPos);
+
+        NetworkEngine.sendToTracking(
+                new S2CPacketEffect(true, (int) newPos.x, (int) newPos.y, (int) newPos.z),
+                targetLevel,
+                BlockPos.containing(newPos),
+                64
+        );
+
+        double distance;
+
+        if (sameDim) {
+            distance = oldPos.distanceTo(newPos);
+        } else {
+            distance = Double.POSITIVE_INFINITY;
+        }
+
+        player.causeFoodExhaustion((float) calculateExhaustion(player.level().getDifficulty(), distance));
+    }
+
+    private static void teleport(Player player, ServerLevel level, Vec3 pos) {
+        performTeleport(player, level, pos.x, pos.y, pos.z, player.getYRot(), player.getXRot());
+    }
+
+    private static void performTeleport(
+            Player player,
+            ServerLevel level,
+            double x,
+            double y,
+            double z,
+            float yaw,
+            float pitch
+    ) {
+        BlockPos blockPos = BlockPos.containing(x, y, z);
+
+        if (!Level.isInSpawnableBounds(blockPos)) {
+            player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+            return;
+        }
+
+        float yRot = Mth.wrapDegrees(yaw);
+        float xRot = Mth.wrapDegrees(pitch);
+
+        if (player.teleportTo(level, x, y, z, EnumSet.noneOf(RelativeMovement.class), yRot, xRot)) {
+            player.setDeltaMovement(player.getDeltaMovement().multiply(1.0, 0.0, 1.0));
+            player.setOnGround(true);
+        }
+    }
+
+    private static double calculateExhaustion(Difficulty difficulty, double distance) {
+
+        distance = Mth.clamp(distance, WarpBook.minExhaustionDistance, WarpBook.maxExhaustionDistance);
+        double distanceFactor = distance * WarpBook.distanceCoefficient;
+
+        float scale = switch (difficulty) {
             case EASY -> 1.0f;
             case NORMAL -> 1.5f;
             case HARD -> 2.0f;
             case PEACEFUL -> 0.0f;
         };
 
-        return WarpBook.exhaustionCoefficient * scaleFactor * distanceFactor;
-	}
-	
+        return WarpBook.exhaustionCoefficient * scale * distanceFactor;
+    }
 }

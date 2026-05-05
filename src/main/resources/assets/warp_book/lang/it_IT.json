@@ -1,0 +1,31 @@
+{
+  "warp_book.item.warp_book": "Libro del Teletrasporto",
+  "warp_book.item.warp_page_unbound": "Pagina Bianca del Teletrasporto",
+  "warp_book.item.warp_page_location": "Pagina Rilegata del Teletrasporto",
+  "warp_book.item.warp_page_player": "Pagina del Giocatore",
+  "warp_book.item.warp_page_deathly": "Pagina Mortale del Teletrasporto",
+
+  "warp_book.creative_tab.title": "Libro del Teletrasporto",
+
+  "warp_book.gui.text.do_warp": "Teletrasportati al Punto di Via.",
+  "warp_book.gui.text.bind_page": "Rilega la Pagina.",
+  "warp_book.gui.text.name_waypoint": "Inserire il nome del Punto di Via.",
+  "warp_book.gui.tooltip_warp_book": "%d/54 pagine",
+  "warp_book.gui.text.warp_book.inventory.title": "Libro del Teletrasporto",
+  "warp_book.gui.text.bind_msg.tooltip": "Rilegata alle coordinate (%.0f, %.0f, %.0f) nella Dimensione %d.",
+  "warp_book.gui.button.done.title": "Fatto",
+  "warp_book.gui.button.cancel.title": "Annullare",
+
+  "warp_book.message.error.no_pages": "In questo Libro non c'è nessuna Pagina. Shift+tasto destro per aggiungere Pagine Rilegate.",
+  "warp_book.message.error.player_notfound": "Giocatore target non trovato",
+  "warp_book.message.error.invalid_position":"Posizione non valida",
+  "warp_book.message.error.invalid_player": "Giocatore non valido",
+  
+  "warp_book.help.nowaypointsfound": "Nessun Punto di Via trovato.",
+  "warp_book.help.noplayerspecified": "Nessun giocatore specificato.",
+  "warp_book.help.waypointdoesnotexist": "Il Punto di Via '%s' non esiste",
+  "warp_book.help.waypointdelete": "Puff!",
+  "warp_book.help.notawaypoint": "'%s' non è un Punto di Via.",
+  "warp_book.help.waypointcreated": "Punto di Via creato.",
+  "warp_book.help.selfaport": "Congratulazioni!  Ti sei appena Teletrasportato da te stesso."
+}

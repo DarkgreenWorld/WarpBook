@@ -11,8 +11,8 @@ import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class DeathlyWarpPageItem extends Item implements IColorable, Registration.ItemRegistry.IMustBeAddedToCreative

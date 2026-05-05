@@ -1,0 +1,31 @@
+{
+  "warp_book.item.warp_book": "Livre de téléportation",
+  "warp_book.item.warp_page_unbound": "Page de téléportation non lié",
+  "warp_book.item.warp_page_location": "Page de téléportation lié",
+  "warp_book.item.warp_page_player": "Page de téléportation du joueur",
+  "warp_book.item.warp_page_deathly": "Deathly Warp Page",
+
+  "warp_book.creative_tab.title": "Livre de téléportation",
+
+  "warp_book.gui.text.do_warp": "Téléportation",
+  "warp_book.gui.text.bind_page": "Lier la page",
+  "warp_book.gui.text.name_waypoint": "Entrer le nom du point de télépoprtation",
+  "warp_book.gui.tooltip_warp_book": "%d/54 pages",
+  "warp_book.gui.text.warp_book.inventory.title": "Livre de téléportation",
+  "warp_book.gui.text.bind_msg.tooltip": "Bound to (%.0f, %.0f, %.0f) in dimension %s",
+  "warp_book.gui.button.done.title": "Fait",
+  "warp_book.gui.button.cancel.title": "Annuler",
+
+  "warp_book.message.error.no_pages": "There are no pages in this book.  Shift+right click to add bound pages",
+  "warp_book.message.error.player_notfound": "Cible joueur non trouvé",
+  "warp_book.message.error.invalid_position":"Position invalide",
+  "warp_book.message.error.invalid_player": "Joueur invalide",
+  
+  "warp_book.help.nowaypointsfound": "Pas de points de téléportation trouvés",
+  "warp_book.help.noplayerspecified": "Vous devez specifier le nom du joueur",
+  "warp_book.help.waypointdoesnotexist": "Waypoint '%s' n'existe pas",
+  "warp_book.help.waypointdelete": "Poof!",
+  "warp_book.help.notawaypoint": "'%s' n'est pas un point de téléportation",
+  "warp_book.help.waypointcreated": "Point de téléportation créé",
+  "warp_book.help.selfaport": "Congratulations!  You just teleported to yourself"
+}

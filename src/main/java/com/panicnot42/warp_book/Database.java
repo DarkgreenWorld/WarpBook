@@ -16,6 +16,14 @@ public class Database
 	public static final String MOD_ID = "warp_book";
 	public static final String VERSION = "1.21";
 	public static final String NAME = "Warp Book";
+	
+    public static final String TAG_NAME_IN_BOOK = "NameInBook";
+    // Registration.DataComponentRegistry.TARGET_POSITION
+    public static final String TAG_TARGET_POS = "TargetPos";
+    // Registration.DataComponentRegistry.TARGET_UUID
+    public static final String TAG_TARGET_UUID = "TargetUUID";
+    // 书本页面列表
+    public static final String TAG_PAGES = "Pages";
 
 	public static final String ITEM_NAME_WARP_BOOK = "warp_book";
 	public static final String ITEM_NAME_WARP_PAGE_LOCATION = "warp_page_location";
@@ -47,7 +55,7 @@ public class Database
 
 	public static final String MESSAGE_ERROR_NO_PAGES = rl("message.error.no_pages").toLanguageKey();
 	public static final String MESSAGE_ERROR_INVALID_POSITION = rl("message.error.invalid_position").toLanguageKey();
-	public static final String MESSAGE_ERROR_NOTFOUND = rl("message.error.notfound").toLanguageKey();
+	public static final String MESSAGE_ERROR_INVALID_PLAYER = rl("message.error.invalid_player").toLanguageKey();
 	public static final String MESSAGE_ERROR_PLAYER_NOTFOUND = rl("message.error.player_notfound").toLanguageKey();
 
 	public static final String SAVED_DATA_FILE_NAME = rl("saved_data").toDebugFileName();
@@ -58,6 +66,6 @@ public class Database
 	@Contract("_ -> new")
 	public static @NotNull ResourceLocation rl(@NotNull String str)
 	{
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, str);
+		return new ResourceLocation(MOD_ID, str);
 	}
 }

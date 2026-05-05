@@ -17,22 +17,23 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
 public class WarpPlayer extends Warp
 {
-	
 	@Override
-	public Component getName(@NotNull Item.TooltipContext ctx, @NotNull ItemStack stack)
+	public Component getSubName(@NotNull ItemStack stack)
 	{
 		if (hasValidData(stack))
 		{
-			return Component.literal(stack.get(Registration.DataComponentRegistry.NAME_IN_BOOK));
+			return Component.literal(stack.getTag().getString(Database.TAG_NAME_IN_BOOK));
 		}
 		return Component.literal(unbound);
 	}
@@ -42,35 +43,40 @@ public class WarpPlayer extends Warp
 	{
 		if(hasValidData(stack))
 		{
-			UUID playerID = stack.get(Registration.DataComponentRegistry.TARGET_UUID);
+			// 从 NBT 读取 UUID
+			UUID playerID = stack.getTag().getUUID(Database.TAG_TARGET_UUID);
 
+			// 1.20.1 中从 Server 获取玩家
 			Player targetPlayer = player.getServer().getPlayerList().getPlayer(playerID);
 
 			if (targetPlayer != null)
 			{
-				return new GlobalPos(targetPlayer.level().dimension(), new BlockPos((int)targetPlayer.getX(), (int)targetPlayer.getEyeY(), (int)targetPlayer.getZ()));
+				return GlobalPos.of(targetPlayer.level().dimension(), 
+						new BlockPos((int)targetPlayer.getX(), (int)targetPlayer.getEyeY(), (int)targetPlayer.getZ()));
 			}
 			else
 			{
 				player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_PLAYER_NOTFOUND));
 			}
 		}
-
+		else
+		{
+			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_PLAYER));
+		}
 		return null;
 	}
 	
 	@Override
 	public boolean hasValidData(@NotNull ItemStack stack)
 	{
-		return stack.has(Registration.DataComponentRegistry.TARGET_UUID);
-
+		return stack.hasTag() && stack.getTag().contains(Database.TAG_TARGET_UUID);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> tooltip, TooltipFlag flagIn)
+	public void addInformation(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(Component.literal(ttprefix).append(getName(context, stack)));
+		tooltip.add(Component.literal(ttprefix).append(getSubName(stack)));
 	}
 	
 	@Override
@@ -78,5 +84,4 @@ public class WarpPlayer extends Warp
 	public WarpColors getColor() {
 		return WarpColors.PLAYER;
 	}
-	
 }

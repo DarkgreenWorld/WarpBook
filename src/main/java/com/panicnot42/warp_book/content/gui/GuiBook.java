@@ -13,6 +13,9 @@ import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,8 +26,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -86,7 +90,7 @@ public class GuiBook extends Screen
 			{
 				if(declareWarp.hasValidData(stack))
 				{
-					pos.add(new ButtonPos(i, declareWarp.getName(Item.TooltipContext.of(player.level()), stack)));
+					pos.add(new ButtonPos(i, declareWarp.getSubName(stack)));
 				} else {
 					pos.add(new ButtonPos(i, Component.literal("...")));
 				}
@@ -214,6 +218,13 @@ public class GuiBook extends Screen
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
+		KeyMapping inventoryKey = Minecraft.getInstance().options.keyInventory;
+	    if (inventoryKey.matches(keyCode, scanCode))
+	    {
+	        this.onClose();
+	        return true;
+	    }
+		
 		boolean result = super.keyPressed(keyCode, scanCode, modifiers);
 
 		switch (keyCode)

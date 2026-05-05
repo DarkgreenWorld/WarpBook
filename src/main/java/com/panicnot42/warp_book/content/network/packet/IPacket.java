@@ -8,10 +8,13 @@
  */
 package com.panicnot42.warp_book.content.network.packet;
 
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.google.common.base.Supplier;
 
-public interface IPacket extends CustomPacketPayload
-{
-    void handle(IPayloadContext ctx);
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
+
+public interface IPacket {
+    void encode(FriendlyByteBuf buf);
+    
+    void handle(Supplier<NetworkEvent.Context> ctx);
 }

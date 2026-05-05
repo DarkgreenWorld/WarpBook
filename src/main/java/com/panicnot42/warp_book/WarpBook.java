@@ -8,11 +8,14 @@
 package com.panicnot42.warp_book;
 
 import com.panicnot42.warp_book.content.core.WarpDrive;
+import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.EventHandler;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,10 +33,14 @@ public class WarpBook
 	public static boolean deathPagesEnabled = true;
 
 
-	public WarpBook(final IEventBus modEventBus, final ModContainer modContainer)
+	public WarpBook()
 	{
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		
 		Registration.init(modEventBus);
 
 		EventHandler.initEvents(modEventBus);
+		
+		NetworkEngine.register();
 	}
 }

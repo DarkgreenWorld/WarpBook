@@ -15,8 +15,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -32,15 +33,15 @@ public class Warp implements IDeclareWarp
 	}
 
 	@Override
-	public Component getName(Item.TooltipContext world, ItemStack stack)
+	public Component getSubName(ItemStack stack)
 	{
 		return null;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> tooltip, TooltipFlag flagIn)
+	public void addInformation(@NotNull ItemStack stack, @NotNull Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(Component.literal(ttprefix).append(getName(context, stack)));
+		tooltip.add(Component.literal(ttprefix).append(getSubName(stack)));
 	}
 	
 	@Override

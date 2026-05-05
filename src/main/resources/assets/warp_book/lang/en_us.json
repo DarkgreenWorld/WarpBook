@@ -17,9 +17,9 @@
   "warp_book.gui.button.cancel.title": "Cancel",
 
   "warp_book.message.error.no_pages": "There are no pages in this book.  Shift+right click to add bound pages",
-  "warp_book.message.error.notfound": "Target not found",
   "warp_book.message.error.player_notfound": "Target player not found",
   "warp_book.message.error.invalid_position":"Invalid position",
+  "warp_book.message.error.invalid_player": "Invalid player",
   
   "warp_book.help.nowaypointsfound": "No waypoints found",
   "warp_book.help.noplayerspecified": "Must specify player name",
