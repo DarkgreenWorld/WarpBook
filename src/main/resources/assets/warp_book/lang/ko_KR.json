@@ -13,7 +13,7 @@
   "warp_book.gui.text.name_waypoint": "웨이포인트의 이름을 입력하십시오",
   "warp_book.gui.tooltip_warp_book": "%d/54 페이지",
   "warp_book.gui.text.warp_book.inventory.title": "순간이동의 책",
-  "warp_book.gui.text.bind_msg.tooltip": "%d 차원에 (%.0f, %.0f, %.0f)로 연결되었습니다.",
+  "warp_book.gui.text.bind_msg.tooltip": "%4$s 차원에 (%1$.0f, %2$.0f, %3$.0f)로 연결되었습니다.",
   "warp_book.gui.button.done.title": "끝",
   "warp_book.gui.button.cancel.title": "취소",
 

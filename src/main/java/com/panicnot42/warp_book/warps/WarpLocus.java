@@ -67,7 +67,7 @@ public class WarpLocus extends Warp
 					pos.pos().getX(),
 					pos.pos().getY(),
 					pos.pos().getZ(),
-					dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1)));
+					dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1).replace('_',' ')));
 		}
 	}
 	

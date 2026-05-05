@@ -32,6 +32,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -137,11 +138,22 @@ public class Registration
     public static final class MenuTypeRegistry
     {
         public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BuiltInRegistries.MENU, Database.MOD_ID);
-
-        public static final DeferredHolder<MenuType<?>, MenuType<MenuWarpBook>> WARP_BOOK = MENU_TYPES.register(Database.CONTAINER_WARP_BOOK, () ->
-                new MenuType<>((windowId, inv) ->
-                        new MenuWarpBook(windowId, inv, new ContainerWarpBook(ItemStack.EMPTY), new ContainerWarpBookSpecial(ItemStack.EMPTY)), FeatureFlags.DEFAULT_FLAGS));
-
+        /*public static final DeferredHolder<MenuType<?>, MenuType<MenuWarpBook>> WARP_BOOK = MENU_TYPES.register(Database.CONTAINER_WARP_BOOK, () ->
+         *      new MenuType<>((windowId, inv) ->
+         *              new MenuWarpBook(windowId, inv, new ContainerWarpBook(ItemStack.EMPTY), new ContainerWarpBookSpecial(ItemStack.EMPTY)), FeatureFlags.DEFAULT_FLAGS));
+         */
+        public static final DeferredHolder<MenuType<?>, MenuType<MenuWarpBook>> WARP_BOOK = MENU_TYPES.register
+        (
+        	Database.CONTAINER_WARP_BOOK, () -> IMenuTypeExtension.create
+        	(
+        		(windowId, inv, data) -> 
+        		{
+        			ItemStack bookStack = ItemStack.OPTIONAL_STREAM_CODEC.decode(data); 
+        		    return new MenuWarpBook(windowId, inv, new ContainerWarpBook(bookStack), new ContainerWarpBookSpecial(bookStack));
+        		}
+        	)
+        );
+        
         public static void init(@NotNull final IEventBus modEventBus)
         {
             MENU_TYPES.register(modEventBus);

@@ -67,8 +67,9 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 				serverPlayer.openMenu(new MenuProvider()
 				{
 					@Override
-					public @NotNull Component getDisplayName() {
-						return Component.empty();
+					public @NotNull Component getDisplayName() 
+					{
+						return itemStack.getHoverName();
 					}
 
 					@Override

@@ -12,7 +12,7 @@
   "warp_book.gui.text.name_waypoint": "Inserire il nome del Punto di Via.",
   "warp_book.gui.tooltip_warp_book": "%d/54 pagine",
   "warp_book.gui.text.warp_book.inventory.title": "Libro del Teletrasporto",
-  "warp_book.gui.text.bind_msg.tooltip": "Rilegata alle coordinate (%.0f, %.0f, %.0f) nella Dimensione %d.",
+  "warp_book.gui.text.bind_msg.tooltip": "Rilegata alle coordinate (%1$.0f, %2$.0f, %3$.0f) nella Dimensione %4$s.",
   "warp_book.gui.button.done.title": "Fatto",
   "warp_book.gui.button.cancel.title": "Annullare",
 

@@ -103,7 +103,7 @@ public class ContainerWarpBook implements Container, Nameable
 	@Override
 	public @NotNull Component getName()
 	{
-		return Component.translatable(Database.GUI_TEXT_WARP_BOOK_INVENTORY_TITLE);
+		return heldStack.getHoverName();
 	}
 	
 	@Override
