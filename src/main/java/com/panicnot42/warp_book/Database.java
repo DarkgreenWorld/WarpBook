@@ -40,7 +40,7 @@ public class Database
 	public static final String GUI_BUTTON_CANCEL_TITLE = rl("gui.button.cancel").toLanguageKey() + ".title";
 	public static final String GUI_TEXT_BIND_PAGE = rl("gui.text").toLanguageKey() + ".bind_page";
 	public static final String GUI_TEXT_NAME_WAYPOINT = rl("gui.text").toLanguageKey() + ".name_waypoint";
-	//public static final String GUI_TEXT_WARP_BOOK_INVENTORY_TITLE = rl("gui.text").toLanguageKey() + ".warp_book.inventory.title";
+	public static final String GUI_TEXT_WARP_BOOK_INVENTORY_TITLE = rl("gui.text").toLanguageKey() + ".warp_book.inventory.title";
 	public static final String GUI_TEXT_WARP_BOOK_BIND_TOOLTIP = rl("gui.text").toLanguageKey() + ".bind_msg.tooltip";
 	public static final String GUI_TEXT_DO_WARP = rl("gui.text.do_warp").toLanguageKey();
 	public static final String GUI_TEXT_WARP_BOOK_TOOLTIP = rl("gui.tooltip_warp_book").toLanguageKey();

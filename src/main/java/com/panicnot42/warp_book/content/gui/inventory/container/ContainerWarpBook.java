@@ -11,6 +11,7 @@ import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.gui.inventory.SlotWarpBook;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
@@ -103,7 +104,8 @@ public class ContainerWarpBook implements Container, Nameable
 	@Override
 	public @NotNull Component getName()
 	{
-		return heldStack.getHoverName();
+		return heldStack.has(DataComponents.CUSTOM_NAME) ? heldStack.getHoverName() : 
+			Component.translatable(Database.GUI_TEXT_WARP_BOOK_INVENTORY_TITLE);
 	}
 	
 	@Override
