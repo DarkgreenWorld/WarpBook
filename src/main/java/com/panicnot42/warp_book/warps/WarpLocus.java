@@ -12,9 +12,13 @@ import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.WarpUtils;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,29 +45,20 @@ public class WarpLocus extends Warp
 	@Override
 	public GlobalPos getWaypoint(Player player, ItemStack stack)
 	{
-		if(hasValidData(stack))
+		GlobalPos pos = getGlobalPos(stack);
+		if(pos != null)
 		{
-			// 使用之前在总结中提到的 WarpUtils 读取 GlobalPos
-			return WarpUtils.getGlobalPos(stack);
+			return pos;
 		}
-		else
-		{
-			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
-		}
+		
+		player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
 		return null;
 	}
 	
 	@Override
-	public boolean hasValidData(ItemStack stack) {
-	    if (!stack.hasTag()) return false;
-
-	    CompoundTag tag = stack.getTag();
-
-	    if (!tag.contains(Database.TAG_TARGET_POS)) return false;
-
-	    CompoundTag pos = tag.getCompound(Database.TAG_TARGET_POS);
-
-	    return pos.contains("x") && pos.contains("y") && pos.contains("z") && pos.contains("dimension");
+	public boolean hasValidData(@NotNull ItemStack stack)
+	{
+		return stack.hasTag() && stack.getTag().contains(Database.TAG_NAME_IN_BOOK);
 	}
 	
 	@Override
@@ -71,23 +66,43 @@ public class WarpLocus extends Warp
 	public void addInformation(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
 	{
 		tooltip.add(Component.literal(ttprefix).append(getSubName(stack)));
-		if(hasValidData(stack))
+		GlobalPos pos = getGlobalPos(stack);
+		if (pos != null) 
 		{
-			GlobalPos pos = WarpUtils.getGlobalPos(stack);
-			if (pos != null) {
-				String dimensionName = pos.dimension().location().toLanguageKey();
-				tooltip.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_BIND_TOOLTIP,
-						pos.pos().getX(),
-						pos.pos().getY(),
-						pos.pos().getZ(),
-						dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1)));
-			}
+			String dimensionName = pos.dimension().location().toLanguageKey();
+			tooltip.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_BIND_TOOLTIP,
+				pos.pos().getX(),
+				pos.pos().getY(),
+				pos.pos().getZ(),
+				dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1)));
 		}
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public WarpColors getColor() {
+	public WarpColors getColor() 
+	{
 		return WarpColors.BOUND;
 	}
+	
+    public static GlobalPos getGlobalPos(ItemStack stack) 
+    {
+    	if (stack.hasTag())
+    	{
+    		CompoundTag tag = stack.getTag();
+    		if (tag.contains(Database.TAG_TARGET_POS))
+    		{
+    			CompoundTag pos = tag.getCompound(Database.TAG_TARGET_POS);
+    			if(pos.contains("x") && pos.contains("y") && pos.contains("z") && pos.contains("dimension"))
+    			{   
+    				BlockPos blockPos = new BlockPos(pos.getInt("x"), pos.getInt("y"), pos.getInt("z"));
+    				ResourceLocation dimRl = new ResourceLocation(pos.getString("dimension"));
+    				ResourceKey<Level> dimKey = ResourceKey.create(Registries.DIMENSION, dimRl);
+    				
+    				return GlobalPos.of(dimKey, blockPos);
+    			}
+    		}
+    	}
+        return null;
+    }
 }

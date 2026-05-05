@@ -43,10 +43,7 @@ public class WarpPlayer extends Warp
 	{
 		if(hasValidData(stack))
 		{
-			// 从 NBT 读取 UUID
 			UUID playerID = stack.getTag().getUUID(Database.TAG_TARGET_UUID);
-
-			// 1.20.1 中从 Server 获取玩家
 			Player targetPlayer = player.getServer().getPlayerList().getPlayer(playerID);
 
 			if (targetPlayer != null)
