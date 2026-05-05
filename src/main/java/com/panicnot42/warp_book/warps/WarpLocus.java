@@ -69,12 +69,12 @@ public class WarpLocus extends Warp
 		GlobalPos pos = getGlobalPos(stack);
 		if (pos != null) 
 		{
-			String dimensionName = pos.dimension().location().toLanguageKey();
+			String dimensionName = pos.dimension().location().getPath();
 			tooltip.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_BIND_TOOLTIP,
 				pos.pos().getX(),
 				pos.pos().getY(),
 				pos.pos().getZ(),
-				dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1)));
+				dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1).replace('_',' ')));
 		}
 	}
 	

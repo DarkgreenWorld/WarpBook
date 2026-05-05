@@ -12,7 +12,7 @@
   "warp_book.gui.text.name_waypoint": "输入路径点名称",
   "warp_book.gui.tooltip_warp_book": "%d/54 书页",
   "warp_book.gui.text.warp_book.inventory.title": "传送之书",
-  "warp_book.gui.text.bind_msg.tooltip": "绑定到维度 %s 中的 (%.0f, %.0f, %.0f) ",
+  "warp_book.gui.text.bind_msg.tooltip": "绑定到维度 %4$s 中的 (%1$.0f, %2$.0f, %3$.0f) ",
   "warp_book.gui.button.done.title": "完成",
   "warp_book.gui.button.cancel.title": "取消",
 
