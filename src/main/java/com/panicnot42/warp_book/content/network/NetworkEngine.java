@@ -1,5 +1,5 @@
 /**
- * @author ArcAnc, Panicnot42, Darkgreen_World
+ * @author ArcAnc, MelonVRneu, Darkgreen_World, Panicnot42, FerreusVeritas
  * Created at: 07.08.2024
  * Copyright (c) 2024-2026
  * <p>
