@@ -15,10 +15,10 @@ out
 
 # gradle
 build
-.gradle
+# .gradle
 
 # other
-eclipse
+# eclipse
 run
 runs
 run-data
