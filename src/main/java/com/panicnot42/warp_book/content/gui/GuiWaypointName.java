@@ -1,6 +1,6 @@
 /**
- * @author Panicnot42, ArcAnc, Darkgreen_World
- * Copyright (c) 2016-2026
+ * @author Panicnot42, FerreusVeritas, MelonVRneu, ArcAnc, Darkgreen_World
+ * Copyright (c) 2014-2026
  * <p>
  * This code is licensed under "GPL-v3.0-only"
  * Details can be found in the license file in the root folder of this project
