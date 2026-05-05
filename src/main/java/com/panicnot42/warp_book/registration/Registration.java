@@ -26,6 +26,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -99,10 +100,24 @@ public class Registration {
 
     public static final class MenuTypeRegistry {
         public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Database.MOD_ID);
-
-        public static final RegistryObject<MenuType<MenuWarpBook>> WARP_BOOK = MENU_TYPES.register(Database.CONTAINER_WARP_BOOK, () ->
-                new MenuType<>((windowId, inv) ->
-                        new MenuWarpBook(windowId, inv, new ContainerWarpBook(ItemStack.EMPTY), new ContainerWarpBookSpecial(ItemStack.EMPTY)), FeatureFlags.DEFAULT_FLAGS));
+        /*
+         * public static final RegistryObject<MenuType<MenuWarpBook>> WARP_BOOK = MENU_TYPES.register(Database.CONTAINER_WARP_BOOK, () ->
+         *      new MenuType<>((windowId, inv) ->
+         *              new MenuWarpBook(windowId, inv, new ContainerWarpBook(ItemStack.EMPTY), new ContainerWarpBookSpecial(ItemStack.EMPTY)), FeatureFlags.DEFAULT_FLAGS));
+        */
+        public static final RegistryObject<MenuType<MenuWarpBook>> WARP_BOOK = MenuTypeRegistry.MENU_TYPES.register
+        		(
+        				Database.CONTAINER_WARP_BOOK, () -> IForgeMenuType.create
+        				(
+        						(windowId, inv, data) -> 
+        						{
+        							ItemStack heldItem = data.readItem(); 
+        							return new MenuWarpBook(windowId, inv, 
+        									new ContainerWarpBook(heldItem), 
+        									new ContainerWarpBookSpecial(heldItem));
+        						}
+        				)
+        		);
 
         public static void init(@NotNull final IEventBus modEventBus) {
             MENU_TYPES.register(modEventBus);

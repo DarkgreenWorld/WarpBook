@@ -89,7 +89,6 @@ public class EventHandler {
                     WarpUtils.bindItemStackToLocation(page, "Death...", death);
                     
                     if (!player.addItem(page)) {
-                        // 传统的生成物品实体方式
                         ItemEntity itemEntity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), page);
                         player.level().addFreshEntity(itemEntity);
                     }
