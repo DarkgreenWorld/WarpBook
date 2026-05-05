@@ -1,5 +1,5 @@
 /**
- * @author Panicnot42, FerreusVeritas, MelonVRneu, ArcAnc, Darkgreen_World
+ * @author Panicnot42, FerreusVeritas, MelonVRneu, ArcAnc, DarkgreenWorld
  * Copyright (c) 2014-2026
  * <p>
  * This code is licensed under "GPL-v3.0-only"
