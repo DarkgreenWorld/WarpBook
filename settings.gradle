@@ -1,13 +1,28 @@
 pluginManagement {
     repositories {
-        mavenLocal()
-        maven { url = 'https://maven.aliyun.com/repository/gradle-plugin' }
-        maven { url = 'https://maven.aliyun.com/repository/public' }
+		mavenLocal()
+        maven { 
+			name = 'MinecraftForge'
+			url = 'https://maven.aliyun.com/repository/public' 
+		}
         gradlePluginPortal()
-        maven { url = 'https://maven.neoforged.net/releases' }
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+
+    repositories {
+        mavenLocal()
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
     }
 }
 
-plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
-}
+//plugins {
+//    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0'
+//}
