@@ -9,7 +9,7 @@
 package com.panicnot42.warp_book.content.network.packet;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraftforge.network.handling.IPayloadContext;
 
 public interface IPacket extends CustomPacketPayload
 {
