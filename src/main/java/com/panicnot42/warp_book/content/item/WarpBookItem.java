@@ -83,14 +83,8 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 				}, 
 				buf -> 
 				{
-				    if (buf instanceof RegistryFriendlyByteBuf registryBuf) 
-				    {
-				        ItemStack.OPTIONAL_STREAM_CODEC.encode(registryBuf, itemStack);
-				    } 
-				    else 
-				    {
-				        ItemStack.OPTIONAL_STREAM_CODEC.encode((RegistryFriendlyByteBuf) buf, itemStack);
-				    }
+					 RegistryFriendlyByteBuf rbuf = new RegistryFriendlyByteBuf(buf, serverPlayer.registryAccess());
+					 ItemStack.OPTIONAL_STREAM_CODEC.encode(rbuf, itemStack);
 				});
 		}
 		else

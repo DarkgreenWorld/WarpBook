@@ -50,7 +50,9 @@ public class WarpDrive
 			ServerLevel serverLevel = level.getServer().getLevel(globalPos.dimension());
 			if(serverLevel != null) 
 			{
+				NetworkEngine.sendToPlayerNear((ServerLevel) level, null, oldPoint, 64, oldDim);
 				teleportToPos(player, serverLevel, globalPos.pos().getCenter(), null);
+				NetworkEngine.sendToPlayerNear(serverLevel, null, globalPos.pos().getCenter(), 64, newDim);
 			}
 			else 
 			{
@@ -66,18 +68,9 @@ public class WarpDrive
 		
 		if(!sameDim)
 			distance = Double.POSITIVE_INFINITY;
-
 		
 		//Update player
 		player.causeFoodExhaustion((float)calculateExhaustion(player.level().getDifficulty(), distance));
-
-		//Send effect packets
-		if (!level.isClientSide())
-		{
-			ServerLevel serverLevel = level.getServer().getLevel(globalPos.dimension());
-			NetworkEngine.sendToPlayerNear((ServerLevel) level, null, oldPoint, 64, oldDim);
-			NetworkEngine.sendToPlayerNear(serverLevel, null, globalPos.pos().getCenter(), 64, newDim);
-		}
 	}
 
 	private static void teleportToPos(

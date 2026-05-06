@@ -14,6 +14,8 @@ import com.panicnot42.warp_book.util.EventHandler;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +24,7 @@ public class WarpBook
 {
 	public static final Logger logger = LogManager.getLogger(Database.MOD_ID);
 
-	public static WarpDrive warpDrive = new WarpDrive();
+	public static WarpDrive warpDrive;
 
 	public static double exhaustionCoefficient =  0.d;
 	public static double minExhaustionDistance = 256.d;
@@ -31,12 +33,14 @@ public class WarpBook
 	public static boolean deathPagesEnabled = true;
 
 
-	public WarpBook(final IEventBus modEventBus)
+	public WarpBook()
 	{
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		
 		Registration.init(modEventBus);
+		
+		warpDrive = new WarpDrive();
 
 		EventHandler.initEvents(modEventBus);
-		
-		NetworkEngine.setupMessages();
 	}
 }

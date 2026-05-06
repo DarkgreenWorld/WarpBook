@@ -154,7 +154,7 @@ public class Registration
         	(
         		(windowId, inv, data) -> 
         		{
-        			RegistryFriendlyByteBuf rdata = (RegistryFriendlyByteBuf) data;
+        			RegistryFriendlyByteBuf rdata = new RegistryFriendlyByteBuf(data, inv.player.registryAccess());
         			ItemStack bookStack = ItemStack.OPTIONAL_STREAM_CODEC.decode(rdata); 
         		    return new MenuWarpBook(windowId, inv, new ContainerWarpBook(bookStack), new ContainerWarpBookSpecial(bookStack));
         		}

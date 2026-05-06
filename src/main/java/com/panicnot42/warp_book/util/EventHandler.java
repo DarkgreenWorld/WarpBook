@@ -97,6 +97,7 @@ public class EventHandler
         }
     }
 
+    @SubscribeEvent
     public static void onPlayerRespawn(@NotNull final PlayerEvent.PlayerRespawnEvent event)
     {
         if (WarpBook.deathPagesEnabled && event.getEntity() instanceof Player player && !event.isEndConquered())
