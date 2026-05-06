@@ -27,19 +27,15 @@ import java.util.stream.Collectors;
 public class ContainerWarpBook implements Container, Nameable
 {
 	private final ItemStack heldStack;
-	private List<ItemStack> content;
+	private NonNullList<ItemStack> content;
 	public final int slotsCount = 54;
 
 	public ContainerWarpBook(ItemStack heldItem)
 	{
 		ItemContainerContents contents = WarpBookItem.getContent(heldItem);
 		content = NonNullList.withSize(54, ItemStack.EMPTY);
+		contents.copyInto(this.content);
 		
-		for(int i = 0; i < contents.getSlots();i++)
-		{
-			content.set(i, contents.getStackInSlot(i));
-		}
-
         this.heldStack = heldItem;
     }
 	

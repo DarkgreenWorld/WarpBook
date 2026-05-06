@@ -9,9 +9,8 @@
 package com.panicnot42.warp_book.content.network.packet;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraftforge.network.handling.IPayloadContext;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-public interface IPacket extends CustomPacketPayload
-{
-    void handle(IPayloadContext ctx);
+public interface IPacket extends CustomPacketPayload {
+    void handle(CustomPayloadEvent.Context ctx);
 }

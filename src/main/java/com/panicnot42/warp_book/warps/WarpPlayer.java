@@ -32,7 +32,7 @@ public class WarpPlayer extends Warp
 	{
 		if (hasValidData(stack))
 		{
-			return Component.literal(stack.get(Registration.DataComponentRegistry.NAME_IN_BOOK));
+			return Component.literal(stack.get(Registration.DataComponentRegistry.NAME_IN_BOOK.get()));
 		}
 		return Component.literal(unbound);
 	}
@@ -42,7 +42,7 @@ public class WarpPlayer extends Warp
 	{
 		if(hasValidData(stack))
 		{
-			UUID playerID = stack.get(Registration.DataComponentRegistry.TARGET_UUID);
+			UUID playerID = stack.get(Registration.DataComponentRegistry.TARGET_UUID.get());
 
 			Player targetPlayer = player.getServer().getPlayerList().getPlayer(playerID);
 
@@ -66,7 +66,7 @@ public class WarpPlayer extends Warp
 	@Override
 	public boolean hasValidData(@NotNull ItemStack stack)
 	{
-		return stack.has(Registration.DataComponentRegistry.TARGET_UUID);
+		return stack.has(Registration.DataComponentRegistry.TARGET_UUID.get());
 
 	}
 

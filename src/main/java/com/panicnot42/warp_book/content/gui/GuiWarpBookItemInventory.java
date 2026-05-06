@@ -28,7 +28,7 @@ public class GuiWarpBookItemInventory extends AbstractContainerScreen<MenuWarpBo
 	
 	public GuiWarpBookItemInventory(MenuWarpBook warpBookContainerItem, Inventory player, Component title)
 	{
-		super(warpBookContainerItem, player, Component.empty());
+		super(warpBookContainerItem, player, title);
 		inventory = warpBookContainerItem.inventory;
 		imageWidth = 194;
 		imageHeight = 222;

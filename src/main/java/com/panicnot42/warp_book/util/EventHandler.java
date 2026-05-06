@@ -8,6 +8,7 @@
  */
 package com.panicnot42.warp_book.util;
 
+import com.google.common.eventbus.Subscribe;
 import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.gui.GuiWarpBookItemInventory;
 import com.panicnot42.warp_book.content.item.IColorable;
@@ -15,6 +16,8 @@ import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.content.savedData.DeathSavedData;
 import com.panicnot42.warp_book.registration.Registration;
+
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.NonNullList;
@@ -25,34 +28,34 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ForgeHooksClient.ClientEvents;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RegisterMenuScreensEvent;
-import net.minecraftforge.common.NeoForge;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.List;
 
 public class EventHandler
 {
-    public static void initEvents(@NotNull final IEventBus modEventBus)
+    public static void initEvents(@NotNull final IEventBus modEventBus) 
     {
-        NeoForge.EVENT_BUS.addListener(EventHandler :: onDeath);
-        NeoForge.EVENT_BUS.addListener(EventHandler :: onPlayerRespawn);
-        modEventBus.addListener(NetworkEngine :: setupMessages);
+        MinecraftForge.EVENT_BUS.register(EventHandler.class);
 
-        if (FMLLoader.getDist().isClient())
-        {
-            modEventBus.addListener(EventHandler :: registerItemColor);
-            modEventBus.addListener(EventHandler :: registerMenuScreens);
+        NetworkEngine.setupMessages();
+
+        if (FMLLoader.getDist() == Dist.CLIENT) {
+            modEventBus.register(ClientEvents.class);
         }
-
     }
 
+    @SubscribeEvent
     public static void onDeath(@NotNull final LivingDeathEvent event)
     {
         if (!WarpBook.deathPagesEnabled || !(event.getEntity() instanceof Player player))
@@ -62,8 +65,8 @@ public class EventHandler
         if(!level.isClientSide)
         {
             if (!player.getInventory().contains(stack -> 
-            		(stack.is(Registration.ItemRegistry.WARP_BOOK) && WarpBookItem.getRespawnsLeft(stack) > 0) 
-            		 || stack.is(Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY)
+            		(stack.getItem() == Registration.ItemRegistry.WARP_BOOK.get() && WarpBookItem.getRespawnsLeft(stack) > 0) 
+            		 || stack.getItem() == Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY.get()
                )) return;
 
             outer:
@@ -72,12 +75,12 @@ public class EventHandler
                 for (int q = 0; q < list.size(); q++)
                 {
                     ItemStack item = list.get(q);
-                    if (item.is(Registration.ItemRegistry.WARP_BOOK) && WarpBookItem.getRespawnsLeft(item) > 0)
+                    if (item.getItem() == Registration.ItemRegistry.WARP_BOOK.get() && WarpBookItem.getRespawnsLeft(item) > 0)
                     {
 
                     	WarpBookItem.decrRespawnsLeft(item);
                     }
-                    else if(item.is(Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY))
+                    else if(item.getItem() == Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY.get())
                     {
                     	item.shrink(1);
                     }
@@ -116,17 +119,30 @@ public class EventHandler
         }
     }
 
-    public static void registerItemColor(@NotNull final RegisterColorHandlersEvent.Item event)
-    {
-        Registration.ItemRegistry.ITEMS.getEntries().stream().
-                map(DeferredHolder::get).
-                filter(item -> item instanceof IColorable).
-                forEach(item ->
-                        event.register((stack, tintIndex) -> ((IColorable)item).getColor(stack, tintIndex), item));
-    }
+    public static class ClientEvents {
 
-    public static void registerMenuScreens(@NotNull final RegisterMenuScreensEvent event)
-    {
-        event.register(Registration.MenuTypeRegistry.WARP_BOOK.get(), GuiWarpBookItemInventory :: new);
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) 
+        {
+            event.enqueueWork(() -> 
+            {
+                MenuScreens.register(
+                    Registration.MenuTypeRegistry.WARP_BOOK.get(), 
+                    GuiWarpBookItemInventory::new
+                );
+            });
+        }
+
+        @SubscribeEvent
+        public static void onItemColors(RegisterColorHandlersEvent.Item event) 
+        {
+            Registration.ItemRegistry.ITEMS.getEntries().forEach(holder -> 
+            {
+                if (holder.get() instanceof IColorable colorable) 
+                {
+                    event.register((stack, tintIndex) -> colorable.getColor(stack, tintIndex), holder.get());
+                }
+            });
+        }
     }
 }

@@ -8,6 +8,7 @@
 package com.panicnot42.warp_book;
 
 import com.panicnot42.warp_book.content.core.WarpDrive;
+import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.EventHandler;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,10 +31,12 @@ public class WarpBook
 	public static boolean deathPagesEnabled = true;
 
 
-	public WarpBook(final IEventBus modEventBus, final ModContainer modContainer)
+	public WarpBook(final IEventBus modEventBus)
 	{
 		Registration.init(modEventBus);
 
 		EventHandler.initEvents(modEventBus);
+		
+		NetworkEngine.setupMessages();
 	}
 }

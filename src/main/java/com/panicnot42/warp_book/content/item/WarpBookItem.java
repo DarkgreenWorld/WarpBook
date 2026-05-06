@@ -17,6 +17,8 @@ import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -36,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.function.Consumer;
 
 public class WarpBookItem extends Item implements IColorable, Registration.ItemRegistry.IMustBeAddedToCreative
 {
@@ -43,8 +46,8 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	public WarpBookItem()
 	{
 		super(new Item.Properties().stacksTo(1).
-				component(DataComponents.CONTAINER, new ItemContainerContents(54)).
-				component(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY, 0));
+				component(DataComponents.CONTAINER, ItemContainerContents.fromItems(NonNullList.withSize(54, ItemStack.EMPTY))).
+				component(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY.get(), 0));
 	}
 
 	@Override
@@ -77,8 +80,18 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 					{
 						return new MenuWarpBook(containerId, playerInventory, new ContainerWarpBook(itemStack), new ContainerWarpBookSpecial(itemStack));
 					}
-				}, byteBuf -> ItemStack.OPTIONAL_STREAM_CODEC.encode(byteBuf, itemStack));
-
+				}, 
+				buf -> 
+				{
+				    if (buf instanceof RegistryFriendlyByteBuf registryBuf) 
+				    {
+				        ItemStack.OPTIONAL_STREAM_CODEC.encode(registryBuf, itemStack);
+				    } 
+				    else 
+				    {
+				        ItemStack.OPTIONAL_STREAM_CODEC.encode((RegistryFriendlyByteBuf) buf, itemStack);
+				    }
+				});
 		}
 		else
 		{
@@ -101,15 +114,15 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 		tooltipComponents.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_TOOLTIP, amount));
 	}
 
-	@Override
-	public boolean isRepairable(ItemStack stack)
-	{
-		return false;
-	}
+	//@Override
+	//public boolean isRepairable(ItemStack stack)
+	//{
+	//	return false;
+	//}
 
 	public static @NotNull ItemContainerContents getContent(@NotNull ItemStack stack)
 	{
-		return stack.getOrDefault(DataComponents.CONTAINER, new ItemContainerContents(54));
+		return stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.fromItems(NonNullList.withSize(54, ItemStack.EMPTY)));
 	}
 
 	public static void setWarpBookContent(@NotNull ItemStack stack, @NotNull ItemContainerContents content)
@@ -119,13 +132,13 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 
 	public static int getRespawnsLeft(@NotNull ItemStack item)
 	{
-		return item.getOrDefault(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY, 0);
+		return item.getOrDefault(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY.get(), 0);
 	}
 	
 	public static void setRespawnsLeft(@NotNull ItemStack item, int deaths)
 	{
-		if (item.has(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY))
-			item.set(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY, deaths);
+		if (item.has(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY.get()))
+			item.set(Registration.DataComponentRegistry.WARP_BOOK_DEATHLY.get(), deaths);
 	}
 	
 	public static void decrRespawnsLeft(ItemStack item)

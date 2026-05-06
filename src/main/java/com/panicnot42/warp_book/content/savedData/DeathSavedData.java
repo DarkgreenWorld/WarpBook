@@ -18,6 +18,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -43,9 +44,16 @@ public class DeathSavedData extends SavedData
        ServerLevel level = server.getLevel(Level.OVERWORLD);
        if (level == null)
            return new DeathSavedData();
-       return level.getDataStorage().computeIfAbsent(new Factory<>(
-               DeathSavedData::new,
-               (compoundTag, provider) -> DeathSavedData.load(compoundTag)), Database.SAVED_DATA_FILE_NAME);
+       return level.getDataStorage().computeIfAbsent
+    		   (
+    				   new SavedData.Factory<>
+    				   (
+    						   DeathSavedData::new,
+    						   (compoundTag, provider) -> DeathSavedData.load(compoundTag), 
+    						   DataFixTypes.LEVEL
+    				   ),
+    				   Database.SAVED_DATA_FILE_NAME
+    			);
     }
 
     @Override

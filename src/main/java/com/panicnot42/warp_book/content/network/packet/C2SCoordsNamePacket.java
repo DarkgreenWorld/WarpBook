@@ -21,48 +21,49 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.handling.IPayloadContext;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public record C2SCoordsNamePacket(String name, UUID playerId, int hand) implements IPacket
-{
-	public static final CustomPacketPayload.Type<C2SCoordsNamePacket> TYPE = new CustomPacketPayload.Type<>(Database.rl("packet_coords_name"));
-	public static final StreamCodec<FriendlyByteBuf, C2SCoordsNamePacket> STREAM_CODEC = StreamCodec.composite(
-			ByteBufCodecs.STRING_UTF8,
-			C2SCoordsNamePacket :: name,
-			UUIDUtil.STREAM_CODEC,
-			C2SCoordsNamePacket :: playerId,
-			ByteBufCodecs.INT,
-			C2SCoordsNamePacket::hand,
-			C2SCoordsNamePacket::new
-	);
+public record C2SCoordsNamePacket(String name, UUID playerId, int hand) implements IPacket {
+    public static final CustomPacketPayload.Type<C2SCoordsNamePacket> TYPE = new CustomPacketPayload.Type<>(Database.rl("packet_coords_name"));
+    
+    public static final StreamCodec<FriendlyByteBuf, C2SCoordsNamePacket> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, C2SCoordsNamePacket::name,
+            UUIDUtil.STREAM_CODEC, C2SCoordsNamePacket::playerId,
+            ByteBufCodecs.INT, C2SCoordsNamePacket::hand,
+            C2SCoordsNamePacket::new
+    );
 
-	@Override
-	public void handle(@NotNull IPayloadContext ctx)
-	{
-		ServerPlayer player = (ServerPlayer) ctx.player();
-		if (player == null)
-			return;
-		ctx.enqueueWork(() ->
-		{
-			Player targetPlayer = player.level().getPlayerByUUID(playerId);
-			InteractionHand usedHand = InteractionHand.values()[hand];
-			ItemStack stack = targetPlayer.getItemInHand(usedHand);
-			stack.shrink(1);
-			ItemStack newPage = WarpUtils.bindItemStackToLocation(new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()), name, targetPlayer);
-			if (!targetPlayer.addItem(newPage))
-			{
-				ItemEntity item = new ItemEntity(targetPlayer.level(), targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ(), newPage);
-				targetPlayer.level().addFreshEntity(item);
-			}
-		});
-	}
+    @Override
+    public void handle(CustomPayloadEvent.Context ctx) {
+    	ServerPlayer player = ctx.getSender();
+        Player targetPlayer = player.level().getPlayerByUUID(playerId);
+        if (targetPlayer == null) targetPlayer = player;
 
-	@Override
-	public @NotNull Type<C2SCoordsNamePacket> type()
-	{
-		return TYPE;
-	}
+        InteractionHand usedHand = InteractionHand.values()[hand];
+        ItemStack stack = targetPlayer.getItemInHand(usedHand);
+        
+        if (!stack.isEmpty()) 
+        {
+            stack.shrink(1);
+            ItemStack newPage = WarpUtils.bindItemStackToLocation(
+                new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()), 
+                name, 
+                targetPlayer
+            );
+            if (!targetPlayer.addItem(newPage)) 
+            {
+                ItemEntity item = new ItemEntity(targetPlayer.level(), targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ(), newPage);
+                targetPlayer.level().addFreshEntity(item);
+            }
+        }
+    }
+
+    @Override
+    public @NotNull Type<C2SCoordsNamePacket> type() {
+        return TYPE;
+    }
 }

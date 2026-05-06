@@ -29,8 +29,8 @@ public class WarpLocus extends Warp
 	@Override
 	public Component getName(@NotNull Item.TooltipContext ctx, @NotNull ItemStack stack)
 	{
-		if (stack.has(Registration.DataComponentRegistry.NAME_IN_BOOK))
-			return Component.literal(stack.get(Registration.DataComponentRegistry.NAME_IN_BOOK));
+		if (stack.has(Registration.DataComponentRegistry.NAME_IN_BOOK.get()))
+			return Component.literal(stack.get(Registration.DataComponentRegistry.NAME_IN_BOOK.get()));
 		return Component.literal(unbound);
 	}
 	
@@ -39,7 +39,7 @@ public class WarpLocus extends Warp
 	{
 		if(hasValidData(stack))
 		{
-			return stack.get(Registration.DataComponentRegistry.TARGET_POSITION);
+			return stack.get(Registration.DataComponentRegistry.TARGET_POSITION.get());
 		}
 		else
 		{
@@ -51,7 +51,7 @@ public class WarpLocus extends Warp
 	@Override
 	public boolean hasValidData(ItemStack stack)
 	{
-		return stack.has(Registration.DataComponentRegistry.TARGET_POSITION);
+		return stack.has(Registration.DataComponentRegistry.TARGET_POSITION.get());
 	}
 	
 	@Override
@@ -61,7 +61,7 @@ public class WarpLocus extends Warp
 		tooltip.add(Component.literal(ttprefix).append(getName(context, stack)));
 		if(hasValidData(stack))
 		{
-			GlobalPos pos = stack.get(Registration.DataComponentRegistry.TARGET_POSITION);
+			GlobalPos pos = stack.get(Registration.DataComponentRegistry.TARGET_POSITION.get());
 			String dimensionName = pos.dimension().location().toShortLanguageKey();
 			tooltip.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_BIND_TOOLTIP,
 					pos.pos().getX(),
