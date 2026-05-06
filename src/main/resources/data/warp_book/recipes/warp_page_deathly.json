@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category":"misc",
+	"key": {
+		"E": {"item":"minecraft:fermented_spider_eye"},
+		"D": {"item":"minecraft:diamond"},
+		"P": {"item":"warp_book:warp_page_unbound"}
+	},
+	"pattern": [
+			" E ",
+			"DPD"
+	],
+	"result": {
+		"item": "warp_book:warp_page_deathly",
+		"count": 1
+	}
+}
