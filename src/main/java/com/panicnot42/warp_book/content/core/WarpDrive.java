@@ -107,7 +107,7 @@ public class WarpDrive
 			float pitch
 	)
 	{
-		net.minecraftforge.event.entity.EntityTeleportEvent.TeleportCommand event = net.minecraftforge.event.EventHooks.onEntityTeleportCommand(player, x, y, z);
+		net.minecraftforge.event.entity.EntityTeleportEvent.TeleportCommand event = net.minecraftforge.event.ForgeEventFactory.onEntityTeleportCommand(player, x, y, z);
 		if (event.isCanceled())
 		{
 			return;

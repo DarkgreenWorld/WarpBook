@@ -32,10 +32,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.common.extensions.IMenuTypeExtension;
-import net.minecraftforge.registries.DeferredHolder;
-import net.minecraftforge.registries.DeferredItem;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;

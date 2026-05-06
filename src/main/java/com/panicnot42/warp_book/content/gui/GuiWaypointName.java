@@ -64,7 +64,7 @@ public class GuiWaypointName extends Screen
 		waypointName.setMaxLength(128);
 		waypointName.setFocused(true);
 		waypointName.setValue("");
-		waypointName.setTextShadow(false);
+		//waypointName.setTextShadow(false);
 		this.setFocused(waypointName);
 		addRenderableWidget(waypointName);
 		doneButton.active = !waypointName.getValue().trim().isEmpty();
