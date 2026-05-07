@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:recipe/root",
 	"criteria": {
-		"has_ender_pearl": {
+		"has_items": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
@@ -10,7 +10,7 @@
 			}
 		}
 	},
-	"requirements": [["has_ender_pearl"]],
+	"requirements": [["has_items"]],
 	"rewards":{
 		"recipes":["warp_book:warp_page_unbound"]
 	}
