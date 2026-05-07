@@ -1,0 +1,17 @@
+{
+	"parent": "minecraft:recipes/root",
+	"criteria": {
+		"has_items": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{"items":["minecraft:ender_pearl","minecraft:paper"]}
+				]
+			}
+		}
+	},
+	"requirements": [["has_items"]],
+	"rewards":{
+		"recipes":["warp_book:warp_page_unbound"]
+	}
+}

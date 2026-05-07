@@ -1,0 +1,23 @@
+{
+	"parent": "minecraft:recipes/root",
+	"criteria": {
+		"has_warp_page_recipe":{
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe":"warp_book:warp_page_unbound"
+			}
+		},
+		"has_items":{
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{"items":["minecraft:diamond","minecraft:fermented_spider_eye","warp_book:warp_page_unbound"]}
+				]
+			}
+		}
+	},
+	"requirements": [["has_items"],["has_warp_page_recipe"]],
+	"rewards":{
+		"recipes":["warp_book:warp_page_deathly"]
+	}
+}
