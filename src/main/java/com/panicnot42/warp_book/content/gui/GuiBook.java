@@ -75,12 +75,6 @@ public class GuiBook extends Screen
 		ItemStack heldItem = procureBook();
 
 		items = WarpBookItem.getContent(heldItem).stream().collect(Collectors.toList());
-		if (items.isEmpty())
-		{
-			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_NO_PAGES));
-			this.onClose();
-			return;
-		}
 		pos = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++)
 		{
@@ -94,6 +88,13 @@ public class GuiBook extends Screen
 					pos.add(new ButtonPos(i, Component.literal("...")));
 				}
 			}
+		}
+		
+		if (pos.isEmpty())
+		{
+			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_NO_PAGES));
+			this.onClose();
+			return;
 		}
 		
 		int x = width / 2 - 48;
