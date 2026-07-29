@@ -15,6 +15,7 @@ import com.panicnot42.warp_book.content.item.WarpBookItem;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
@@ -26,22 +27,25 @@ public class C2SWarpPacket
 {
     private final UUID uuid;
     private final int index;
+    private final boolean isMainHand;
 
-    public C2SWarpPacket(UUID uuid, int index)
+    public C2SWarpPacket(UUID uuid, int index, boolean isMainHand)
     {
         this.uuid = uuid;
         this.index = index;
+        this.isMainHand = isMainHand;
     }
 
     public static void encode(C2SWarpPacket msg, FriendlyByteBuf buf)
     {
         buf.writeUUID(msg.uuid);
         buf.writeInt(msg.index);
+        buf.writeBoolean(msg.isMainHand);
     }
 
     public static C2SWarpPacket decode(FriendlyByteBuf buf)
     {
-        return new C2SWarpPacket(buf.readUUID(), buf.readInt());
+        return new C2SWarpPacket(buf.readUUID(), buf.readInt(), buf.readBoolean());
     }
 
     public static void handle(C2SWarpPacket msg, Supplier<NetworkEvent.Context> ctx)
@@ -54,7 +58,8 @@ public class C2SWarpPacket
             Player target = player.getServer().getPlayerList().getPlayer(msg.uuid);
             if (target == null) return;
 
-            ItemStack stack = target.getMainHandItem();
+            InteractionHand usedHand = msg.isMainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+            ItemStack stack = target.getItemInHand(usedHand);
 
             if (stack.getItem() instanceof WarpBookItem)
             {

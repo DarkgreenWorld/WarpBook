@@ -86,10 +86,16 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 		else
 		{
 			if (level.isClientSide())
-				Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
+				openGui(player, usedHand);
 		}
 
 		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public static void openGui(Player player, InteractionHand usedHand)
+	{
+		Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
 	}
 
 	@Override
