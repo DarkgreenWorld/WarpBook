@@ -38,46 +38,49 @@ public record S2CPacketEffect(boolean enter, int x, int y, int z) implements IPa
     @Override
     public void handle(CustomPayloadEvent.Context ctx) 
     {
-        if (!ctx.isClientSide()) 
-        {
-            return;
-        }
+    	ctx.enqueueWork(() ->
+    	{
+    		if (!ctx.isClientSide()) 
+    		{
+    			return;
+    		}
     	
-        LocalPlayer player = Minecraft.getInstance().player;
-		if (player == null)
-			return;
-		Level level = player.level();
-        RandomSource rand = level.random;
-        int particles = (2 - Minecraft.getInstance().options.particles().get().getId()) * 50;
+    		LocalPlayer player = Minecraft.getInstance().player;
+    		if (player == null)
+    			return;
+    		Level level = player.level();
+    		RandomSource rand = level.random;
+    		int particles = (2 - Minecraft.getInstance().options.particles().get().getId()) * 50;
 
-		if (enter)
-		{
-			for (int i = 0; i < (5 * particles); ++i)
-			{
-				player.level().addParticle(ParticleTypes.LARGE_SMOKE,
+    		if (enter)
+    		{
+    			for (int i = 0; i < (5 * particles); ++i)
+    			{
+    				player.level().addParticle(ParticleTypes.LARGE_SMOKE,
 						x,
 						y + (rand.nextDouble() * 2),
 						z,
 						(rand.nextDouble() / 10) - 0.05D,
 						0D,
 						(rand.nextDouble() / 10) - 0.05D);
-			}
-			player.level().playSound(player, player.getX(), player.getY(), player.getZ(), Registration.SoundRegistry.ARRIVE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
-		}
-		else
-		{
-			for (int i = 0; i < particles; ++i)
-			{
-				player.level().addParticle(ParticleTypes.PORTAL,
+    			}
+    			player.level().playSound(player, player.getX(), player.getY(), player.getZ(), Registration.SoundRegistry.ARRIVE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+    		}
+    		else
+    		{
+    			for (int i = 0; i < particles; ++i)
+    			{
+    				player.level().addParticle(ParticleTypes.PORTAL,
 						x + 0.5D,
 						y + (rand.nextDouble() * 2),
 						z + 0.5D,
 						rand.nextDouble() - 0.5D,
 						rand.nextDouble() - 0.5D,
 						rand.nextDouble() - 0.5D);
-			}
-			player.level().playSound(player, player.getX(), player.getY(), player.getZ(), Registration.SoundRegistry.DEPART.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
-		}
+    			}
+    			player.level().playSound(player, player.getX(), player.getY(), player.getZ(), Registration.SoundRegistry.DEPART.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+    		}
+    	});
     }
 
     @Override

@@ -20,6 +20,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -56,11 +59,7 @@ public class UnboundWarpPageItem extends WarpPageItem
 			}
 			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
 		}
-		else
-		{
-			if (level.isClientSide())
-				Minecraft.getInstance().setScreen(new GuiWaypointName(player, usedHand));
-		}
+		else{}
 
 		return InteractionResultHolder.success(stack);
 	}

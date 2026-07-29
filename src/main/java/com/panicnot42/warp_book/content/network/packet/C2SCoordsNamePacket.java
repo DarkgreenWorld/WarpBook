@@ -40,26 +40,31 @@ public record C2SCoordsNamePacket(String name, UUID playerId, int hand) implemen
     @Override
     public void handle(CustomPayloadEvent.Context ctx) {
     	ServerPlayer player = ctx.getSender();
-        Player targetPlayer = player.level().getPlayerByUUID(playerId);
-        if (targetPlayer == null) targetPlayer = player;
+    	if (player == null) return;
+    	
+    	ctx.enqueueWork(() ->
+    	{
+    		Player targetPlayer = player.level().getPlayerByUUID(playerId);
+    		if (targetPlayer == null) targetPlayer = player;
 
-        InteractionHand usedHand = InteractionHand.values()[hand];
-        ItemStack stack = targetPlayer.getItemInHand(usedHand);
+    		InteractionHand usedHand = InteractionHand.values()[hand];
+    		ItemStack stack = targetPlayer.getItemInHand(usedHand);
         
-        if (!stack.isEmpty()) 
-        {
-            stack.shrink(1);
-            ItemStack newPage = WarpUtils.bindItemStackToLocation(
-                new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()), 
-                name, 
-                targetPlayer
-            );
-            if (!targetPlayer.addItem(newPage)) 
-            {
-                ItemEntity item = new ItemEntity(targetPlayer.level(), targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ(), newPage);
-                targetPlayer.level().addFreshEntity(item);
-            }
-        }
+    		if (!stack.isEmpty()) 
+    		{
+    			stack.shrink(1);
+    			ItemStack newPage = WarpUtils.bindItemStackToLocation(
+    				new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()), 
+    				name, 
+    				targetPlayer
+    			);
+    			if (!targetPlayer.addItem(newPage)) 
+    			{
+    				ItemEntity item = new ItemEntity(targetPlayer.level(), targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ(), newPage);
+    				targetPlayer.level().addFreshEntity(item);
+    			}
+    		}
+    	});
     }
 
     @Override

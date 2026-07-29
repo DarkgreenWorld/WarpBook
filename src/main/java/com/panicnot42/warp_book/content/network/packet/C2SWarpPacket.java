@@ -20,6 +20,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
@@ -30,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public record C2SWarpPacket(UUID uuid, int index) implements IPacket 
+public record C2SWarpPacket(UUID uuid, int index, boolean isMainHand) implements IPacket 
 {
     public static final CustomPacketPayload.Type<C2SWarpPacket> TYPE = new CustomPacketPayload.Type<>(Database.rl("packet_warp"));
     
@@ -38,6 +39,7 @@ public record C2SWarpPacket(UUID uuid, int index) implements IPacket
     (
     		UUIDUtil.STREAM_CODEC, C2SWarpPacket::uuid,
     		ByteBufCodecs.INT, C2SWarpPacket::index,
+    		ByteBufCodecs.BOOL,C2SWarpPacket::isMainHand,
     		C2SWarpPacket::new
     );
 
@@ -47,24 +49,28 @@ public record C2SWarpPacket(UUID uuid, int index) implements IPacket
     	ServerPlayer player = ctx.getSender();
         if (player.getServer() == null) return;
         
-        Player targetPlayer = player.getServer().getPlayerList().getPlayer(uuid);
-        if (targetPlayer == null) return;
-
-        ItemStack stack = targetPlayer.getMainHandItem();
-        if (stack.getItem() instanceof WarpBookItem) 
+        ctx.enqueueWork(() ->
         {
-            ItemContainerContents item = WarpBookItem.getContent(stack);
-            List<ItemStack> items = item.stream().toList();
-            if (index >= 0 && index < items.size()) 
-            {
-                ItemStack page = items.get(index);
-                if (page.getItem() instanceof IDeclareWarp warp) 
-                {
-                    GlobalPos pos = warp.getWaypoint(targetPlayer, page);
-                    if (pos != null) WarpBook.warpDrive.processWarp(targetPlayer, pos);
-                }
-            }
-        }
+        	Player targetPlayer = player.getServer().getPlayerList().getPlayer(uuid);
+        	if (targetPlayer == null) return;
+        	
+        	InteractionHand usedHand = isMainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+        	ItemStack stack = targetPlayer.getItemInHand(usedHand);
+        	if (stack.getItem() instanceof WarpBookItem) 
+        	{
+        		ItemContainerContents item = WarpBookItem.getContent(stack);
+        		List<ItemStack> items = item.stream().toList();
+        		if (index >= 0 && index < items.size()) 
+        		{
+        			ItemStack page = items.get(index);
+        			if (page.getItem() instanceof IDeclareWarp warp) 
+        			{
+        				GlobalPos pos = warp.getWaypoint(targetPlayer, page);
+        				if (pos != null) WarpBook.warpDrive.processWarp(targetPlayer, pos);
+        			}
+        		}
+        	}
+        });
     }
 
     @Override

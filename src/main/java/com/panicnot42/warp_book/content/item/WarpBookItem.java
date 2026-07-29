@@ -87,11 +87,7 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 					 ItemStack.OPTIONAL_STREAM_CODEC.encode(rbuf, itemStack);
 				});
 		}
-		else
-		{
-			if (level.isClientSide())
-				Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
-		}
+		else{}
 
 		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
 	}
