@@ -12,13 +12,13 @@ import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.registration.Registration;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +43,7 @@ public record S2CPacketEffect(boolean enter, int x, int y, int z) implements IPa
 	{
 		ctx.enqueueWork(() ->
 		{
-			LocalPlayer player = Minecraft.getInstance().player;
+			Player player = ctx.player();
 			if (player == null)
 				return;
 			Level level = player.level();

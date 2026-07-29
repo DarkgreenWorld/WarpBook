@@ -14,8 +14,8 @@ import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.registration.Registration;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -78,15 +78,20 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 						return new MenuWarpBook(containerId, playerInventory, new ContainerWarpBook(itemStack), new ContainerWarpBookSpecial(itemStack));
 					}
 				}, byteBuf -> ItemStack.OPTIONAL_STREAM_CODEC.encode(byteBuf, itemStack));
-
 		}
 		else
 		{
 			if (level.isClientSide())
-				Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
+				openGui(player, usedHand);
 		}
-
+		
 		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public static void openGui(Player player, InteractionHand usedHand)
+	{
+		Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
 	}
 
 	@Override

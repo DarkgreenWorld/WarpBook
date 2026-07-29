@@ -46,6 +46,7 @@ public class GuiBook extends Screen
 	private ArrayList<WarpButton> warps;
 	private ArrayList<ButtonPos> pos;
 	private static final int warpsPerPage = 10;
+	private final InteractionHand usedHand;
 	
 	private record ButtonPos(int id, Component name)
 	{
@@ -58,6 +59,7 @@ public class GuiBook extends Screen
 	{
 		super(Component.empty());
 		this.player = entityPlayer;
+		this.usedHand = hand;
 		this.bookBearer = () -> entityPlayer.getItemInHand(hand);
 	}
 	
@@ -107,7 +109,7 @@ public class GuiBook extends Screen
 			{
 				int index = pos.get(((WarpButton)button).getIndex() + (page*warpsPerPage)).id();
 
-				C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), index);
+				C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), index, this.usedHand == InteractionHand.MAIN_HAND);
 				NetworkEngine.sendToServer(packet);
 				GuiBook.this.onClose();
 			});
