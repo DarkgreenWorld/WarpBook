@@ -16,6 +16,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraft.sounds.SoundSource;
@@ -49,46 +50,51 @@ public record S2CPacketEffect(boolean enter, int x, int y, int z) {
 
         ctx.enqueueWork(() ->
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-
-                    LocalPlayer player = Minecraft.getInstance().player;
-                    if (player == null) return;
-
-                    Level level = player.level();
-                    RandomSource rand = level.random;
-
-                    int particlesSetting = Minecraft.getInstance().options.particles().get().getId();
-                    int particles = (2 - particlesSetting) * 50;
-
-                    if (msg.enter) {
-                        for (int i = 0; i < 5 * particles; i++) {
-                            level.addParticle(ParticleTypes.LARGE_SMOKE,
-                                    msg.x,
-                                    msg.y + rand.nextDouble() * 2,
-                                    msg.z,
-                                    rand.nextDouble() / 10 - 0.05,
-                                    0,
-                                    rand.nextDouble() / 10 - 0.05);
-                        }
-                        level.playSound(player, player.getX(), player.getY(), player.getZ(),
-                                Registration.SoundRegistry.ARRIVE.get(),
-                                SoundSource.PLAYERS, 1F, 1F);
-                    } else {
-                        for (int i = 0; i < particles; i++) {
-                            level.addParticle(ParticleTypes.PORTAL,
-                                    msg.x + 0.5,
-                                    msg.y + rand.nextDouble() * 2,
-                                    msg.z + 0.5,
-                                    rand.nextDouble() - 0.5,
-                                    rand.nextDouble() - 0.5,
-                                    rand.nextDouble() - 0.5);
-                        }
-                        level.playSound(player, player.getX(), player.getY(), player.getZ(),
-                                Registration.SoundRegistry.DEPART.get(),
-                                SoundSource.PLAYERS, 1F, 1F);
-                    }
+                	effectWork(msg);
                 })
         );
 
         ctx.setPacketHandled(true);
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    public static void effectWork(S2CPacketEffect msg)
+    {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        Level level = player.level();
+        RandomSource rand = level.random;
+
+        int particlesSetting = Minecraft.getInstance().options.particles().get().getId();
+        int particles = (2 - particlesSetting) * 50;
+
+        if (msg.enter) {
+            for (int i = 0; i < 5 * particles; i++) {
+                level.addParticle(ParticleTypes.LARGE_SMOKE,
+                        msg.x,
+                        msg.y + rand.nextDouble() * 2,
+                        msg.z,
+                        rand.nextDouble() / 10 - 0.05,
+                        0,
+                        rand.nextDouble() / 10 - 0.05);
+            }
+            level.playSound(player, player.getX(), player.getY(), player.getZ(),
+                    Registration.SoundRegistry.ARRIVE.get(),
+                    SoundSource.PLAYERS, 1F, 1F);
+        } else {
+            for (int i = 0; i < particles; i++) {
+                level.addParticle(ParticleTypes.PORTAL,
+                        msg.x + 0.5,
+                        msg.y + rand.nextDouble() * 2,
+                        msg.z + 0.5,
+                        rand.nextDouble() - 0.5,
+                        rand.nextDouble() - 0.5,
+                        rand.nextDouble() - 0.5);
+            }
+            level.playSound(player, player.getX(), player.getY(), player.getZ(),
+                    Registration.SoundRegistry.DEPART.get(),
+                    SoundSource.PLAYERS, 1F, 1F);
+        }
     }
 }
