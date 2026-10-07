@@ -4,13 +4,12 @@
   "package": "com.panicnot42.warp_book.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": [
-    "MixinTitleScreen"
+  "mixins": [
+    "MixinServerPlayer"
   ],
+  "client": [],
   "server": [],
   "injectors": {
     "defaultRequire": 1
   }
 }
-  

@@ -5,22 +5,29 @@
     "name": "${mod_name}",
     "description": "${description}",
     "authors": [
-        "${mod_author}"
+        "Panicnot42",
+        "FerreusVeritas",
+        "MelonVRneu",
+        "ArcAnc",
+        "DarkgreenWorld"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/warp-book",
+        "sources": "https://github.com/DarkgreenWorld/WarpBook",
+        "issues": "https://github.com/DarkgreenWorld/WarpBook/issues"
     },
     "license": "${license}",
-    "icon": "${mod_id}.png",
+    "icon": "assets/warp_book/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.panicnot42.warp_book.ExampleMod"
+            "com.panicnot42.warp_book.WarpBook"
+        ],
+        "client": [
+            "com.panicnot42.warp_book.util.ClientHandler"
         ]
     },
     "mixins": [
-        "${mod_id}.mixins.json",
         "${mod_id}.fabric.mixins.json"
     ],
     "depends": {
@@ -28,9 +35,5 @@
         "fabric-api": "*",
         "minecraft": "${minecraft_version}",
         "java": ">=${java_version}"
-    },
-    "suggests": {
-        "another-mod": "*"
     }
 }
-  
