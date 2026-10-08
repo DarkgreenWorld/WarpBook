@@ -1,6 +1,10 @@
 Warp Book
 =========
 
+[![Modrinth](https://img.shields.io/badge/Published%20on-Modrinth-1bd96a?logo=modrinth&logoColor=bluegreen)](https://modrinth.com/mod/warp-book)
+[![CurseForge](https://img.shields.io/badge/Published%20on-CurseForge-f16436?logo=curseforge&logoColor=orange)](https://www.curseforge.com/minecraft/mc-mods/warp-book)
+[![GitHub](https://img.shields.io/badge/%E2%80%8B-GitHub-gray?logo=github&logoColor=black&labelColor=white)](https://github.com/DarkgreenWorld/WarpBook)
+
 This niche mod allows for easy teleportation between given points without admin privileges. It offers a simple alternative to the standard /home and /warp commands.
 
 This is a continuation of the work done by [Panicnot42](https://github.com/Outurnate) in 2016. It has been ported to Minecraft Java Edition 1.21 based on NeoForge by contributor [ArcAnc] using version 2.0. This version features a multitude of bug fixes, graphic overhauls, and improved features. I have fixed a large number of bugs in the ported version and corrected the author and license certificate information.
