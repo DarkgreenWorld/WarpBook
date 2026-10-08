@@ -8,13 +8,14 @@
  */
 package com.panicnot42.warp_book.content.network.packet;
 
-import com.google.common.base.Supplier;
+import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.world.entity.player.Player;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
-
-public interface IPacket {
-    void encode(FriendlyByteBuf buf);
-    
-    void handle(Supplier<NetworkEvent.Context> ctx);
+public interface IPacket extends FabricPacket
+{
+    /**
+     * Runs on the main thread. For C2S packets the player is the sender (a ServerPlayer),
+     * for S2C packets it is the local client player.
+     */
+    void handle(Player player);
 }

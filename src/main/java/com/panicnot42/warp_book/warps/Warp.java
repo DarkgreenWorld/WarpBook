@@ -12,13 +12,11 @@ import com.panicnot42.warp_book.content.core.WarpColors;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -33,15 +31,14 @@ public class Warp implements IDeclareWarp
 	}
 
 	@Override
-	public Component getSubName(ItemStack stack)
+	public Component getName(@Nullable Level level, ItemStack stack)
 	{
 		return null;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public void addInformation(@NotNull ItemStack stack, @NotNull Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
+	public void addInformation(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(Component.literal(ttprefix).append(getSubName(stack)));
+		tooltip.add(Component.literal(ttprefix).append(getName(level, stack)));
 	}
 	
 	@Override
@@ -56,7 +53,6 @@ public class Warp implements IDeclareWarp
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public WarpColors getColor()
 	{
 		return WarpColors.UNBOUND;

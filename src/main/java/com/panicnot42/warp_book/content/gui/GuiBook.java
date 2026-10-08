@@ -24,19 +24,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
-@OnlyIn(Dist.CLIENT)
 public class GuiBook extends Screen
 {
 	private final Player player;
@@ -47,7 +41,7 @@ public class GuiBook extends Screen
 	private ArrayList<WarpButton> warps;
 	private ArrayList<ButtonPos> pos;
 	private static final int warpsPerPage = 10;
-	private static InteractionHand hand;
+	private final InteractionHand usedHand;
 	
 	private record ButtonPos(int id, Component name)
 	{
@@ -60,7 +54,7 @@ public class GuiBook extends Screen
 	{
 		super(Component.empty());
 		this.player = entityPlayer;
-		this.hand = hand;
+		this.usedHand = hand;
 		this.bookBearer = () -> entityPlayer.getItemInHand(hand);
 	}
 	
@@ -77,7 +71,7 @@ public class GuiBook extends Screen
 		page = 0;
 		ItemStack heldItem = procureBook();
 
-		items = WarpBookItem.getContent(heldItem).stream().collect(Collectors.toList());
+		items = WarpBookItem.getContent(heldItem);
 		pos = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++)
 		{
@@ -86,7 +80,7 @@ public class GuiBook extends Screen
 			{
 				if(declareWarp.hasValidData(stack))
 				{
-					pos.add(new ButtonPos(i, declareWarp.getSubName(stack)));
+					pos.add(new ButtonPos(i, declareWarp.getName(player.level(), stack)));
 				} else {
 					pos.add(new ButtonPos(i, Component.literal("...")));
 				}
@@ -110,7 +104,7 @@ public class GuiBook extends Screen
 			{
 				int index = pos.get(((WarpButton)button).getIndex() + (page*warpsPerPage)).id();
 
-				C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), index, this.hand == InteractionHand.MAIN_HAND);
+				C2SWarpPacket packet = new C2SWarpPacket(player.getUUID(), index, this.usedHand == InteractionHand.MAIN_HAND);
 				NetworkEngine.sendToServer(packet);
 				GuiBook.this.onClose();
 			});
@@ -170,6 +164,8 @@ public class GuiBook extends Screen
 	@Override
 	public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick)
 	{
+		// 1.20.1 screens draw their own background (1.20.2+ does it inside Screen.render)
+		this.renderBackground(guiGraphics);
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -177,7 +173,6 @@ public class GuiBook extends Screen
 		guiGraphics.drawCenteredString(font, Component.translatable(Database.GUI_TEXT_DO_WARP), width / 2, (height / 2) - ySize / 2 - 12, 0xFFFFFF);
 	}
 
-    @OnlyIn(Dist.CLIENT)
     static class NextPageButton extends Button
 	{
 		private final boolean isForward;

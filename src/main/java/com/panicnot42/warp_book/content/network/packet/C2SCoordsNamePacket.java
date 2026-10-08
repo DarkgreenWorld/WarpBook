@@ -8,69 +8,59 @@
  */
 package com.panicnot42.warp_book.content.network.packet;
 
+import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.WarpUtils;
+import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
-public record C2SCoordsNamePacket(String name, UUID playerId, int hand) {
+public record C2SCoordsNamePacket(String name, UUID playerId, int hand) implements IPacket
+{
+	public static final PacketType<C2SCoordsNamePacket> TYPE = PacketType.create(Database.rl("packet_coords_name"), C2SCoordsNamePacket :: new);
 
-    public static void encode(C2SCoordsNamePacket msg, FriendlyByteBuf buf) {
-        buf.writeUtf(msg.name);
-        buf.writeUUID(msg.playerId);
-        buf.writeInt(msg.hand);
-    }
+	public C2SCoordsNamePacket(FriendlyByteBuf buf)
+	{
+		this(buf.readUtf(), buf.readUUID(), buf.readInt());
+	}
 
-    public static C2SCoordsNamePacket decode(FriendlyByteBuf buf) {
-        return new C2SCoordsNamePacket(
-                buf.readUtf(),
-                buf.readUUID(),
-                buf.readInt()
-        );
-    }
+	@Override
+	public void write(FriendlyByteBuf buf)
+	{
+		buf.writeUtf(name);
+		buf.writeUUID(playerId);
+		buf.writeInt(hand);
+	}
 
-    public static void handle(C2SCoordsNamePacket msg, Supplier<NetworkEvent.Context> ctxGetter) {
-        NetworkEvent.Context ctx = ctxGetter.get();
+	@Override
+	public void handle(@NotNull Player player)
+	{
+		Player targetPlayer = player.level().getPlayerByUUID(playerId);
+		if (targetPlayer == null) targetPlayer = player;
 
-        ctx.enqueueWork(() -> {
-            ServerPlayer player = ctx.getSender();
-            if (player == null) return;
+		InteractionHand usedHand = InteractionHand.values()[hand];
+		ItemStack stack = targetPlayer.getItemInHand(usedHand);
+		if (stack.isEmpty())
+			return;
 
-            Player targetPlayer = player.level().getPlayerByUUID(msg.playerId);
-            if (targetPlayer == null) return;
+		stack.shrink(1);
+		ItemStack newPage = WarpUtils.bindItemStackToLocation(new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()), name, targetPlayer);
+		if (!targetPlayer.addItem(newPage))
+		{
+			ItemEntity item = new ItemEntity(targetPlayer.level(), targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ(), newPage);
+			targetPlayer.level().addFreshEntity(item);
+		}
+	}
 
-            InteractionHand hand = InteractionHand.values()[msg.hand];
-            ItemStack stack = targetPlayer.getItemInHand(hand);
-
-            stack.shrink(1);
-
-            ItemStack newPage = WarpUtils.bindItemStackToLocation(
-                    new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()),
-                    msg.name,
-                    targetPlayer
-            );
-
-            if (!targetPlayer.addItem(newPage)) {
-                targetPlayer.level().addFreshEntity(
-                        new ItemEntity(
-                                targetPlayer.level(),
-                                targetPlayer.getX(),
-                                targetPlayer.getY(),
-                                targetPlayer.getZ(),
-                                newPage
-                        )
-                );
-            }
-        });
-
-        ctx.setPacketHandled(true);
-    }
+	@Override
+	public @NotNull PacketType<?> getType()
+	{
+		return TYPE;
+	}
 }

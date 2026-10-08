@@ -10,14 +10,14 @@ package com.panicnot42.warp_book.content.core;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 public interface IDeclareWarp
 {
   /** Used by the warpbook for generating it's listing.  Must be used for warp book pages */
-  Component getSubName(ItemStack stack);
+  Component getName(@Nullable Level level, ItemStack stack);
   
   /** Gets the waypoint for this object */
   GlobalPos getWaypoint(Player player, ItemStack stack);

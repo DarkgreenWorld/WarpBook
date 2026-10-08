@@ -5,7 +5,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
-					{"items":["minecraft:ender_pearl","minecraft:paper"]}
+					{"items": ["minecraft:ender_pearl","minecraft:paper"]}
 				]
 			}
 		}

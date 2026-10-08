@@ -11,7 +11,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
-					{"items":["minecraft:diamond","minecraft:fermented_spider_eye","warp_book:warp_page_unbound"]}
+					{"items": ["minecraft:diamond","minecraft:fermented_spider_eye","warp_book:warp_page_unbound"]}
 				]
 			}
 		}

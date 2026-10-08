@@ -1,55 +1,37 @@
 /**
- * @author DarkgreenWorld, Panicnot42, FerreusVeritas, MelonVRneu, ArcAnc
- * Created at: 2026.07.29
- * Copyright (c) 2026
+ * @author Panicnot42, FerreusVeritas, MelonVRneu, ArcAnc, DarkgreenWorld
+ * Copyright (c) 2014-2026
  * <p>
  * This code is licensed under "GPL-v3.0-only"
  * Details can be found in the license file in the root folder of this project
  */
-/*package com.panicnot42.warp_book.util;
+package com.panicnot42.warp_book.util;
 
-import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.content.gui.GuiBook;
-import com.panicnot42.warp_book.content.gui.GuiWaypointName;
-import com.panicnot42.warp_book.content.item.UnboundWarpPageItem;
-import com.panicnot42.warp_book.content.item.WarpBookItem;
+import com.panicnot42.warp_book.content.gui.GuiWarpBookItemInventory;
+import com.panicnot42.warp_book.content.item.IColorable;
+import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
+import com.panicnot42.warp_book.registration.Registration;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.client.gui.screens.MenuScreens;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraft.world.item.ItemStack;
+import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = Database.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.FORGE)
-public class ClientHandler
+public class ClientHandler implements ClientModInitializer
 {
-	public ClientHandler() {}
-	
-	@SubscribeEvent
-    public static void openGui(PlayerInteractEvent.RightClickItem event)
-    {
-		ItemStack stack = event.getItemStack();
-		Player player = event.getEntity();
-		InteractionHand usedHand = event.getHand();
-		
-        if (stack.getItem() instanceof WarpBookItem && !player.isCrouching()) 
-            if (event.getLevel().isClientSide())
-            	Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
-    }
-	
-	@SubscribeEvent
-	public static void setWaypointName(PlayerInteractEvent.RightClickItem event)
+	@Override
+	public void onInitializeClient()
 	{
-		ItemStack stack = event.getItemStack();
-		Player player = event.getEntity();
-		InteractionHand usedHand = event.getHand();
-		
-        if (stack.getItem() instanceof UnboundWarpPageItem && !player.isCrouching()) 
-            if (event.getLevel().isClientSide())
-            	Minecraft.getInstance().setScreen(new GuiWaypointName(player, usedHand));
+		MenuScreens.register(Registration.MenuTypeRegistry.WARP_BOOK.get(), GuiWarpBookItemInventory :: new);
+
+		Registration.ItemRegistry.ITEMS.stream().
+				map(Supplier::get).
+				filter(item -> item instanceof IColorable).
+				forEach(item ->
+						ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ((IColorable)item).getColor(stack, tintIndex), item));
+
+		// Fabric calls this on the client thread
+		ClientPlayNetworking.registerGlobalReceiver(S2CPacketEffect.TYPE, (packet, player, responseSender) -> packet.handle(player));
 	}
 }
-*/

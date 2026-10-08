@@ -8,11 +8,8 @@
 package com.panicnot42.warp_book.content.item;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public interface IColorable
 {
-	@OnlyIn(Dist.CLIENT)
 	int getColor(ItemStack stack, int tintIndex);
 }

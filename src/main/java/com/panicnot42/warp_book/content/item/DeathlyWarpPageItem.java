@@ -11,8 +11,6 @@ import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class DeathlyWarpPageItem extends Item implements IColorable, Registration.ItemRegistry.IMustBeAddedToCreative
@@ -23,7 +21,6 @@ public class DeathlyWarpPageItem extends Item implements IColorable, Registratio
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public int getColor(ItemStack stack, int tintIndex)
 	{
         return switch (tintIndex)
@@ -34,12 +31,10 @@ public class DeathlyWarpPageItem extends Item implements IColorable, Registratio
         };
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public int pageColor() {
 		return WarpColors.DEATHLY.getColor();
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public int symbolColor() {
 		return 0xFFBBBBBB;
 	}

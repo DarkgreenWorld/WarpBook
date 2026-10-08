@@ -7,11 +7,9 @@
  */
 package com.panicnot42.warp_book.content.item;
 
-import com.panicnot42.warp_book.content.gui.GuiBook;
-import com.panicnot42.warp_book.content.gui.GuiWaypointName;
+import com.panicnot42.warp_book.client.ClientHooks;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.WarpUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -21,10 +19,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -63,20 +60,14 @@ public class UnboundWarpPageItem extends WarpPageItem
 		else
 		{
 			if (level.isClientSide())
-				setWaypointName(player, usedHand);
+				ClientHooks.openWaypointNameGui(player, usedHand);
 		}
 
 		return InteractionResultHolder.success(stack);
 	}
-	
-	@OnlyIn(Dist.CLIENT)
-	public static void setWaypointName(Player player, InteractionHand usedHand)
-	{
-		Minecraft.getInstance().setScreen(new GuiWaypointName(player, usedHand));
-	}
 
 	@Override
-	public void appendHoverText(@NotNull ItemStack stack, @NotNull Level level, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag)
+	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag)
 	{
 	}
 

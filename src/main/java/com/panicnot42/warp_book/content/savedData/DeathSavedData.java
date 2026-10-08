@@ -1,5 +1,5 @@
 /**
- * @author ArcAnc, MelonVRneu, DarkgreenWorld, Panicnot42, FerreusVeritas
+ * @author  ArcAnc, MelonVRneu, DarkgreenWorld, Panicnot42, FerreusVeritas
  * Created at: 07.08.2024
  * Copyright (c) 2024-2026
  * <p>
@@ -19,50 +19,41 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class DeathSavedData extends SavedData {
-    
+public class DeathSavedData extends SavedData
+{
     public final Object2ObjectLinkedOpenHashMap<UUID, GlobalPos> POSITIONS = new Object2ObjectLinkedOpenHashMap<>();
 
-    public DeathSavedData() {
+    public DeathSavedData()
+    {
         setDirty();
     }
 
-    public static @NotNull DeathSavedData getInstance() {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        if (server == null)
-            return new DeathSavedData();
+    public static @NotNull DeathSavedData getInstance(@Nullable MinecraftServer server)
+    {
+       if (server == null)
+           return new DeathSavedData();
 
-        ServerLevel level = server.getLevel(Level.OVERWORLD);
-        if (level == null)
-            return new DeathSavedData();
-
-        // 加载方法、创建方法 和 文件名
-        return level.getDataStorage().computeIfAbsent(
-                DeathSavedData::load,
-                DeathSavedData::new,
-                Database.SAVED_DATA_FILE_NAME
-        );
+       ServerLevel level = server.getLevel(Level.OVERWORLD);
+       if (level == null)
+           return new DeathSavedData();
+       return level.getDataStorage().computeIfAbsent(DeathSavedData::load, DeathSavedData::new, Database.SAVED_DATA_FILE_NAME);
     }
 
     @Override
-    public @NotNull CompoundTag save(@NotNull CompoundTag tag) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag tag)
+    {
         ListTag listTag = new ListTag();
 
-        POSITIONS.forEach((uuid, globalPos) -> {
+        POSITIONS.forEach((uuid, globalPos) ->
+        {
             CompoundTag compoundTag = new CompoundTag();
-            
-            // result().ifPresent(...) 替代 .ifSuccess(...)
-            GlobalPos.CODEC.encodeStart(NbtOps.INSTANCE, globalPos).result()
-                    .ifPresent(savedTag -> compoundTag.put(Database.SAVED_DATA_POSITION, savedTag));
-            
-            UUIDUtil.CODEC.encodeStart(NbtOps.INSTANCE, uuid).result()
-                    .ifPresent(savedTag -> compoundTag.put(Database.SAVED_DATA_UUID, savedTag));
-            
+            GlobalPos.CODEC.encodeStart(NbtOps.INSTANCE, globalPos).result().ifPresent(savedTag -> compoundTag.put(Database.SAVED_DATA_POSITION, savedTag));
+            UUIDUtil.CODEC.encodeStart(NbtOps.INSTANCE, uuid).result().ifPresent(savedTag -> compoundTag.put(Database.SAVED_DATA_UUID, savedTag));
             listTag.add(compoundTag);
         });
 
@@ -70,18 +61,21 @@ public class DeathSavedData extends SavedData {
         return tag;
     }
 
-    public static @NotNull DeathSavedData load(@NotNull CompoundTag tag) {
+    public static @NotNull DeathSavedData load(@NotNull CompoundTag tag)
+    {
         DeathSavedData data = new DeathSavedData();
 
         ListTag listTag = tag.getList(Database.SAVED_DATA_INFO_LIST, 10);
-        listTag.forEach(dynTag -> {
-            if (dynTag instanceof CompoundTag compoundTag) {
-                GlobalPos pos = GlobalPos.CODEC.parse(NbtOps.INSTANCE, compoundTag.get(Database.SAVED_DATA_POSITION))
-                        .result()
-                        .orElse(null);
-                UUID uuid = UUIDUtil.CODEC.parse(NbtOps.INSTANCE, compoundTag.get(Database.SAVED_DATA_UUID))
-                        .result()
-                        .orElse(null);
+        listTag.forEach(dynTag ->
+        {
+            if (dynTag instanceof CompoundTag compoundTag)
+            {
+                GlobalPos pos = GlobalPos.CODEC.parse(NbtOps.INSTANCE, compoundTag.get(Database.SAVED_DATA_POSITION)).
+                        result().
+                        orElse(null);
+                UUID uuid = UUIDUtil.CODEC.parse(NbtOps.INSTANCE, compoundTag.get(Database.SAVED_DATA_UUID)).
+                        result().
+                        orElse(null);
 
                 if (pos != null && uuid != null)
                     data.POSITIONS.putIfAbsent(uuid, pos);
@@ -91,8 +85,10 @@ public class DeathSavedData extends SavedData {
         return data;
     }
 
-    public void removeDeath(@NotNull UUID uuid) {
-        if (POSITIONS.remove(uuid) != POSITIONS.defaultReturnValue()) {
+    public void removeDeath(@NotNull UUID uuid)
+    {
+        if (POSITIONS.remove(uuid) != POSITIONS.defaultReturnValue())
+        {
             POSITIONS.trim();
             setDirty();
         }

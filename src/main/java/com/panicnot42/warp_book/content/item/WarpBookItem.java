@@ -8,37 +8,32 @@
 package com.panicnot42.warp_book.content.item;
 
 import com.panicnot42.warp_book.Database;
+import com.panicnot42.warp_book.client.ClientHooks;
 import com.panicnot42.warp_book.content.core.WarpColors;
-import com.panicnot42.warp_book.content.gui.GuiBook;
 import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.registration.Registration;
-import net.minecraft.client.Minecraft;
+
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
-
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class WarpBookItem extends Item implements IColorable, Registration.ItemRegistry.IMustBeAddedToCreative
 {
@@ -65,113 +60,74 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 		if (player.isCrouching())
 		{
 			if (player instanceof ServerPlayer serverPlayer)
-				NetworkHooks.openScreen(serverPlayer, new MenuProvider()
+				serverPlayer.openMenu(new ExtendedScreenHandlerFactory()
 				{
-				    @Override
-				    public Component getDisplayName()
-				    {
-				        return Component.empty();
-				    }
+					@Override
+					public @NotNull Component getDisplayName()
+					{
+						return itemStack.getHoverName();
+					}
 
-				    @Override
-				    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
-				    {
-				        return new MenuWarpBook(id, inv,
-				                new ContainerWarpBook(itemStack),
-				                new ContainerWarpBookSpecial(itemStack));
-				    }
-				}, buf -> buf.writeItem(itemStack));
+					@Override
+					public @NotNull MenuWarpBook createMenu(int containerId, @NotNull Inventory playerInventory, @NotNull Player player)
+					{
+						return new MenuWarpBook(containerId, playerInventory, new ContainerWarpBook(itemStack), new ContainerWarpBookSpecial(itemStack));
+					}
 
+					// Sent to the client, which rebuilds the menu from it (see Registration.MenuTypeRegistry)
+					@Override
+					public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf)
+					{
+						buf.writeItem(itemStack);
+					}
+				});
 		}
 		else
 		{
 			if (level.isClientSide())
-				openGui(player, usedHand);
+				ClientHooks.openWarpBookGui(player, usedHand);
 		}
 
 		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
-	}
-	
-	@OnlyIn(Dist.CLIENT)
-	public static void openGui(Player player, InteractionHand usedHand)
-	{
-		Minecraft.getInstance().setScreen(new GuiBook(player, usedHand));
 	}
 
 	@Override
 	public void appendHoverText(
 			@NotNull ItemStack stack,
-			@NotNull Level level,
+			@Nullable Level level,
 			@NotNull List<Component> tooltipComponents,
 			@NotNull TooltipFlag tooltipFlag)
 	{
-	    int amount = (int) WarpBookItem.getContent(stack).stream().filter(itemStack -> !itemStack.isEmpty()).count();
+		int amount = countNonEmptyAmount(WarpBookItem.getContent(stack));
 
 		tooltipComponents.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_TOOLTIP, amount));
 	}
 
-	@Override
-	public boolean isRepairable(ItemStack stack)
+	// The pages live in the book's NBT as a 54 slot inventory ("warp_book_content" -> "Items")
+	public static @NotNull NonNullList<ItemStack> getContent(@NotNull ItemStack stack)
 	{
-		return false;
+		NonNullList<ItemStack> items = NonNullList.withSize(54, ItemStack.EMPTY);
+		CompoundTag content = stack.getTagElement(Database.TAG_WARP_BOOK_CONTENT);
+		if (content != null)
+			ContainerHelper.loadAllItems(content, items);
+		return items;
 	}
 
-	public static NonNullList<ItemStack> getContent(ItemStack stack)
+	public static void setContent(@NotNull ItemStack stack, @NotNull NonNullList<ItemStack> items)
 	{
-	    NonNullList<ItemStack> list = NonNullList.withSize(54, ItemStack.EMPTY);
-	    CompoundTag rootTag = stack.getTag();
-	    
-	    if (rootTag == null) return list;
-	    if (rootTag.contains("Inventory", 10)) 
-	    {
-	        CompoundTag inventoryTag = rootTag.getCompound("Inventory");
-	        if (inventoryTag.contains("Items", 9)) 
-	        {
-	            ListTag listTag = inventoryTag.getList("Items", 10);
-	            for (int i = 0; i < listTag.size(); i++) 
-	            {
-	                CompoundTag itemTag = listTag.getCompound(i);
-	                int slot = itemTag.getInt("Slot");
-	                if (slot >= 0 && slot < list.size()) 
-	                {
-	                    list.set(slot, ItemStack.of(itemTag));
-	                }
-	            }
-	        }
-	    }
-	    return list;
-	}
-
-	public static void setWarpBookContent(ItemStack stack, NonNullList<ItemStack> list)
-	{
-	    CompoundTag rootTag = stack.getOrCreateTag();
-	    CompoundTag inventoryTag = new CompoundTag();
-	    ListTag listTag = new ListTag();
-	    
-	    for (int i = 0; i < list.size(); i++) 
-	    {
-	        ItemStack item = list.get(i);
-	        if (!item.isEmpty()) 
-	        {
-	            CompoundTag itemTag = new CompoundTag();
-	            itemTag.putInt("Slot", i); 
-	            item.save(itemTag);        
-	            listTag.add(itemTag);      
-	        }
-	    }
-	    inventoryTag.put("Items", listTag);
-	    rootTag.put("Inventory", inventoryTag);
+		ContainerHelper.saveAllItems(stack.getOrCreateTagElement(Database.TAG_WARP_BOOK_CONTENT), items);
 	}
 
 	public static int getRespawnsLeft(@NotNull ItemStack item)
 	{
 		CompoundTag tag = item.getTag();
-	    return tag != null ? tag.getInt("Respawns") : 0;
+		return tag == null ? 0 : tag.getInt(Database.TAG_WARP_BOOK_DEATHLY);
 	}
 	
 	public static void setRespawnsLeft(@NotNull ItemStack item, int deaths)
 	{
-		item.getOrCreateTag().putInt("Respawns", deaths);
+		if (item.getItem() instanceof WarpBookItem)
+			item.getOrCreateTag().putInt(Database.TAG_WARP_BOOK_DEATHLY, deaths);
 	}
 	
 	public static void decrRespawnsLeft(ItemStack item)
@@ -180,7 +136,6 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public int getColor(ItemStack stack, int tintIndex)
 	{
         return switch (tintIndex)

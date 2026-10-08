@@ -8,7 +8,6 @@
 package com.panicnot42.warp_book.content.item;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.warps.Warp;
 
@@ -17,13 +16,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class WarpPageItem extends WarpItem
@@ -54,13 +50,13 @@ public class WarpPageItem extends WarpItem
 				GlobalPos pos = item.getWaypoint(player, itemStack);
 				if(pos != null)
 				{
-					WarpBook.warpDrive.processWarp(player, pos);
+					Database.warpDrive.processWarp(player, pos);
 					player.getItemInHand(usedHand).shrink(1);
 				}
 			}
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
 	}
 	@Override
 	public boolean canGoInBook()
@@ -69,7 +65,6 @@ public class WarpPageItem extends WarpItem
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public int getColor(@NotNull ItemStack stack, int tintIndex)
 	{
 		return switch (tintIndex)
@@ -80,13 +75,11 @@ public class WarpPageItem extends WarpItem
         };
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public int pageColor()
 	{
 		return WarpColors.UNBOUND.getColor();
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public int symbolColor()
 	{
 		return getWarpColor().getColor();

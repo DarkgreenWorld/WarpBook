@@ -17,11 +17,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
-@OnlyIn(Dist.CLIENT)
 public class GuiWaypointName extends Screen
 {
 	private EditBox waypointName;
@@ -73,12 +70,14 @@ public class GuiWaypointName extends Screen
 	@Override
 	public void tick()
 	{
+		waypointName.tick(); // 1.20.1 EditBox needs this for the blinking cursor
 		doneButton.active = !waypointName.getValue().trim().isEmpty();
 	}
 
 	@Override
 	public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick)
 	{
+		this.renderBackground(guiGraphics);
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 		guiGraphics.drawCenteredString(font, Component.translatable(Database.GUI_TEXT_BIND_PAGE), width / 2, 20, 16777215);
 		guiGraphics.drawString(font, Component.translatable(Database.GUI_TEXT_NAME_WAYPOINT), width / 2 - 150, 47, 10526880);

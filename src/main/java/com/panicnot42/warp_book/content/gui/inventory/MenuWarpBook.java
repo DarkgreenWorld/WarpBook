@@ -7,7 +7,7 @@
  */
 package com.panicnot42.warp_book.content.gui.inventory;
 
-import com.panicnot42.warp_book.WarpBook;
+import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.registration.Registration;
@@ -36,7 +36,7 @@ public class MenuWarpBook extends AbstractContainerMenu
 		for (int i = 0; i < 9; ++i)
 			this.addSlot(new SlotWarpBookInventory(inventoryPlayer, i, 8 + i * 18, 198));
 
-		if (WarpBook.deathPagesEnabled)
+		if (Database.deathPagesEnabled)
 			this.addSlot(new SlotWarpBookDeathly(inventorySpecial, 0, 174, 72));
 	}
 

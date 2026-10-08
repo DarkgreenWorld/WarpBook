@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.panicnot42.warp_book.mixin",
+  "refmap": "warp_book.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinServerPlayer"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,28 +1,16 @@
 pluginManagement {
     repositories {
-		mavenLocal()
-        maven { 
-			name = 'MinecraftForge'
-			url = 'https://maven.aliyun.com/repository/public' 
-		}
-        gradlePluginPortal()
-        maven {
-            name = 'MinecraftForge'
-            url = 'https://maven.minecraftforge.net/'
-        }
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
-
-    repositories {
-        mavenLocal()
-        maven { url = 'https://maven.minecraftforge.net/' }
+        // Mirrors carried over from the multiloader project
+        maven { url = 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url = 'https://maven.aliyun.com/repository/public' }
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
         mavenCentral()
     }
 }
 
-//plugins {
-//    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
-//}
+// Should match the folder name of the project, or IDEA may complain
+rootProject.name = 'WarpBook'

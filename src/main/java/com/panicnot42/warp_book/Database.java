@@ -7,6 +7,7 @@
  */
 package com.panicnot42.warp_book;
 
+import com.panicnot42.warp_book.content.core.WarpDrive;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,14 @@ public class Database
 	public static final String MOD_ID = "warp_book";
 	public static final String VERSION = "1.21";
 	public static final String NAME = "Warp Book";
+
+	public static WarpDrive warpDrive = new WarpDrive();
+
+	public static double exhaustionCoefficient =  0.d;
+	public static double minExhaustionDistance = 256.d;
+	public static double maxExhaustionDistance = 16384.d;
+	public static double distanceCoefficient = 1/256d;
+	public static boolean deathPagesEnabled = true;
 
 	public static final String ITEM_NAME_WARP_BOOK = "warp_book";
 	public static final String ITEM_NAME_WARP_PAGE_LOCATION = "warp_page_location";
@@ -28,13 +37,12 @@ public class Database
 
 	public static final String CREATIVE_TAB_TITLE = rl("creative_tab").toLanguageKey() + ".title";
 
-	public static final String TAG_NAME_IN_BOOK = "NameInBook";
-    // Registration.DataComponentRegistry.TARGET_POSITION
-    public static final String TAG_TARGET_POS = "TargetPos";
-    // Registration.DataComponentRegistry.TARGET_UUID
-    public static final String TAG_TARGET_UUID = "TargetUUID";
-    // 书本页面列表
-    public static final String TAG_PAGES = "Pages";
+	// Item NBT keys
+	public static final String TAG_PLAYER_UUID = "target_player_uuid";
+	public static final String TAG_COORDINATES = "target_coordinates";
+	public static final String TAG_NAME_IN_BOOK = "name_in_book";
+	public static final String TAG_WARP_BOOK_CONTENT = "warp_book_content";
+	public static final String TAG_WARP_BOOK_DEATHLY = "warp_book_deathly";
 
 	public static final String CONTAINER_WARP_BOOK = "warp_book";
 

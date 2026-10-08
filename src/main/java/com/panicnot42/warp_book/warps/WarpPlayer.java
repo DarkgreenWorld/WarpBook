@@ -9,17 +9,14 @@ package com.panicnot42.warp_book.warps;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.core.WarpColors;
-import com.panicnot42.warp_book.registration.Registration;
+import com.panicnot42.warp_book.util.WarpUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,12 +25,13 @@ import java.util.UUID;
 
 public class WarpPlayer extends Warp
 {
+	
 	@Override
-	public Component getSubName(@NotNull ItemStack stack)
+	public Component getName(@Nullable Level level, @NotNull ItemStack stack)
 	{
 		if (hasValidData(stack))
 		{
-			return Component.literal(stack.getTag().getString(Database.TAG_NAME_IN_BOOK));
+			return Component.literal(WarpUtils.getName(stack));
 		}
 		return Component.literal(unbound);
 	}
@@ -43,13 +41,13 @@ public class WarpPlayer extends Warp
 	{
 		if(hasValidData(stack))
 		{
-			UUID playerID = stack.getTag().getUUID(Database.TAG_TARGET_UUID);
+			UUID playerID = WarpUtils.getPlayer(stack);
+
 			Player targetPlayer = player.getServer().getPlayerList().getPlayer(playerID);
 
 			if (targetPlayer != null)
 			{
-				return GlobalPos.of(targetPlayer.level().dimension(), 
-						new BlockPos((int)targetPlayer.getX(), (int)targetPlayer.getEyeY(), (int)targetPlayer.getZ()));
+				return GlobalPos.of(targetPlayer.level().dimension(), new BlockPos((int)targetPlayer.getX(), (int)targetPlayer.getEyeY(), (int)targetPlayer.getZ()));
 			}
 			else
 			{
@@ -60,25 +58,26 @@ public class WarpPlayer extends Warp
 		{
 			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_PLAYER));
 		}
+
 		return null;
 	}
 	
 	@Override
 	public boolean hasValidData(@NotNull ItemStack stack)
 	{
-		return stack.hasTag() && stack.getTag().contains(Database.TAG_TARGET_UUID);
+		return WarpUtils.hasPlayer(stack);
+
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public void addInformation(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(Component.literal(ttprefix).append(getSubName(stack)));
+		tooltip.add(Component.literal(ttprefix).append(getName(level, stack)));
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public WarpColors getColor() {
 		return WarpColors.PLAYER;
 	}
+	
 }

@@ -8,79 +8,67 @@
  */
 package com.panicnot42.warp_book.content.network.packet;
 
-import com.panicnot42.warp_book.WarpBook;
+import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 
+import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
-public class C2SWarpPacket
+public record C2SWarpPacket(UUID uuid, int index, boolean isMainHand) implements IPacket
 {
-    private final UUID uuid;
-    private final int index;
-    private final boolean isMainHand;
 
-    public C2SWarpPacket(UUID uuid, int index, boolean isMainHand)
-    {
-        this.uuid = uuid;
-        this.index = index;
-        this.isMainHand = isMainHand;
-    }
+	public static final PacketType<C2SWarpPacket> TYPE = PacketType.create(Database.rl("packet_warp"), C2SWarpPacket :: new);
 
-    public static void encode(C2SWarpPacket msg, FriendlyByteBuf buf)
-    {
-        buf.writeUUID(msg.uuid);
-        buf.writeInt(msg.index);
-        buf.writeBoolean(msg.isMainHand);
-    }
+	public C2SWarpPacket(FriendlyByteBuf buf)
+	{
+		this(buf.readUUID(), buf.readInt(), buf.readBoolean());
+	}
 
-    public static C2SWarpPacket decode(FriendlyByteBuf buf)
-    {
-        return new C2SWarpPacket(buf.readUUID(), buf.readInt(), buf.readBoolean());
-    }
+	@Override
+	public void write(FriendlyByteBuf buf)
+	{
+		buf.writeUUID(uuid);
+		buf.writeInt(index);
+		buf.writeBoolean(isMainHand);
+	}
 
-    public static void handle(C2SWarpPacket msg, Supplier<NetworkEvent.Context> ctx)
-    {
-        ctx.get().enqueueWork(() ->
-        {
-            ServerPlayer player = ctx.get().getSender();
-            if (player == null) return;
+	@Override
+	public void handle(@NotNull Player player)
+	{
+		Player targetPlayer = player.getServer().getPlayerList().getPlayer(uuid);
+		if (targetPlayer == null) return;
 
-            Player target = player.getServer().getPlayerList().getPlayer(msg.uuid);
-            if (target == null) return;
+		InteractionHand usedHand = isMainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+		ItemStack stack = targetPlayer.getItemInHand(usedHand);
 
-            InteractionHand usedHand = msg.isMainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-            ItemStack stack = target.getItemInHand(usedHand);
+		if (stack.getItem() instanceof WarpBookItem)
+		{
+			NonNullList<ItemStack> pages = WarpBookItem.getContent(stack);
 
-            if (stack.getItem() instanceof WarpBookItem)
-            {
-                var contents = WarpBookItem.getContent(stack);
+			if(index >= 0 && index < pages.size())
+			{
+				ItemStack page = pages.get(index);
+				if(page.getItem() instanceof IDeclareWarp warp)
+				{
+					GlobalPos pos = warp.getWaypoint(targetPlayer, page);
+					if(pos != null) Database.warpDrive.processWarp(targetPlayer, pos);
+				}
+			}
+		}
+	}
 
-                if (msg.index >= 0 && msg.index < contents.size())
-                {
-                    ItemStack page = contents.get(msg.index);
-
-                    if (page.getItem() instanceof IDeclareWarp warp)
-                    {
-                        GlobalPos pos = warp.getWaypoint(target, page);
-                        if (pos != null)
-                        {
-                            WarpBook.warpDrive.processWarp(target, pos);
-                        }
-                    }
-                }
-            }
-        });
-
-        ctx.get().setPacketHandled(true);
-    }
+	@Override
+	public @NotNull PacketType<?> getType()
+	{
+		return TYPE;
+	}
 }

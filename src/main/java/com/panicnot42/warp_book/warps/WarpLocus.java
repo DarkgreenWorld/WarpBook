@@ -9,23 +9,13 @@ package com.panicnot42.warp_book.warps;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.core.WarpColors;
-import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.WarpUtils;
-
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,75 +24,54 @@ import java.util.Locale;
 
 public class WarpLocus extends Warp
 {
+	
 	@Override
-	public Component getSubName(@NotNull ItemStack stack)
+	public Component getName(@Nullable Level level, @NotNull ItemStack stack)
 	{
-		if (stack.hasTag() && stack.getTag().contains(Database.TAG_NAME_IN_BOOK))
-			return Component.literal(stack.getTag().getString(Database.TAG_NAME_IN_BOOK));
+		if (WarpUtils.hasName(stack))
+			return Component.literal(WarpUtils.getName(stack));
 		return Component.literal(unbound);
 	}
 	
 	@Override
 	public GlobalPos getWaypoint(Player player, ItemStack stack)
 	{
-		GlobalPos pos = getGlobalPos(stack);
-		if(pos != null)
+		if(hasValidData(stack))
 		{
-			return pos;
+			return WarpUtils.getPosition(stack);
 		}
-		
-		player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+		else
+		{
+			player.sendSystemMessage(Component.translatable(Database.MESSAGE_ERROR_INVALID_POSITION));
+		}
 		return null;
 	}
 	
 	@Override
-	public boolean hasValidData(@NotNull ItemStack stack)
+	public boolean hasValidData(ItemStack stack)
 	{
-		return stack.hasTag() && stack.getTag().contains(Database.TAG_NAME_IN_BOOK);
+		return WarpUtils.hasPosition(stack);
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public void addInformation(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(Component.literal(ttprefix).append(getSubName(stack)));
-		GlobalPos pos = getGlobalPos(stack);
-		if (pos != null) 
+		tooltip.add(Component.literal(ttprefix).append(getName(level, stack)));
+		GlobalPos pos = WarpUtils.getPosition(stack);
+		if(pos != null)
 		{
-			String dimensionName = pos.dimension().location().getPath();
+			String dimensionName = pos.dimension().location().toShortLanguageKey();
 			tooltip.add(Component.translatable(Database.GUI_TEXT_WARP_BOOK_BIND_TOOLTIP,
-				pos.pos().getX(),
-				pos.pos().getY(),
-				pos.pos().getZ(),
-				dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1).replace('_',' ')));
+					pos.pos().getX(),
+					pos.pos().getY(),
+					pos.pos().getZ(),
+					dimensionName.substring(0, 1).toUpperCase(Locale.ROOT) + dimensionName.substring(1).replace('_',' ')));
 		}
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public WarpColors getColor() 
-	{
+	public WarpColors getColor() {
 		return WarpColors.BOUND;
 	}
-	
-    public static GlobalPos getGlobalPos(ItemStack stack) 
-    {
-    	if (stack.hasTag())
-    	{
-    		CompoundTag tag = stack.getTag();
-    		if (tag.contains(Database.TAG_TARGET_POS))
-    		{
-    			CompoundTag pos = tag.getCompound(Database.TAG_TARGET_POS);
-    			if(pos.contains("x") && pos.contains("y") && pos.contains("z") && pos.contains("dimension"))
-    			{   
-    				BlockPos blockPos = new BlockPos(pos.getInt("x"), pos.getInt("y"), pos.getInt("z"));
-    				ResourceLocation dimRl = new ResourceLocation(pos.getString("dimension"));
-    				ResourceKey<Level> dimKey = ResourceKey.create(Registries.DIMENSION, dimRl);
-    				
-    				return GlobalPos.of(dimKey, blockPos);
-    			}
-    		}
-    	}
-        return null;
-    }
+
 }
