@@ -11,6 +11,11 @@
         "ArcAnc",
         "DarkgreenWorld"
     ],
+    "contributors": [
+        "Claude Opus 5.5",
+        "Gemini 3.1 Pro Preview",
+        "UtmostStar"
+    ],
     "contact": {
         "homepage": "https://www.curseforge.com/minecraft/mc-mods/warp-book",
         "sources": "https://github.com/DarkgreenWorld/WarpBook",
