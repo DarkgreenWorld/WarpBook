@@ -1,9 +1,3 @@
-package com.panicnot42.warp_book.platform;
-
-import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
-import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
-import com.panicnot42.warp_book.content.network.packet.IPacket;
 /**
  * @author DarkgreenWorld, Claude Opus 5.5
  * Created at: 2026.10.07
@@ -12,6 +6,12 @@ import com.panicnot42.warp_book.content.network.packet.IPacket;
  * This code is licensed under "GPL-v3.0-only"
  * Details can be found in the license file in the root folder of this project
  */
+package com.panicnot42.warp_book.platform;
+
+import com.panicnot42.warp_book.Database;
+import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
+import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
+import com.panicnot42.warp_book.content.network.packet.IPacket;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
 import com.panicnot42.warp_book.platform.services.IPlatformHelper;
 import net.minecraft.core.Registry;
