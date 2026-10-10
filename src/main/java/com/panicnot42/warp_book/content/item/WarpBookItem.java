@@ -11,25 +11,26 @@ import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.client.ClientHooks;
 import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
-import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
-import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.registration.Registration;
 
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LecternBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,27 +61,7 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 		if (player.isCrouching())
 		{
 			if (player instanceof ServerPlayer serverPlayer)
-				serverPlayer.openMenu(new ExtendedScreenHandlerFactory()
-				{
-					@Override
-					public @NotNull Component getDisplayName()
-					{
-						return itemStack.getHoverName();
-					}
-
-					@Override
-					public @NotNull MenuWarpBook createMenu(int containerId, @NotNull Inventory playerInventory, @NotNull Player player)
-					{
-						return new MenuWarpBook(containerId, playerInventory, new ContainerWarpBook(itemStack), new ContainerWarpBookSpecial(itemStack));
-					}
-
-					// Sent to the client, which rebuilds the menu from it (see Registration.MenuTypeRegistry)
-					@Override
-					public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf)
-					{
-						buf.writeItem(itemStack);
-					}
-				});
+				MenuWarpBook.open(serverPlayer, itemStack.getHoverName(), itemStack, null, false);
 		}
 		else
 		{
@@ -89,6 +70,16 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 		}
 
 		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+	}
+
+	// Like the vanilla books, a 1.20.1 lectern lets the book place itself, the lectern_books tag only lets the click through
+	@Override
+	public @NotNull InteractionResult useOn(@NotNull UseOnContext context)
+	{
+		Level level = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		BlockState state = level.getBlockState(pos);
+		return state.is(Blocks.LECTERN) && LecternBlock.tryPlaceBook(context.getPlayer(), level, pos, state, context.getItemInHand()) ? InteractionResult.sidedSuccess(level.isClientSide()) : InteractionResult.PASS;
 	}
 
 	@Override
@@ -116,6 +107,21 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	public static void setContent(@NotNull ItemStack stack, @NotNull NonNullList<ItemStack> items)
 	{
 		ContainerHelper.saveAllItems(stack.getOrCreateTagElement(Database.TAG_WARP_BOOK_CONTENT), items);
+	}
+
+	public static int getCopyCost(@NotNull ItemStack book)
+	{
+		return getContent(book).stream().filter(WarpItem::isCloneable).mapToInt(ItemStack::getCount).sum();
+	}
+
+	// A new book with only the cloneable pages, each in the same slot as before
+	public static @NotNull ItemStack copyBook(@NotNull ItemStack book)
+	{
+		NonNullList<ItemStack> pages = getContent(book);
+		pages.replaceAll(page -> WarpItem.isCloneable(page) ? page : ItemStack.EMPTY);
+		ItemStack copy = new ItemStack(Registration.ItemRegistry.WARP_BOOK.get());
+		setContent(copy, pages);
+		return copy;
 	}
 
 	public static int getRespawnsLeft(@NotNull ItemStack item)

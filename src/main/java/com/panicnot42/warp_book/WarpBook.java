@@ -12,6 +12,9 @@ import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.EventHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.world.InteractionResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,13 +25,19 @@ public class WarpBook implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
+		Database.loadConfig(FabricLoader.getInstance().getConfigDir());
+
 		// Fabric registers immediately, in the order Registration.init() touches the registries
 		Registration.init();
+		Registration.BlockRegistry.makeFlammable();
+		Registration.PotionRegistry.addBrewingRecipes();
 
 		NetworkEngine.setupMessages();
 
 		// Deaths are forwarded by MixinServerPlayer, see there for why it isn't an event
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) ->
 				EventHandler.onPlayerRespawn(newPlayer, alive));
+		UseBlockCallback.EVENT.register((player, level, hand, hitResult) ->
+				EventHandler.onUseBlock(player, level, hand, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
 	}
 }

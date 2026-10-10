@@ -1,0 +1,18 @@
+{
+	"type": "warp_book:shaped",
+	"category": "redstone",
+	"key": {
+		"S": {"tag": "minecraft:wooden_slabs"},
+		"W": {"item": "warp_book:warp_book"},
+		"B": {"item": "minecraft:bookshelf"}
+	},
+	"pattern": [
+		"SWS",
+		" B ",
+		" S "
+	],
+	"result": {
+		"item": "warp_book:warp_lectern",
+		"count": 1
+	}
+}

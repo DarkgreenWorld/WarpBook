@@ -8,26 +8,30 @@
 package com.panicnot42.warp_book.content.gui;
 
 import com.panicnot42.warp_book.Database;
+import com.panicnot42.warp_book.content.gui.inventory.SlotWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.NotNull;
 
 public class GuiWarpBookItemInventory extends AbstractContainerScreen<MenuWarpBook>
 {
 	private static final ResourceLocation iconLocation = Database.rl("textures/gui/warpinv.png");
 	private static final ResourceLocation deathBox = Database.rl("textures/gui/deathbox.png");
+	private static final ResourceLocation warpLecternBackground = Database.rl("textures/gui/warp_lectern_inv.png");
 	
 	private final ContainerWarpBook inventory;
 	
 	public GuiWarpBookItemInventory(MenuWarpBook warpBookContainerItem, Inventory player, Component title)
 	{
-		super(warpBookContainerItem, player, Component.empty());
+		super(warpBookContainerItem, player, title);
 		inventory = warpBookContainerItem.inventory;
 		imageWidth = 194;
 		imageHeight = 222;
@@ -36,8 +40,14 @@ public class GuiWarpBookItemInventory extends AbstractContainerScreen<MenuWarpBo
 	@Override
 	protected void renderLabels(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		Component s = inventory.getName();
+		// The server sends the warp lectern title, its anvil name or the default one
+		Component s = menu.warpLectern ? title : inventory.getName();
 		guiGraphics.drawString(font, s, (imageWidth - 18) / 2 - font.width(s) / 2, 6, 4210752,false);
+
+		// Gray out other players' pages, the overlay render type draws on top of the items
+		for (Slot slot : menu.slots)
+			if (slot instanceof SlotWarpBook pageSlot && pageSlot.isLocked())
+				guiGraphics.fill(RenderType.guiOverlay(), slot.x, slot.y, slot.x + 16, slot.y + 16, 0xB08B8B8B);
 	}
 
 	@Override
@@ -55,8 +65,8 @@ public class GuiWarpBookItemInventory extends AbstractContainerScreen<MenuWarpBo
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int k = (width - imageWidth) / 2;
 		int l = (height - imageHeight) / 2;
-		guiGraphics.blit(iconLocation, k, l, 0, 0, imageWidth, imageHeight);
-		if (Database.deathPagesEnabled)
+		guiGraphics.blit(menu.warpLectern ? warpLecternBackground : iconLocation, k, l, 0, 0, imageWidth, imageHeight);
+		if (Database.deathPagesEnabled && !menu.warpLectern)
 		{
 			guiGraphics.blit(deathBox, k, l, 0, 0, imageWidth, imageHeight);
 		}

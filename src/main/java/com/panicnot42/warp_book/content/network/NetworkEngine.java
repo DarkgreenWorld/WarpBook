@@ -9,6 +9,9 @@
 package com.panicnot42.warp_book.content.network;
 
 import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
+import com.panicnot42.warp_book.content.network.packet.C2SLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STakeBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STurnLecternPagePacket;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.IPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -22,17 +25,25 @@ import org.jetbrains.annotations.Nullable;
 
 public class NetworkEngine
 {
-    // Fabric calls these on the server thread. The S2C receiver is registered in ClientHandler.
+    // Fabric calls these on the server thread. The S2C receivers are registered in ClientHandler.
     public static void setupMessages()
     {
         ServerPlayNetworking.registerGlobalReceiver(C2SWarpPacket.TYPE, (packet, player, responseSender) -> packet.handle(player));
         ServerPlayNetworking.registerGlobalReceiver(C2SCoordsNamePacket.TYPE, (packet, player, responseSender) -> packet.handle(player));
+        ServerPlayNetworking.registerGlobalReceiver(C2STakeBookPacket.TYPE, (packet, player, responseSender) -> packet.handle(player));
+        ServerPlayNetworking.registerGlobalReceiver(C2SLecternBookPacket.TYPE, (packet, player, responseSender) -> packet.handle(player));
+        ServerPlayNetworking.registerGlobalReceiver(C2STurnLecternPagePacket.TYPE, (packet, player, responseSender) -> packet.handle(player));
     }
 
     // Only ever called from client code
     public static void sendToServer(@NotNull final IPacket packet)
     {
         ClientPlayNetworking.send(packet);
+    }
+
+    public static void sendToPlayer(@NotNull ServerPlayer player, @NotNull IPacket packet)
+    {
+        ServerPlayNetworking.send(player, packet);
     }
 
     public static void sendToPlayerNear(@NotNull ServerLevel level, @Nullable ServerPlayer exclude, @NotNull Vec3 position, double radius, @NotNull IPacket packet)

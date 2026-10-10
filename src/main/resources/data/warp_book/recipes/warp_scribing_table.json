@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"P": {"item": "minecraft:ender_pearl"},
+		"O": {"item": "minecraft:obsidian"},
+		"W": {"item": "warp_book:warp_quill"},
+		"G": {"item": "minecraft:gold_ingot"}
+	},
+	"pattern": [
+		" W ",
+		"GPG",
+		"OOO"
+	],
+	"result": {
+		"item": "warp_book:warp_scribing_table",
+		"count": 1
+	}
+}

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class ContainerWarpBook implements Container, Nameable
 {
-	private final ItemStack heldStack;
+	public final ItemStack heldStack;
 	private final NonNullList<ItemStack> content;
 	public final int slotsCount = 54;
 

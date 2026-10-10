@@ -1,0 +1,108 @@
+{
+	"parent": "minecraft:block/lectern",
+	"textures": {
+		"book": "warp_book:block/warp_lectern_book",
+		"particle": "warp_book:block/warp_lectern_sides",
+		"base": "warp_book:block/warp_lectern_base",
+		"front": "warp_book:block/warp_lectern_front",
+		"sides": "warp_book:block/warp_lectern_sides",
+		"top": "warp_book:block/warp_lectern_top",
+		"bottom": "warp_book:block/warp_lectern_bottom"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [0, 14, 16, 16], "texture": "#base", "cullface": "north"},
+				"east":  {"uv": [0, 6, 16, 8], "texture": "#base", "cullface": "east"},
+				"south": {"uv": [0, 6, 16, 8], "texture": "#base", "cullface": "south"},
+				"west":  {"uv": [0, 6, 16, 8], "texture": "#base", "cullface": "west"},
+				"up":    {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#base"},
+				"down":  {"uv": [0, 0, 16, 16], "texture": "#bottom", "cullface": "down"}
+			}
+		},
+		{
+			"from": [4, 2, 4],
+			"to": [12, 15, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 13], "texture": "#front"},
+				"east":  {"uv": [2, 16, 15, 8], "rotation": 90, "texture": "#sides"},
+				"south": {"uv": [8, 3, 16, 16], "texture": "#front"},
+				"west":  {"uv": [2, 8, 15, 16], "rotation": 90, "texture": "#sides"}
+			}
+		},
+		{
+			"from": [0.0125, 12, 3],
+			"to": [15.9875, 16, 16],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 4], "texture": "#sides"},
+				"east":  {"uv": [0, 4, 13, 8], "texture": "#sides"},
+				"south": {"uv": [0, 4, 16, 8], "texture": "#sides"},
+				"west":  {"uv": [0, 4, 13, 8], "texture": "#sides"},
+				"up":    {"uv": [0, 1, 16, 14], "rotation": 180, "texture": "#top"},
+				"down":  {"uv": [0, 0, 16, 13], "texture": "#bottom"}
+			}
+		},
+		{
+			"__comment": "Left cover",
+			"from": [1, 16, 4.5],
+			"to": [7, 16.25, 14.5],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up":    {"uv": [0, 0, 1.5, 5], "texture": "#book"},
+				"north": {"uv": [0, 0, 1.5, 0.125], "texture": "#book"},
+				"south": {"uv": [0, 4.875, 1.5, 5], "texture": "#book"},
+				"west":  {"uv": [0, 0, 0.0625, 5], "rotation": 90, "texture": "#book"}
+			}
+		},
+		{
+			"__comment": "Spine",
+			"from": [7, 16, 4.5],
+			"to": [9, 16.25, 14.5],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up":    {"uv": [3.5, 0, 4, 5], "texture": "#book"},
+				"north": {"uv": [3.5, 0, 4, 0.125], "texture": "#book"},
+				"south": {"uv": [3.5, 4.875, 4, 5], "texture": "#book"}
+			}
+		},
+		{
+			"__comment": "Right cover",
+			"from": [9, 16, 4.5],
+			"to": [15, 16.25, 14.5],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up":    {"uv": [4, 0, 5.5, 5], "texture": "#book"},
+				"north": {"uv": [4, 0, 5.5, 0.125], "texture": "#book"},
+				"south": {"uv": [4, 4.875, 5.5, 5], "texture": "#book"},
+				"east":  {"uv": [5.4375, 0, 5.5, 5], "rotation": 90, "texture": "#book"}
+			}
+		},
+		{
+			"__comment": "Left pages",
+			"from": [3, 16.25, 5.5],
+			"to": [8, 17.25, 13.5],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up":    {"uv": [1.75, 5.5, 3, 9.5], "texture": "#book"},
+				"north": {"uv": [0.25, 5, 1.5, 5.5], "texture": "#book"},
+				"south": {"uv": [0.25, 5, 1.5, 5.5], "texture": "#book"},
+				"west":  {"uv": [1.5, 5.5, 1.75, 9.5], "rotation": 90, "texture": "#book"}
+			}
+		},
+		{
+			"__comment": "Right pages",
+			"from": [8, 16.25, 5.5],
+			"to": [13, 17.25, 13.5],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up":    {"uv": [3.25, 5.5, 4.5, 9.5], "texture": "#book"},
+				"north": {"uv": [3.25, 5, 4.5, 5.5], "texture": "#book"},
+				"south": {"uv": [3.25, 5, 4.5, 5.5], "texture": "#book"},
+				"east":  {"uv": [4.5, 5.5, 4.75, 9.5], "rotation": 90, "texture": "#book"}
+			}
+		}
+	]
+}
