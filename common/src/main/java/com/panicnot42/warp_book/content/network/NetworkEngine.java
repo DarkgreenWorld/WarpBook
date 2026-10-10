@@ -24,6 +24,11 @@ public class NetworkEngine
         Services.PLATFORM.sendToServer(packet);
     }
 
+    public static void sendToPlayer(@NotNull ServerPlayer player, @NotNull IPacket packet)
+    {
+        Services.PLATFORM.sendToPlayer(player, packet);
+    }
+
     public static void sendToPlayerNear(@NotNull ServerLevel level, @Nullable ServerPlayer exclude, @NotNull Vec3 position, double radius, @NotNull IPacket packet)
     {
         Services.PLATFORM.sendToPlayersNear(level, exclude, position, radius, packet);

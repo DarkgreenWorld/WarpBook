@@ -1,10 +1,23 @@
+/**
+ * @author DarkgreenWorld, Claude Opus 5.5
+ * Created at: 2026.10.07
+ * Copyright (c) 2026
+ * <p>
+ * This code is licensed under "GPL-v3.0-only"
+ * Details can be found in the license file in the root folder of this project
+ */
 package com.panicnot42.warp_book.platform;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
+import com.panicnot42.warp_book.content.network.packet.C2STakeBookPacket;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.IPacket;
+import com.panicnot42.warp_book.content.network.packet.S2COpenLecternPacket;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
+import com.panicnot42.warp_book.content.network.packet.C2SLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.S2CLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STurnLecternPagePacket;
 import com.panicnot42.warp_book.platform.services.IPlatformHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -26,7 +39,15 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import java.util.function.BiFunction;
 
+import java.nio.file.Path;
 import java.util.function.Supplier;
 
 public class PlatformHelper implements IPlatformHelper {
@@ -49,12 +70,20 @@ public class PlatformHelper implements IPlatformHelper {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 
-    // Fabric registers right away, so the order in Registration.init() matters
+    // Fabric registers right away, so the order in Registration.init matters
     @Override
     public <R, T extends R> Supplier<T> register(Registry<R> registry, String name, Supplier<T> factory) {
 
         T value = Registry.register(registry, Database.rl(name), factory.get());
         return () -> value;
+    }
+
+    // Fabric API does not open the vanilla supplier type to other mods on 1.21.1, its own builder still works
+    @Override
+    @SuppressWarnings("deprecation")
+    public <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks) {
+
+        return FabricBlockEntityTypeBuilder.<T>create(factory::apply, blocks).build();
     }
 
     @Override
@@ -92,12 +121,26 @@ public class PlatformHelper implements IPlatformHelper {
     public static void registerPackets() {
 
         PayloadTypeRegistry.playS2C().register(S2CPacketEffect.TYPE, S2CPacketEffect.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(S2COpenLecternPacket.TYPE, S2COpenLecternPacket.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(S2CLecternBookPacket.TYPE, S2CLecternBookPacket.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(C2SWarpPacket.TYPE, C2SWarpPacket.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(C2SCoordsNamePacket.TYPE, C2SCoordsNamePacket.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(C2STakeBookPacket.TYPE, C2STakeBookPacket.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(C2SLecternBookPacket.TYPE, C2SLecternBookPacket.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(C2STurnLecternPagePacket.TYPE, C2STurnLecternPagePacket.STREAM_CODEC);
 
         // Fabric calls these on the server thread; the S2C receiver is registered in ClientHandler
         ServerPlayNetworking.registerGlobalReceiver(C2SWarpPacket.TYPE, (packet, context) -> packet.handle(context.player()));
         ServerPlayNetworking.registerGlobalReceiver(C2SCoordsNamePacket.TYPE, (packet, context) -> packet.handle(context.player()));
+        ServerPlayNetworking.registerGlobalReceiver(C2STakeBookPacket.TYPE, (packet, context) -> packet.handle(context.player()));
+        ServerPlayNetworking.registerGlobalReceiver(C2SLecternBookPacket.TYPE, (packet, context) -> packet.handle(context.player()));
+        ServerPlayNetworking.registerGlobalReceiver(C2STurnLecternPagePacket.TYPE, (packet, context) -> packet.handle(context.player()));
+    }
+
+    @Override
+    public Path getConfigDir() {
+
+        return FabricLoader.getInstance().getConfigDir();
     }
 
     // Only ever called from client code
@@ -105,6 +148,12 @@ public class PlatformHelper implements IPlatformHelper {
     public void sendToServer(IPacket packet) {
 
         ClientPlayNetworking.send(packet);
+    }
+
+    @Override
+    public void sendToPlayer(ServerPlayer player, IPacket packet) {
+
+        ServerPlayNetworking.send(player, packet);
     }
 
     @Override

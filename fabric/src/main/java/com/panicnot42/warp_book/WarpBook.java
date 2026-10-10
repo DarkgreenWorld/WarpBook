@@ -1,5 +1,6 @@
 /**
  * @author Panicnot42, FerreusVeritas, MelonVRneu, ArcAnc, DarkgreenWorld
+ * Created at: 2026.10.07
  * Copyright (c) 2014-2026
  * <p>
  * This code is licensed under "GPL-v3.0-only"
@@ -8,10 +9,14 @@
 package com.panicnot42.warp_book;
 
 import com.panicnot42.warp_book.platform.PlatformHelper;
+import com.panicnot42.warp_book.platform.Services;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.EventHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
+import net.minecraft.world.InteractionResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,13 +27,19 @@ public class WarpBook implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		// Fabric registers immediately, in the order Registration.init() touches the registries
+		Database.loadConfig(Services.PLATFORM.getConfigDir());
+
+		// Fabric registers immediately, in the order Registration.init touches the registries
 		Registration.init();
+		Registration.BlockRegistry.makeFlammable();
 
 		PlatformHelper.registerPackets();
 
 		// Deaths are forwarded by MixinServerPlayer, see there for why it isn't an event
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) ->
 				EventHandler.onPlayerRespawn(newPlayer, alive));
+		UseBlockCallback.EVENT.register((player, level, hand, hitResult) ->
+				EventHandler.onUseBlock(player, level, hand, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
+		FabricBrewingRecipeRegistryBuilder.BUILD.register(Registration.PotionRegistry::addBrewingRecipes);
 	}
 }

@@ -8,13 +8,19 @@
 package com.panicnot42.warp_book;
 
 import com.panicnot42.warp_book.platform.PlatformHelper;
+import com.panicnot42.warp_book.platform.Services;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.EventHandler;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.brewing.BrewingRecipeRegisterEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -30,14 +36,27 @@ public class WarpBook
 	{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+		Database.loadConfig(Services.PLATFORM.getConfigDir());
+
 		// Fill the DeferredRegisters first, then attach them to the bus
 		Registration.init();
 		PlatformHelper.registerAll(modEventBus);
 
 		PlatformHelper.registerPackets();
+		modEventBus.addListener(EventPriority.NORMAL, false, FMLCommonSetupEvent.class, event -> event.enqueueWork(Registration.BlockRegistry::makeFlammable));
 
 		MinecraftForge.EVENT_BUS.addListener(WarpBook :: onDeath);
 		MinecraftForge.EVENT_BUS.addListener(WarpBook :: onPlayerRespawn);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, PlayerInteractEvent.RightClickBlock.class, event ->
+		{
+			if (EventHandler.onUseBlock(event.getEntity(), event.getLevel(), event.getHand(), event.getPos()))
+			{
+				event.setCanceled(true);
+				event.setCancellationResult(InteractionResult.SUCCESS);
+			}
+		});
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, BrewingRecipeRegisterEvent.class, event ->
+				Registration.PotionRegistry.addBrewingRecipes(event.getBuilder()));
 	}
 
 	private static void onDeath(@NotNull final LivingDeathEvent event)

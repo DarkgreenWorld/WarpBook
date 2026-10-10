@@ -9,18 +9,33 @@
 package com.panicnot42.warp_book.util;
 
 import com.panicnot42.warp_book.Database;
+import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
+import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
+import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
+import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
+import com.panicnot42.warp_book.content.network.NetworkEngine;
+import com.panicnot42.warp_book.content.network.packet.S2COpenLecternPacket;
 import com.panicnot42.warp_book.content.savedData.DeathSavedData;
+import com.panicnot42.warp_book.platform.Services;
 import com.panicnot42.warp_book.registration.Registration;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
+import com.mojang.datafixers.util.Pair;
 
 import java.util.List;
 
@@ -66,6 +81,35 @@ public class EventHandler
                 }
             }
         }
+    }
+
+    // Returns true when the click was handled and the vanilla interaction must not run
+    public static boolean onUseBlock(@NotNull Player player, @NotNull Level level, @NotNull InteractionHand hand, @NotNull BlockPos pos)
+    {
+        if (hand != InteractionHand.MAIN_HAND)
+            return false;
+        // The client cannot see what lies on a vanilla lectern, so it only claims clicks on a warp lectern
+        if (level.isClientSide())
+            return level.getBlockState(pos).is(Registration.BlockRegistry.WARP_LECTERN.get());
+
+        ItemStack book = WarpLecternBlockEntity.findBook(level, pos);
+        if (book.isEmpty() || player.isSpectator() || !(player instanceof ServerPlayer serverPlayer))
+            return false;
+
+        BlockEntity lectern = level.getBlockEntity(pos);
+        boolean warpLectern = lectern instanceof WarpLecternBlockEntity;
+        Component title = warpLectern ? lectern.components().getOrDefault(DataComponents.CUSTOM_NAME, Component.translatable(Database.GUI_TEXT_WARP_LECTERN_INVENTORY_TITLE)) : book.getHoverName();
+
+        if (!player.isSecondaryUseActive())
+            NetworkEngine.sendToPlayer(serverPlayer, new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : 0));
+            // Like vanilla, sneaking with an item in hand on a vanilla lectern uses the item instead
+        else if (warpLectern || player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
+            Services.PLATFORM.openMenu(serverPlayer, new SimpleMenuProvider(
+                    (containerId, inventory, menuPlayer) -> new MenuWarpBook(containerId, inventory, new ContainerWarpBook(book), new ContainerWarpBookSpecial(book), pos, warpLectern),
+                    title), Pair.of(book, warpLectern), MenuWarpBook.OPENING_DATA);
+        else
+            return false;
+        return true;
     }
 
     public static void onPlayerRespawn(@NotNull final Player player, boolean endConquered)

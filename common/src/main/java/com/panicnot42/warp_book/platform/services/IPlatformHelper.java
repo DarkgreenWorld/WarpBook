@@ -21,7 +21,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import java.util.function.BiFunction;
 
+import java.nio.file.Path;
 import java.util.function.Supplier;
 
 public interface IPlatformHelper {
@@ -58,30 +65,26 @@ public interface IPlatformHelper {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
 
-    /**
-     * Registers an object. NeoForge registers lazily, Fabric immediately, so only read it through the returned supplier.
-     */
+    // NeoForge and Forge register lazily, Fabric immediately, so only read objects through the returned supplier
     <R, T extends R> Supplier<T> register(Registry<R> registry, String name, Supplier<T> factory);
 
-    /**
-     * Creates a menu type whose client side instance is built from extra data sent by the server.
-     */
+    // BlockEntityType.Builder.of takes a supplier type that is package private in vanilla
+    <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks);
+
+    // The client side menu is built from extra data sent by the server
     <T extends AbstractContainerMenu, D> MenuType<T> createMenuType(MenuFactory<T, D> factory, StreamCodec<? super RegistryFriendlyByteBuf, D> dataCodec);
 
-    /**
-     * Opens a menu created by {@link #createMenuType} and sends the extra data to the client.
-     */
     <D> void openMenu(ServerPlayer player, MenuProvider provider, D data, StreamCodec<? super RegistryFriendlyByteBuf, D> dataCodec);
+
+    Path getConfigDir();
 
     void sendToServer(IPacket packet);
 
+    void sendToPlayer(ServerPlayer player, IPacket packet);
+
     void sendToPlayersNear(ServerLevel level, @Nullable ServerPlayer exclude, Vec3 pos, double radius, IPacket packet);
 
-    /**
-     * Lets other mods adjust or cancel a teleport.
-     *
-     * @return The (possibly changed) target, or null if the teleport was cancelled.
-     */
+    // Lets other mods adjust the target, null means the teleport was cancelled
     @Nullable
     Vec3 fireTeleportEvent(Player player, double x, double y, double z);
 

@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=east": {"model": "warp_book:block/warp_lectern", "y": 90},
+		"facing=north": {"model": "warp_book:block/warp_lectern"},
+		"facing=south": {"model": "warp_book:block/warp_lectern", "y": 180},
+		"facing=west": {"model": "warp_book:block/warp_lectern", "y": 270}
+	}
+}

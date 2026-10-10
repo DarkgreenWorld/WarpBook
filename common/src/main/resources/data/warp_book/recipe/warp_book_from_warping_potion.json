@@ -1,0 +1,18 @@
+{
+	"type": "warp_book:shaped",
+	"category": "misc",
+	"key": {
+		"P": {"item": "minecraft:potion"},
+		"B": {"item": "minecraft:book"}
+	},
+	"pattern": [
+		" P ",
+		"PBP",
+		" P "
+	],
+	"result": {
+		"id": "warp_book:warp_book",
+		"count": 1
+	},
+	"warping_potion_test": true
+}

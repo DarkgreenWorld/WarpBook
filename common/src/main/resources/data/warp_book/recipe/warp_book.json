@@ -1,5 +1,5 @@
 {
-	"type": "minecraft:crafting_shapeless",
+	"type": "warp_book:shapeless",
 	"category":"misc",
 	"ingredients": [
 		{"item":"minecraft:ender_pearl"},
@@ -8,5 +8,6 @@
 	"result": {
 		"id": "warp_book:warp_book",
 		"count": 1
-	}
+	},
+	"warping_potion_test": false
 }

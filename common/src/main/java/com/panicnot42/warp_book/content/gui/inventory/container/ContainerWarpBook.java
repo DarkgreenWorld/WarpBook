@@ -26,13 +26,12 @@ import java.util.stream.Collectors;
 
 public class ContainerWarpBook implements Container, Nameable
 {
-	private final ItemStack heldStack;
+	public final ItemStack heldStack;
 	private List<ItemStack> content;
 	public final int slotsCount = 54;
 
 	public ContainerWarpBook(ItemStack heldItem)
 	{
-		// getSlots() / getStackInSlot() are NeoForge additions, copyInto() is vanilla
 		NonNullList<ItemStack> list = NonNullList.withSize(54, ItemStack.EMPTY);
 		WarpBookItem.getContent(heldItem).copyInto(list);
 		content = list;

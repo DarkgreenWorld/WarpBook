@@ -11,9 +11,14 @@ package com.panicnot42.warp_book.platform;
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.client.ClientHooks;
 import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
+import com.panicnot42.warp_book.content.network.packet.C2STakeBookPacket;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.IPacket;
+import com.panicnot42.warp_book.content.network.packet.S2COpenLecternPacket;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
+import com.panicnot42.warp_book.content.network.packet.C2SLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.S2CLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STurnLecternPagePacket;
 import com.panicnot42.warp_book.platform.services.IPlatformHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -33,12 +38,21 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import java.util.function.BiFunction;
 
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -84,10 +98,17 @@ public class PlatformHelper implements IPlatformHelper {
         return register.register(name, factory);
     }
 
-    // Must run after Registration.init() has created every entry
+    // Must run after Registration.init has created every entry
     public static void registerAll(IEventBus modEventBus) {
 
         REGISTERS.values().forEach(register -> register.register(modEventBus));
+    }
+
+    // Public here thanks to the loader's access transformer
+    @Override
+    public <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks) {
+
+        return BlockEntityType.Builder.<T>of(factory::apply, blocks).build(null);
     }
 
     // Forge hands menus a plain FriendlyByteBuf, the ItemStack codec needs registry access
@@ -122,6 +143,32 @@ public class PlatformHelper implements IPlatformHelper {
                 .codec(C2SCoordsNamePacket.STREAM_CODEC)
                 .consumerMainThread(PlatformHelper::handlePacket)
                 .add();
+
+        // This one carries an ItemStack, which needs the registry aware buffer of a fixed direction
+        CHANNEL.messageBuilder(S2COpenLecternPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .codec(S2COpenLecternPacket.STREAM_CODEC)
+                .consumerMainThread(PlatformHelper::handlePacket)
+                .add();
+
+        CHANNEL.messageBuilder(C2STakeBookPacket.class, id++)
+                .codec(C2STakeBookPacket.STREAM_CODEC)
+                .consumerMainThread(PlatformHelper::handlePacket)
+                .add();
+
+        CHANNEL.messageBuilder(C2SLecternBookPacket.class, id++)
+                .codec(C2SLecternBookPacket.STREAM_CODEC)
+                .consumerMainThread(PlatformHelper::handlePacket)
+                .add();
+
+        CHANNEL.messageBuilder(S2CLecternBookPacket.class, id++)
+                .codec(S2CLecternBookPacket.STREAM_CODEC)
+                .consumerMainThread(PlatformHelper::handlePacket)
+                .add();
+
+        CHANNEL.messageBuilder(C2STurnLecternPagePacket.class, id++)
+                .codec(C2STurnLecternPagePacket.STREAM_CODEC)
+                .consumerMainThread(PlatformHelper::handlePacket)
+                .add();
     }
 
     // Already on the main thread. ClientHooks is only touched on the client side.
@@ -133,9 +180,21 @@ public class PlatformHelper implements IPlatformHelper {
     }
 
     @Override
+    public Path getConfigDir() {
+
+        return FMLPaths.CONFIGDIR.get();
+    }
+
+    @Override
     public void sendToServer(IPacket packet) {
 
         CHANNEL.send(packet, PacketDistributor.SERVER.noArg());
+    }
+
+    @Override
+    public void sendToPlayer(ServerPlayer player, IPacket packet) {
+
+        CHANNEL.send(packet, PacketDistributor.PLAYER.with(player));
     }
 
     @Override

@@ -11,14 +11,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
-import net.minecraft.client.gui.components.WidgetSprites;
 
 public class WarpButton extends Button
 {
+    // AbstractButton.SPRITES is private in vanilla, only NeoForge opens it, so keep our own copy
     private static final WidgetSprites SPRITES = new WidgetSprites(
             ResourceLocation.withDefaultNamespace("widget/button"),
             ResourceLocation.withDefaultNamespace("widget/button_disabled"),

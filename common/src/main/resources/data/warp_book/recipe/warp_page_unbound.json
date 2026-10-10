@@ -1,5 +1,5 @@
 {
-	"type": "minecraft:crafting_shapeless",
+	"type": "warp_book:shapeless",
 	"category": "misc",
 	"ingredients": [
 		{"item":"minecraft:paper"},
@@ -8,5 +8,6 @@
 	"result": {
 		"id": "warp_book:warp_page_unbound",
 		"count": 1
-	}
+	},
+	"warping_potion_test": false
 }

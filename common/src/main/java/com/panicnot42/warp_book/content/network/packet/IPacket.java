@@ -13,9 +13,6 @@ import net.minecraft.world.entity.player.Player;
 
 public interface IPacket extends CustomPacketPayload
 {
-    /**
-     * Runs on the main thread. For C2S packets the player is the sender (a ServerPlayer),
-     * for S2C packets it is the local client player.
-     */
+    // Runs on the main thread, the player is the sender on the server and the local player on the client
     void handle(Player player);
 }

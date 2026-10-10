@@ -9,9 +9,11 @@
 package com.panicnot42.warp_book.content.network.packet;
 
 import com.panicnot42.warp_book.Database;
+import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
 import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.UUIDUtil;
@@ -24,9 +26,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.UUID;
 
-public record C2SWarpPacket(UUID uuid, int index, boolean isMainHand) implements IPacket
+// The lectern is set when the warp list was opened from a lectern instead of a held book
+public record C2SWarpPacket(UUID uuid, int index, boolean isMainHand, Optional<BlockPos> lectern) implements IPacket
 {
 
 	public static final CustomPacketPayload.Type<C2SWarpPacket> TYPE = new CustomPacketPayload.Type<>(Database.rl("packet_warp"));
@@ -37,6 +41,8 @@ public record C2SWarpPacket(UUID uuid, int index, boolean isMainHand) implements
 			C2SWarpPacket :: index,
 			ByteBufCodecs.BOOL,
 			C2SWarpPacket::isMainHand,
+			ByteBufCodecs.optional(BlockPos.STREAM_CODEC),
+			C2SWarpPacket :: lectern,
 			C2SWarpPacket :: new
 	);
 
@@ -47,11 +53,11 @@ public record C2SWarpPacket(UUID uuid, int index, boolean isMainHand) implements
 		if (targetPlayer == null) return;
 
 		InteractionHand usedHand = isMainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-		ItemStack stack = targetPlayer.getItemInHand(usedHand);
+		ItemStack stack = lectern.map(pos -> targetPlayer.canInteractWithBlock(pos, 4.0) ? WarpLecternBlockEntity.findBook(targetPlayer.level(), pos) : ItemStack.EMPTY).
+				orElseGet(() -> targetPlayer.getItemInHand(usedHand));
 
 		if (stack.getItem() instanceof WarpBookItem)
 		{
-			// getSlots() / getStackInSlot() are NeoForge additions, copyInto() is vanilla
 			NonNullList<ItemStack> pages = NonNullList.withSize(54, ItemStack.EMPTY);
 			WarpBookItem.getContent(stack).copyInto(pages);
 

@@ -71,6 +71,11 @@ public class WarpItem extends Item implements IDeclareWarp, IColorable, Registra
 		return false;
 	}
 
+	public static boolean isCloneable(@NotNull ItemStack stack)
+	{
+		return stack.getItem() instanceof WarpItem warpItem && warpItem.cloneable;
+	}
+
 	@Override
 	public int getColor(ItemStack stack, int tintIndex) {
 		return 0xFFFFFFFF;

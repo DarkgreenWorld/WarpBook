@@ -1,12 +1,11 @@
 plugins {
     // see https://fabricmc.net/develop/ for new versions
-    id 'fabric-loom' version '1.8-SNAPSHOT' apply false
+    id 'fabric-loom' version '1.8.13' apply false
     // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
     id 'net.neoforged.moddev' version '2.0.49-beta' apply false
-    //id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-println "[diag] init scripts: ${gradle.startParameter.allInitScripts}"
-println "[diag] gradle home: ${gradle.gradleHomeDir}"
-println "[diag] gradle user home: ${gradle.gradleUserHomeDir}"
-repositories.each { println "[diag] repo: ${it.name} ${it.hasProperty('url') ? it.url : ''}" }
+//println "[diag] init scripts: ${gradle.startParameter.allInitScripts}"
+//println "[diag] gradle home: ${gradle.gradleHomeDir}"
+//println "[diag] gradle user home: ${gradle.gradleUserHomeDir}"
+//repositories.each { println "[diag] repo: ${it.name} ${it.hasProperty('url') ? it.url : ''}" }

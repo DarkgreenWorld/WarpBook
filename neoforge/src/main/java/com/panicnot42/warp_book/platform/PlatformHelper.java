@@ -10,9 +10,14 @@ package com.panicnot42.warp_book.platform;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
+import com.panicnot42.warp_book.content.network.packet.C2STakeBookPacket;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.IPacket;
+import com.panicnot42.warp_book.content.network.packet.S2COpenLecternPacket;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
+import com.panicnot42.warp_book.content.network.packet.C2SLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.S2CLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STurnLecternPagePacket;
 import com.panicnot42.warp_book.platform.services.IPlatformHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -28,6 +33,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
@@ -37,7 +43,14 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import java.util.function.BiFunction;
 
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -74,10 +87,17 @@ public class PlatformHelper implements IPlatformHelper {
         return register.register(name, factory);
     }
 
-    // Must run after Registration.init() has created every entry
+    // Must run after Registration.init has created every entry
     public static void registerAll(IEventBus modEventBus) {
 
         REGISTERS.values().forEach(register -> register.register(modEventBus));
+    }
+
+    // Public here thanks to the loader's access transformer
+    @Override
+    public <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks) {
+
+        return BlockEntityType.Builder.<T>of(factory::apply, blocks).build(null);
     }
 
     @Override
@@ -97,8 +117,13 @@ public class PlatformHelper implements IPlatformHelper {
         final PayloadRegistrar registrar = event.registrar(Database.MOD_ID);
 
         registrar.playToClient(S2CPacketEffect.TYPE, S2CPacketEffect.STREAM_CODEC, PlatformHelper::handlePacket);
+        registrar.playToClient(S2COpenLecternPacket.TYPE, S2COpenLecternPacket.STREAM_CODEC, PlatformHelper::handlePacket);
+        registrar.playToClient(S2CLecternBookPacket.TYPE, S2CLecternBookPacket.STREAM_CODEC, PlatformHelper::handlePacket);
         registrar.playToServer(C2SWarpPacket.TYPE, C2SWarpPacket.STREAM_CODEC, PlatformHelper::handlePacket);
         registrar.playToServer(C2SCoordsNamePacket.TYPE, C2SCoordsNamePacket.STREAM_CODEC, PlatformHelper::handlePacket);
+        registrar.playToServer(C2STakeBookPacket.TYPE, C2STakeBookPacket.STREAM_CODEC, PlatformHelper::handlePacket);
+        registrar.playToServer(C2SLecternBookPacket.TYPE, C2SLecternBookPacket.STREAM_CODEC, PlatformHelper::handlePacket);
+        registrar.playToServer(C2STurnLecternPagePacket.TYPE, C2STurnLecternPagePacket.STREAM_CODEC, PlatformHelper::handlePacket);
     }
 
     private static void handlePacket(IPacket packet, IPayloadContext ctx) {
@@ -107,9 +132,21 @@ public class PlatformHelper implements IPlatformHelper {
     }
 
     @Override
+    public Path getConfigDir() {
+
+        return FMLPaths.CONFIGDIR.get();
+    }
+
+    @Override
     public void sendToServer(IPacket packet) {
 
         PacketDistributor.sendToServer(packet);
+    }
+
+    @Override
+    public void sendToPlayer(ServerPlayer player, IPacket packet) {
+
+        PacketDistributor.sendToPlayer(player, packet);
     }
 
     @Override

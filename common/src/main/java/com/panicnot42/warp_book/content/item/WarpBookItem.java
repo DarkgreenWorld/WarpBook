@@ -16,6 +16,7 @@ import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBoo
 import com.panicnot42.warp_book.platform.Services;
 import com.panicnot42.warp_book.registration.Registration;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +32,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import com.mojang.datafixers.util.Pair;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,7 +77,7 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 					{
 						return new MenuWarpBook(containerId, playerInventory, new ContainerWarpBook(itemStack), new ContainerWarpBookSpecial(itemStack));
 					}
-				}, itemStack, ItemStack.OPTIONAL_STREAM_CODEC);
+				}, Pair.of(itemStack, false), MenuWarpBook.OPENING_DATA);
 		}
 		else
 		{
@@ -106,6 +108,22 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	public static void setWarpBookContent(@NotNull ItemStack stack, @NotNull ItemContainerContents content)
 	{
 		stack.set(DataComponents.CONTAINER, content);
+	}
+
+	public static int getCopyCost(@NotNull ItemStack book)
+	{
+		return getContent(book).nonEmptyStream().filter(WarpItem::isCloneable).mapToInt(ItemStack::getCount).sum();
+	}
+
+	// A new book with only the cloneable pages, each in the same slot as before
+	public static @NotNull ItemStack copyBook(@NotNull ItemStack book)
+	{
+		NonNullList<ItemStack> pages = NonNullList.withSize(54, ItemStack.EMPTY);
+		getContent(book).copyInto(pages);
+		pages.replaceAll(page -> WarpItem.isCloneable(page) ? page : ItemStack.EMPTY);
+		ItemStack copy = new ItemStack(Registration.ItemRegistry.WARP_BOOK.get());
+		setWarpBookContent(copy, ItemContainerContents.fromItems(pages));
+		return copy;
 	}
 
 	public static int getRespawnsLeft(@NotNull ItemStack item)
