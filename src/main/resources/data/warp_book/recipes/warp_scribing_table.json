@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"S": {"item": "minecraft:sandstone_slab"},
+		"O": {"item": "minecraft:obsidian"},
+		"W": {"item": "warp_book:warp_quill"},
+		"G": {"item": "minecraft:gold_ingot"}
+	},
+	"pattern": [
+		"SSS",
+		"OWO",
+		"GGG"
+	],
+	"result": {
+		"item": "warp_book:warp_scribing_table",
+		"count": 1
+	}
+}

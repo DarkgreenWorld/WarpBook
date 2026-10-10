@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class ContainerWarpBook implements Container, Nameable {
-    private final ItemStack heldStack;
+    public final ItemStack heldStack;
     private final NonNullList<ItemStack> content;
     public static final int SLOTS_COUNT = 54;
     

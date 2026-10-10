@@ -1,0 +1,17 @@
+{
+	"parent": "minecraft:recipes/root",
+	"criteria": {
+		"has_warp_book": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{"items": ["warp_book:warp_book"]}
+				]
+			}
+		}
+	},
+	"requirements": [["has_warp_book"]],
+	"rewards": {
+		"recipes": ["warp_book:warp_lectern"]
+	}
+}

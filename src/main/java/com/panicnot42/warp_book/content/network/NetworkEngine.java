@@ -11,8 +11,13 @@ package com.panicnot42.warp_book.content.network;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.network.packet.C2SCoordsNamePacket;
+import com.panicnot42.warp_book.content.network.packet.C2SLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STakeBookPacket;
+import com.panicnot42.warp_book.content.network.packet.C2STurnLecternPagePacket;
 import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.IPacket;
+import com.panicnot42.warp_book.content.network.packet.S2CLecternBookPacket;
+import com.panicnot42.warp_book.content.network.packet.S2COpenLecternPacket;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
 
 import net.minecraft.core.BlockPos;
@@ -63,6 +68,41 @@ public class NetworkEngine {
                 (msg, buf) -> S2CPacketEffect.encode(msg, buf),
                 S2CPacketEffect::decode,
                 (msg, ctx) -> S2CPacketEffect.handle(msg, ctx)
+        );
+
+        CHANNEL.registerMessage(id++,
+                S2COpenLecternPacket.class,
+                S2COpenLecternPacket::encode,
+                S2COpenLecternPacket::decode,
+                S2COpenLecternPacket::handle
+        );
+
+        CHANNEL.registerMessage(id++,
+                C2STakeBookPacket.class,
+                C2STakeBookPacket::encode,
+                C2STakeBookPacket::decode,
+                C2STakeBookPacket::handle
+        );
+
+        CHANNEL.registerMessage(id++,
+                C2SLecternBookPacket.class,
+                C2SLecternBookPacket::encode,
+                C2SLecternBookPacket::decode,
+                C2SLecternBookPacket::handle
+        );
+
+        CHANNEL.registerMessage(id++,
+                S2CLecternBookPacket.class,
+                S2CLecternBookPacket::encode,
+                S2CLecternBookPacket::decode,
+                S2CLecternBookPacket::handle
+        );
+
+        CHANNEL.registerMessage(id++,
+                C2STurnLecternPagePacket.class,
+                C2STurnLecternPagePacket::encode,
+                C2STurnLecternPagePacket::decode,
+                C2STurnLecternPagePacket::handle
         );
     }
 

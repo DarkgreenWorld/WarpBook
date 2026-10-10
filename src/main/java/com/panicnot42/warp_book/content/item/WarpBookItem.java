@@ -15,12 +15,14 @@ import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBoo
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +32,11 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LecternBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
@@ -80,7 +86,11 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 				                new ContainerWarpBook(itemStack),
 				                new ContainerWarpBookSpecial(itemStack));
 				    }
-				}, buf -> buf.writeItem(itemStack));
+				}, buf ->
+				{
+				    buf.writeItem(itemStack);
+				    buf.writeBoolean(false);
+				});
 
 		}
 		else
@@ -90,6 +100,16 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 		}
 
 		return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+	}
+	
+	// Like the vanilla books, a 1.20.1 lectern lets the book place itself, the lectern_books tag only lets the click through
+	@Override
+	public @NotNull InteractionResult useOn(@NotNull UseOnContext context)
+	{
+		Level level = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		BlockState state = level.getBlockState(pos);
+		return state.is(Blocks.LECTERN) && LecternBlock.tryPlaceBook(context.getPlayer(), level, pos, state, context.getItemInHand()) ? InteractionResult.sidedSuccess(level.isClientSide()) : InteractionResult.PASS;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
@@ -161,6 +181,21 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	    }
 	    inventoryTag.put("Items", listTag);
 	    rootTag.put("Inventory", inventoryTag);
+	}
+
+	public static int getCopyCost(@NotNull ItemStack book)
+	{
+		return getContent(book).stream().filter(WarpItem::isCloneable).mapToInt(ItemStack::getCount).sum();
+	}
+
+	// A new book with only the cloneable pages, each in the same slot as before
+	public static @NotNull ItemStack copyBook(@NotNull ItemStack book)
+	{
+		NonNullList<ItemStack> pages = getContent(book);
+		pages.replaceAll(page -> WarpItem.isCloneable(page) ? page : ItemStack.EMPTY);
+		ItemStack copy = new ItemStack(Registration.ItemRegistry.WARP_BOOK.get());
+		setWarpBookContent(copy, pages);
+		return copy;
 	}
 
 	public static int getRespawnsLeft(@NotNull ItemStack item)

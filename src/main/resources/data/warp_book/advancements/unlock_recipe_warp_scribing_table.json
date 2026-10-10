@@ -1,0 +1,17 @@
+{
+	"parent": "minecraft:recipes/root",
+	"criteria": {
+		"has_warp_quill": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{"items": ["warp_book:warp_quill"]}
+				]
+			}
+		}
+	},
+	"requirements": [["has_warp_quill"]],
+	"rewards": {
+		"recipes": ["warp_book:warp_scribing_table"]
+	}
+}

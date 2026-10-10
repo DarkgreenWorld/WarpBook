@@ -6,7 +6,8 @@
  * This code is licensed under "GPL-v3.0-only"
  * Details can be found in the license file in the root folder of this project
  */
-/*package com.panicnot42.warp_book.util;
+/*
+package com.panicnot42.warp_book.util;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.gui.GuiBook;
