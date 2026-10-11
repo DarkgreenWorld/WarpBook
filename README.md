@@ -28,20 +28,20 @@ In version 4.1.0+ of the mod, you will be able to place Warp Books on Lecterns.
 When you have a Warp Page Deathly in your inventory or in a Warp Book in your inventory, you will receive a warp page after death that can teleport you back to your death point. 
 This consumes one Warp Page Deathly, whether or not it is in a Warp Book.
 
-<img width="485" height="222" alt="屏幕截图 2026-10-11 163211" src="https://github.com/user-attachments/assets/a52b9fa9-c868-4a6e-9336-329a7500bdc1" />
+<img width="242" height="111" alt="屏幕截图 2026-10-11 163211" src="https://github.com/user-attachments/assets/a52b9fa9-c868-4a6e-9336-329a7500bdc1" />
 
 #### Warp Quill
 _(exists in version 4.1.0+)_
 Warp Quill is an important ingredient for crafting the Warp Scribing Table. Its crafting recipe is:
 
-<img width="487" height="226" alt="屏幕截图 2026-10-11 163041" src="https://github.com/user-attachments/assets/12dbd802-316b-4cbe-b3e6-755faaca22d9" />
+<img width="243" height="113" alt="屏幕截图 2026-10-11 163041" src="https://github.com/user-attachments/assets/12dbd802-316b-4cbe-b3e6-755faaca22d9" />
 
 #### Warp Scribing Table
 _(exists in version 4.1.0+)_
 This is the “respawned version” of the Warp Book Cloner. 
 It has new textures and a new crafting recipe, but the GUI and usage logic are basically unchanged.
 
-<img width="486" height="225" alt="屏幕截图 2026-10-11 163141" src="https://github.com/user-attachments/assets/7161e449-6740-413c-b6f9-c37b599961e6" />
+<img width="243" height="112" alt="屏幕截图 2026-10-11 163141" src="https://github.com/user-attachments/assets/7161e449-6740-413c-b6f9-c37b599961e6" />
 
 #### Warp Lectern
 _(exists in version 4.1.0+)_
@@ -53,7 +53,7 @@ Aside from not being able to hold Warp Page Deathly, it is no different from a W
 However, you can enable `onlyOwnerTakesPages` in the config file. 
 If you do, then for the Warp Lectern, only the person who inserted a Warp Page can take the corresponding Warp Page out.
 
-<img width="492" height="227" alt="屏幕截图 2026-10-11 162952" src="https://github.com/user-attachments/assets/3397f7ca-d42f-4538-b691-99cfba7ad86d" />
+<img width="246" height="113" alt="屏幕截图 2026-10-11 162952" src="https://github.com/user-attachments/assets/3397f7ca-d42f-4538-b691-99cfba7ad86d" />
 
 #### Warp Potion
 _(Only exists in versions 3.0.x-3.3.x)_ 
