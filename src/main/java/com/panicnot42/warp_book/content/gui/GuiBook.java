@@ -222,6 +222,7 @@ public class GuiBook extends Screen
 	@Override
 	public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick)
 	{
+		this.renderBackground(guiGraphics);
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

@@ -8,7 +8,6 @@
 package com.panicnot42.warp_book.content.crafting;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.core.NonNullList;
@@ -96,7 +95,7 @@ public class WarpShapedRecipe extends ShapedRecipe
 	// Warping potion test switch: a recipe marked true or false only works while the switch has that value
 	static boolean isActive(Optional<Boolean> warpingPotionTest)
 	{
-		return warpingPotionTest.map(test -> test == WarpBook.WARPING_POTION_TEST).orElse(true);
+		return warpingPotionTest.map(test -> test == Database.WARPING_POTION_TEST).orElse(true);
 	}
 
 	// JSON cannot ask for a potion type, so wherever these recipes take a potion it has to be the warping one

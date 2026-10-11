@@ -9,7 +9,6 @@
 package com.panicnot42.warp_book.content.block;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.registration.Registration;
@@ -64,7 +63,7 @@ public class WarpLecternBlockEntity extends BlockEntity implements Nameable
 	public boolean isLocked(int slot, @NotNull Player player)
 	{
 		UUID owner = owners.get(slot);
-		return WarpBook.onlyOwnerTakesPages && !owner.equals(Util.NIL_UUID) && !owner.equals(player.getUUID());
+		return Database.onlyOwnerTakesPages && !owner.equals(Util.NIL_UUID) && !owner.equals(player.getUUID());
 	}
 
 	// A slot belongs to the last player who put a different page into it

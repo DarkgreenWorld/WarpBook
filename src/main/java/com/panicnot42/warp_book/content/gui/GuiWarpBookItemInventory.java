@@ -8,7 +8,6 @@
 package com.panicnot42.warp_book.content.gui;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.SlotWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBook;
 import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
@@ -54,8 +53,8 @@ public class GuiWarpBookItemInventory extends AbstractContainerScreen<MenuWarpBo
 	@Override
 	public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick)
 	{
+		this.renderBackground(guiGraphics);
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
-
 		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
@@ -66,7 +65,7 @@ public class GuiWarpBookItemInventory extends AbstractContainerScreen<MenuWarpBo
 		int k = (width - imageWidth) / 2;
 		int l = (height - imageHeight) / 2;
 		guiGraphics.blit(menu.warpLectern ? warpLecternBackground : iconLocation, k, l, 0, 0, imageWidth, imageHeight);
-		if (WarpBook.deathPagesEnabled && !menu.warpLectern)
+		if (Database.deathPagesEnabled && !menu.warpLectern)
 		{
 			guiGraphics.blit(deathBox, k, l, 0, 0, imageWidth, imageHeight);
 		}

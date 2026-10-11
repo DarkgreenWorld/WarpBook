@@ -7,7 +7,7 @@
  */
 package com.panicnot42.warp_book.content.network.packet;
 
-import com.panicnot42.warp_book.WarpBook;
+import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
 import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
@@ -81,7 +81,7 @@ public class C2SWarpPacket
                         GlobalPos pos = warp.getWaypoint(target, page);
                         if (pos != null)
                         {
-                            WarpBook.warpDrive.processWarp(target, pos);
+                            Database.warpDrive.processWarp(target, pos);
                         }
                     }
                 }

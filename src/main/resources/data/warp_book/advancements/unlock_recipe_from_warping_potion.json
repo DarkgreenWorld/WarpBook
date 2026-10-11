@@ -1,0 +1,23 @@
+{
+	"parent": "minecraft:recipes/root",
+	"criteria": {
+		"has_warping_potion": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": ["minecraft:potion"],
+						"predicates": {"minecraft:potion_contents": "warp_book:warping"}
+					}
+				]
+			}
+		}
+	},
+	"requirements": [["has_warping_potion"]],
+	"rewards": {
+		"recipes": [
+			"warp_book:warp_page_unbound_from_warping_potion",
+			"warp_book:warp_book_from_warping_potion"
+		]
+	}
+}

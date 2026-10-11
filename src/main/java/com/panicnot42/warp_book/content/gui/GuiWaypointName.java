@@ -79,6 +79,7 @@ public class GuiWaypointName extends Screen
 	@Override
 	public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick)
 	{
+		this.renderBackground(guiGraphics);
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 		guiGraphics.drawCenteredString(font, Component.translatable(Database.GUI_TEXT_BIND_PAGE), width / 2, 20, 16777215);
 		guiGraphics.drawString(font, Component.translatable(Database.GUI_TEXT_NAME_WAYPOINT), width / 2 - 150, 47, 10526880);

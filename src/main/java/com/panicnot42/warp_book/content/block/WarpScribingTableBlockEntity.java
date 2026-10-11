@@ -14,7 +14,9 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import net.minecraft.core.NonNullList;
 
 public class WarpScribingTableBlockEntity extends BlockEntity
 {
@@ -31,13 +33,19 @@ public class WarpScribingTableBlockEntity extends BlockEntity
 	public void load(@NotNull CompoundTag tag)
 	{
 		super.load(tag);
-		ContainerHelper.loadAllItems(tag, items.items);
+		NonNullList<ItemStack> list = NonNullList.withSize(items.getContainerSize(), ItemStack.EMPTY);
+		ContainerHelper.loadAllItems(tag, list);
+		for (int i = 0; i < list.size(); i++)
+			items.setItem(i, list.get(i));
 	}
 
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag)
 	{
 		super.saveAdditional(tag);
-		ContainerHelper.saveAllItems(tag, items.items);
+		NonNullList<ItemStack> list = NonNullList.withSize(items.getContainerSize(), ItemStack.EMPTY);
+		for (int i = 0; i < list.size(); i++)
+			list.set(i, items.getItem(i));
+		ContainerHelper.saveAllItems(tag, list);
 	}
 }

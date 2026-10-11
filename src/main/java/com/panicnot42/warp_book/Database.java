@@ -10,12 +10,32 @@ package com.panicnot42.warp_book;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import com.panicnot42.warp_book.content.core.WarpDrive;
+import org.apache.logging.log4j.LogManager;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Properties;
 
 public class Database
 {
 	public static final String MOD_ID = "warp_book";
 	public static final String VERSION = "1.21";
 	public static final String NAME = "Warp Book";
+
+	public static WarpDrive warpDrive = new WarpDrive();
+
+	public static final int WARPS_PER_PAGE = 10;
+	public static double exhaustionCoefficient =  0.d;
+	public static double minExhaustionDistance = 256.d;
+	public static double maxExhaustionDistance = 16384.d;
+	public static double distanceCoefficient = 1/256d;
+	public static boolean deathPagesEnabled = true;
+	public static boolean onlyOwnerTakesPages = false;
+	public static final boolean WARPING_POTION_TEST = true;
 
 	public static final String ITEM_NAME_WARP_BOOK = "warp_book";
 	public static final String ITEM_NAME_WARP_PAGE_LOCATION = "warp_page_location";
@@ -45,8 +65,10 @@ public class Database
     public static final String TAG_TARGET_POS = "TargetPos";
     // Registration.DataComponentRegistry.TARGET_UUID
     public static final String TAG_TARGET_UUID = "TargetUUID";
-    // 书本页面列表
-    public static final String TAG_PAGES = "Pages";
+	public static final String TAG_BOOK = "book";
+	public static final String TAG_OWNERS = "owners";
+	public static final String TAG_PAGE = "page";
+	public static final String TAG_CUSTOM_NAME = "CustomName";
 
 	public static final String CONTAINER_WARP_BOOK = "warp_book";
 
@@ -73,16 +95,34 @@ public class Database
 	public static final String SAVED_DATA_UUID = "uuid";
 	public static final String SAVED_DATA_POSITION = "pos";
 
-	public static final String TAG_BOOK = "book";
-	public static final String TAG_OWNERS = "owners";
-	public static final String TAG_PAGE = "page";
-	public static final String TAG_CUSTOM_NAME = "CustomName";
-
-	public static final int WARPS_PER_PAGE = 10;
-
 	@Contract("_ -> new")
 	public static @NotNull ResourceLocation rl(@NotNull String str)
 	{
 		return new ResourceLocation(MOD_ID, str);
+	}
+
+	static void loadConfig(@NotNull Path configDir)
+	{
+		Path file = configDir.resolve(MOD_ID + ".properties");
+		Properties properties = new Properties();
+		try
+		{
+			if (Files.exists(file))
+				try (Reader reader = Files.newBufferedReader(file))
+				{
+					properties.load(reader);
+				}
+			onlyOwnerTakesPages = Boolean.parseBoolean(properties.getProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages)));
+			properties.setProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages));
+			Files.createDirectories(configDir);
+			try (Writer writer = Files.newBufferedWriter(file))
+			{
+				properties.store(writer, NAME);
+			}
+		}
+		catch (IOException e)
+		{
+			LogManager.getLogger(MOD_ID).warn("Could not load {}", file, e);
+		}
 	}
 }

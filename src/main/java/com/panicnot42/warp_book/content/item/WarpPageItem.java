@@ -8,16 +8,12 @@
 package com.panicnot42.warp_book.content.item;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.warps.Warp;
 
 import net.minecraft.core.GlobalPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +50,7 @@ public class WarpPageItem extends WarpItem
 				GlobalPos pos = item.getWaypoint(player, itemStack);
 				if(pos != null)
 				{
-					WarpBook.warpDrive.processWarp(player, pos);
+					Database.warpDrive.processWarp(player, pos);
 					player.getItemInHand(usedHand).shrink(1);
 				}
 			}

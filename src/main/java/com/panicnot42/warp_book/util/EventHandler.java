@@ -8,7 +8,7 @@
  */
 package com.panicnot42.warp_book.util;
 
-import com.panicnot42.warp_book.WarpBook;
+import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.client.ClientHooks;
 import com.panicnot42.warp_book.client.WarpLecternRenderer;
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
@@ -27,13 +27,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -52,7 +49,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
@@ -80,7 +76,7 @@ public class EventHandler {
     }
 
     public static void onDeath(@NotNull final LivingDeathEvent event) {
-        if (!WarpBook.deathPagesEnabled || !(event.getEntity() instanceof Player player))
+        if (!Database.deathPagesEnabled || !(event.getEntity() instanceof Player player))
             return;
 
         Level level = player.level();
@@ -107,7 +103,7 @@ public class EventHandler {
     }
 
     public static void onPlayerRespawn(@NotNull final PlayerEvent.PlayerRespawnEvent event) {
-        if (WarpBook.deathPagesEnabled && !event.isEndConquered()) {
+        if (Database.deathPagesEnabled && !event.isEndConquered()) {
         	Player player = event.getEntity();
         	
             if (!player.level().isClientSide()) {

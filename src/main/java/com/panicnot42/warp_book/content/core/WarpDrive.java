@@ -8,7 +8,6 @@
 package com.panicnot42.warp_book.content.core;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.content.network.packet.S2CPacketEffect;
 import net.minecraft.core.BlockPos;
@@ -20,10 +19,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
@@ -113,8 +109,8 @@ public class WarpDrive {
 
     private static double calculateExhaustion(Difficulty difficulty, double distance) {
 
-        distance = Mth.clamp(distance, WarpBook.minExhaustionDistance, WarpBook.maxExhaustionDistance);
-        double distanceFactor = distance * WarpBook.distanceCoefficient;
+        distance = Mth.clamp(distance, Database.minExhaustionDistance, Database.maxExhaustionDistance);
+        double distanceFactor = distance * Database.distanceCoefficient;
 
         float scale = switch (difficulty) {
             case EASY -> 1.0f;
@@ -123,6 +119,6 @@ public class WarpDrive {
             case PEACEFUL -> 0.0f;
         };
 
-        return WarpBook.exhaustionCoefficient * scale * distanceFactor;
+        return Database.exhaustionCoefficient * scale * distanceFactor;
     }
 }

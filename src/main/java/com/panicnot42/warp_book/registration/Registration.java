@@ -10,7 +10,6 @@ package com.panicnot42.warp_book.registration;
 
 import com.google.gson.JsonObject;
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.WarpBook;
 import com.panicnot42.warp_book.content.block.WarpLecternBlock;
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
 import com.panicnot42.warp_book.content.block.WarpScribingTableBlock;
@@ -38,7 +37,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -256,11 +254,11 @@ public class Registration {
         public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, Database.MOD_ID);
 
         public static final RegistryObject<Potion> WARPING = POTIONS.register(Database.POTION_NAME_WARPING,
-                () -> new Potion(Database.MOD_ID + "." + Database.POTION_NAME_WARPING, new MobEffectInstance(MobEffectRegistry.WARPING.get(), 3600)));
+                () -> new Potion(Database.MOD_ID + "." + Database.POTION_NAME_WARPING, new MobEffectInstance(MobEffectRegistry.WARPING.get(), 1800)));
 
         // Glowstone and redstone do nothing because no stronger or longer version is registered
         public static void addBrewingRecipes() {
-            if (WarpBook.WARPING_POTION_TEST)
+            if (Database.WARPING_POTION_TEST)
                 BrewingRecipeRegistry.addRecipe(StrictNBTIngredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
                         Ingredient.of(Items.ENDER_PEARL),
                         PotionUtils.setPotion(new ItemStack(Items.POTION), WARPING.get()));
