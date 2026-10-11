@@ -115,15 +115,22 @@ public class Database
 				{
 					properties.load(reader);
 				}
-			onlyOwnerTakesPages = Boolean.parseBoolean(properties.getProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages)));
-			properties.setProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages));
-			Files.createDirectories(configDir);
-			try (Writer writer = Files.newBufferedWriter(file))
+			String value = properties.getProperty(CONFIG_ONLY_OWNER_TAKES_PAGES);
+			if (value == null)
 			{
-				properties.store(writer, NAME);
+				properties.setProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages));
+				Files.createDirectories(configDir);
+				try (Writer writer = Files.newBufferedWriter(file))
+				{
+					properties.store(writer, NAME);
+				}
 			}
+			else if (value.trim().equalsIgnoreCase("true") || value.trim().equalsIgnoreCase("false"))
+				onlyOwnerTakesPages = Boolean.parseBoolean(value.trim());
+			else
+				LogUtils.getLogger().warn("{} in {} must be true or false, not {}, using {}", CONFIG_ONLY_OWNER_TAKES_PAGES, file, value, onlyOwnerTakesPages);
 		}
-		catch (IOException e)
+		catch (IOException | IllegalArgumentException e)
 		{
 			LogUtils.getLogger().warn("Could not load {}", file, e);
 		}
