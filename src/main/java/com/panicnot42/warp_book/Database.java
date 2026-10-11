@@ -116,15 +116,23 @@ public class Database
 				{
 					properties.load(reader);
 				}
-			onlyOwnerTakesPages = Boolean.parseBoolean(properties.getProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages)));
-			properties.setProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages));
-			Files.createDirectories(configDir);
-			try (Writer writer = Files.newBufferedWriter(file))
+			String value = properties.getProperty(CONFIG_ONLY_OWNER_TAKES_PAGES);
+			// Only a missing setting is written, so the player's comments and typos stay in the file
+			if (value == null)
 			{
-				properties.store(writer, NAME);
+				properties.setProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages));
+				Files.createDirectories(configDir);
+				try (Writer writer = Files.newBufferedWriter(file))
+				{
+					properties.store(writer, NAME);
+				}
 			}
+			else if (value.trim().equalsIgnoreCase("true") || value.trim().equalsIgnoreCase("false"))
+				onlyOwnerTakesPages = Boolean.parseBoolean(value.trim());
+			else
+				LogManager.getLogger(MOD_ID).warn("{} in {} must be true or false, not {}, using {}", CONFIG_ONLY_OWNER_TAKES_PAGES, file, value, onlyOwnerTakesPages);
 		}
-		catch (IOException e)
+		catch (IOException | IllegalArgumentException e)
 		{
 			LogManager.getLogger(MOD_ID).warn("Could not load {}", file, e);
 		}
