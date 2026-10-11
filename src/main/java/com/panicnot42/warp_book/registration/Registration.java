@@ -249,7 +249,7 @@ public class Registration
     public static final class PotionRegistry
     {
         public static final Supplier<Potion> WARPING = register(BuiltInRegistries.POTION, Database.POTION_NAME_WARPING,
-                () -> new Potion(Database.MOD_ID + "." + Database.POTION_NAME_WARPING, new MobEffectInstance(MobEffectRegistry.WARPING.get(), 3600)));
+                () -> new Potion(Database.MOD_ID + "." + Database.POTION_NAME_WARPING, new MobEffectInstance(MobEffectRegistry.WARPING.get(), 1800)));
 
         // Glowstone and redstone do nothing because no stronger or longer version is registered, addMix is opened by Fabric API
         public static void addBrewingRecipes()

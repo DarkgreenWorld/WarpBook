@@ -45,7 +45,7 @@ public class WarpingMobEffect extends MobEffect
 	@Override
 	public boolean isDurationEffectTick(int duration, int amplifier)
 	{
-		int interval = 25 >> amplifier;
+		int interval = 50 >> amplifier;
 		return interval == 0 || duration % interval == 0;
 	}
 
@@ -56,7 +56,7 @@ public class WarpingMobEffect extends MobEffect
 			return;
 		if (entity.getHealth() > 1.0F)
 			entity.hurt(entity.damageSources().magic(), 1.0F);
-		if (entity.getRandom().nextInt(4) == 0)
+		if (entity.getRandom().nextInt(2) == 0)
 			teleportRandomly(entity, level);
 	}
 

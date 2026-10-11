@@ -1,5 +1,5 @@
-[01:32:31] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.16.9
-[01:32:32] [main/INFO] (FabricLoader) Loading 59 mods:
+[15:22:23] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.16.9
+[15:22:23] [main/INFO] (FabricLoader) Loading 59 mods:
 	- fabric-api 0.92.2+1.20.1
 	- fabric-api-base 0.4.31+1802ada577
 	- fabric-api-lookup-api-v1 1.6.36+1802ada577
@@ -55,19 +55,18 @@
 	- fabric-transfer-api-v1 3.3.5+8dd72ea377
 	- fabric-transitive-access-wideners-v1 4.3.1+1802ada577
 	- fabricloader 0.16.9
-	- java 21
+	- java 17
 	- minecraft 1.20.1
 	- mixinextras 0.4.1
-	- warp_book 4.0.4
-[01:32:33] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/zhao_/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
-[01:32:33] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[01:32:33] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
-[01:32:33] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[01:32:37] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[01:32:50] [Datafixer Bootstrap/INFO] (Minecraft) 188 Datafixer optimizations took 516 milliseconds
-[01:32:56] [Render thread/INFO] (Minecraft) [STDERR]: [LWJGL] [ThreadLocalUtil] Unsupported JNI version detected, this may result in a crash. Please inform LWJGL developers.
-[01:32:57] [Render thread/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[01:32:59] [Render thread/ERROR] (Minecraft) Failed to verify authentication
+	- warp_book 4.1.0
+[15:22:24] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/E:/Gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[15:22:24] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[15:22:24] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
+[15:22:24] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[15:22:27] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[15:22:37] [Datafixer Bootstrap/INFO] (Minecraft) 188 Datafixer optimizations took 229 milliseconds
+[15:22:43] [Render thread/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[15:22:44] [Render thread/ERROR] (Minecraft) Failed to verify authentication
 com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
 	at com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:56) ~[authlib-4.0.43.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:156) ~[authlib-4.0.43.jar:?]
@@ -85,569 +84,130 @@ Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 4
 	at com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:48) ~[authlib-4.0.43.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:129) ~[authlib-4.0.43.jar:?]
 	... 9 more
-[01:32:59] [Render thread/INFO] (Minecraft) Setting user: Player829
-[01:33:00] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
-[01:33:03] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.2-snapshot
-[01:33:09] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, fabric (fabric-convention-tags-v1, fabric-renderer-indigo, fabricloader, fabric-screen-api-v1, fabric-client-tags-api-v1, warp_book, fabric-particles-v1, fabric-keybindings-v0, fabric-rendering-v0, fabric-block-view-api-v2, fabric-rendering-data-attachment-v1, fabric-resource-conditions-api-v1, fabric-networking-v0, fabric-item-api-v1, fabric-entity-events-v1, fabric-events-lifecycle-v0, fabric-command-api-v2, fabric-networking-api-v1, fabric-containers-v0, fabric-events-interaction-v0, fabric-gametest-api-v1, fabric-biome-api-v1, fabric-item-group-api-v1, fabric-data-generation-api-v1, fabric-screen-handler-api-v1, fabric-blockrenderlayer-v1, fabric-commands-v0, fabric-api-lookup-api-v1, fabric-key-binding-api-v1, fabric-model-loading-api-v1, fabric-transitive-access-wideners-v1, fabric-block-api-v1, fabric-loot-api-v2, fabric-resource-loader-v0, fabric-models-v0, fabric-api-base, fabric-command-api-v1, fabric-lifecycle-events-v1, fabric-sound-api-v1, fabric-content-registries-v0, fabric-rendering-fluids-v1, fabric-renderer-registries-v1, fabric-data-attachment-api-v1, fabric-mining-level-api-v1, fabric-renderer-api-v1, fabric-message-api-v1, fabric-object-builder-api-v1, fabric-crash-report-info-v1, fabric-api, fabric-dimensions-v1, fabric-transfer-api-v1, fabric-game-rule-api-v1, fabric-rendering-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-loot-tables-v1)
-[01:33:10] [Worker-Main-1/INFO] (Minecraft) Found unifont_all_no_pua-15.0.06.hex, loading
-[01:33:12] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC
-[01:33:14] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
-[01:33:14] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
-[01:33:15] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on 扬声器 (Realtek(R) Audio)
-[01:33:15] [Render thread/INFO] (Minecraft) Sound engine started
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[01:33:15] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[01:33:16] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
-[01:33:17] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
-[01:33:17] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
-[01:33:17] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_page_unbound_from_warping_potion
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapelessRecipe$Serializer.fromJson(ShapelessRecipe.java:99) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapelessRecipe$Serializer.fromJson(ShapelessRecipe.java:87) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_quill_from_warping_potion
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_page_deathly
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_lectern
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_book_from_warping_potion
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_page_deathly-
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_scribing_table
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_book
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapelessRecipe$Serializer.fromJson(ShapelessRecipe.java:99) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapelessRecipe$Serializer.fromJson(ShapelessRecipe.java:87) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_quill
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:293) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe$Serializer.fromJson(ShapedRecipe.java:279) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/ERROR] (Minecraft) Parsing error loading recipe warp_book:warp_page_unbound
-com.google.gson.JsonSyntaxException: Missing item, expected to find a string
-	at net.minecraft.util.GsonHelper.getAsString(GsonHelper.java:127) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemFromJson(ShapedRecipe.java:271) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapedRecipe.itemStackFromJson(ShapedRecipe.java:259) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapelessRecipe$Serializer.fromJson(ShapelessRecipe.java:99) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.ShapelessRecipe$Serializer.fromJson(ShapelessRecipe.java:87) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.panicnot42.warp_book.registration.Registration$RecipeSerializerRegistry$1.fromJson(Registration.java:217) ~[main/:?]
-	at net.minecraft.world.item.crafting.RecipeManager.fromJson(RecipeManager.java:135) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.world.item.crafting.RecipeManager.apply(RecipeManager.java:35) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.server.packs.resources.SimplePreparableReloadListener.method_18790(SimplePreparableReloadListener.java:13) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718) ~[?:?]
-	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
-	at net.minecraft.server.packs.resources.SimpleReloadInstance.method_18365(SimpleReloadInstance.java:69) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:156) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:23) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:130) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:139) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.CreateWorldScreen.openFresh(CreateWorldScreen.java:352) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.method_19944(SelectWorldScreen.java:60) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.Button.onPress(Button.java:94) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractButton.onClick(AbstractButton.java:56) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.AbstractWidget.mouseClicked(AbstractWidget.java:189) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.components.events.ContainerEventHandler.mouseClicked(ContainerEventHandler.java:38) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_1611(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.gui.screens.Screen.wrapScreenError(Screen.java:409) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.onPress(MouseHandler.java:98) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22686(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.util.thread.BlockableEventLoop.execute(BlockableEventLoop.java:102) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.MouseHandler.method_22684(MouseHandler.java:169) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.2.jar:build 13]
-	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:3438) ~[lwjgl-glfw-3.3.2.jar:build 13]
-	at com.mojang.blaze3d.systems.RenderSystem.pollEvents(RenderSystem.java:201) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.systems.RenderSystem.flipFrame(RenderSystem.java:219) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at com.mojang.blaze3d.platform.Window.updateDisplay(Window.java:288) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1241) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:802) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:250) ~[minecraft-merged-7787b014d4-1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.9.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[01:33:58] [Render thread/INFO] (Minecraft) Loaded 7 recipes
-[01:33:59] [Render thread/INFO] (Minecraft) Loaded 1279 advancements
-[01:34:02] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 2.328 ms
-[01:34:02] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.20.1
-[01:34:02] [Server thread/INFO] (Minecraft) Generating keypair
-[01:34:09] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[01:34:10] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
-[01:34:10] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
-[01:34:10] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
-[01:34:11] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
-[01:34:11] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
-[01:34:12] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
-[01:34:12] [Render thread/INFO] (Minecraft) 准备生成区域中：1%
-[01:34:13] [Render thread/INFO] (Minecraft) 准备生成区域中：1%
-[01:34:13] [Render thread/INFO] (Minecraft) 准备生成区域中：2%
-[01:34:14] [Render thread/INFO] (Minecraft) 准备生成区域中：3%
-[01:34:14] [Render thread/INFO] (Minecraft) 准备生成区域中：4%
-[01:34:15] [Render thread/INFO] (Minecraft) 准备生成区域中：4%
-[01:34:15] [Render thread/INFO] (Minecraft) 准备生成区域中：5%
-[01:34:16] [Render thread/INFO] (Minecraft) 准备生成区域中：6%
-[01:34:16] [Render thread/INFO] (Minecraft) 准备生成区域中：7%
-[01:34:17] [Render thread/INFO] (Minecraft) 准备生成区域中：9%
-[01:34:17] [Render thread/INFO] (Minecraft) 准备生成区域中：10%
-[01:34:18] [Render thread/INFO] (Minecraft) 准备生成区域中：10%
-[01:34:18] [Render thread/INFO] (Minecraft) 准备生成区域中：11%
-[01:34:19] [Render thread/INFO] (Minecraft) 准备生成区域中：13%
-[01:34:19] [Render thread/INFO] (Minecraft) 准备生成区域中：14%
-[01:34:20] [Render thread/INFO] (Minecraft) 准备生成区域中：15%
-[01:34:20] [Render thread/INFO] (Minecraft) 准备生成区域中：15%
-[01:34:21] [Render thread/INFO] (Minecraft) 准备生成区域中：17%
-[01:34:21] [Render thread/INFO] (Minecraft) 准备生成区域中：20%
-[01:34:22] [Render thread/INFO] (Minecraft) 准备生成区域中：22%
-[01:34:22] [Render thread/INFO] (Minecraft) 准备生成区域中：23%
-[01:34:23] [Render thread/INFO] (Minecraft) 准备生成区域中：24%
-[01:34:23] [Render thread/INFO] (Minecraft) 准备生成区域中：25%
-[01:34:24] [Render thread/INFO] (Minecraft) 准备生成区域中：28%
-[01:34:24] [Render thread/INFO] (Minecraft) 准备生成区域中：30%
-[01:34:25] [Render thread/INFO] (Minecraft) 准备生成区域中：31%
-[01:34:25] [Render thread/INFO] (Minecraft) 准备生成区域中：32%
-[01:34:26] [Render thread/INFO] (Minecraft) 准备生成区域中：33%
-[01:34:26] [Render thread/INFO] (Minecraft) 准备生成区域中：35%
-[01:34:27] [Render thread/INFO] (Minecraft) 准备生成区域中：38%
-[01:34:27] [Render thread/INFO] (Minecraft) 准备生成区域中：41%
-[01:34:28] [Render thread/INFO] (Minecraft) 准备生成区域中：43%
-[01:34:28] [Render thread/INFO] (Minecraft) 准备生成区域中：43%
-[01:34:29] [Render thread/INFO] (Minecraft) 准备生成区域中：45%
-[01:34:29] [Render thread/INFO] (Minecraft) 准备生成区域中：47%
-[01:34:30] [Render thread/INFO] (Minecraft) 准备生成区域中：48%
-[01:34:30] [Render thread/INFO] (Minecraft) 准备生成区域中：51%
-[01:34:31] [Render thread/INFO] (Minecraft) 准备生成区域中：53%
-[01:34:31] [Render thread/INFO] (Minecraft) 准备生成区域中：55%
-[01:34:32] [Render thread/INFO] (Minecraft) 准备生成区域中：57%
-[01:34:32] [Render thread/INFO] (Minecraft) 准备生成区域中：59%
-[01:34:33] [Render thread/INFO] (Minecraft) 准备生成区域中：61%
-[01:34:33] [Render thread/INFO] (Minecraft) 准备生成区域中：64%
-[01:34:34] [Render thread/INFO] (Minecraft) 准备生成区域中：66%
-[01:34:34] [Render thread/INFO] (Minecraft) 准备生成区域中：68%
-[01:34:35] [Render thread/INFO] (Minecraft) 准备生成区域中：69%
-[01:34:35] [Render thread/INFO] (Minecraft) 准备生成区域中：71%
-[01:34:36] [Render thread/INFO] (Minecraft) 准备生成区域中：72%
-[01:34:36] [Render thread/INFO] (Minecraft) 准备生成区域中：75%
-[01:34:37] [Render thread/INFO] (Minecraft) 准备生成区域中：77%
-[01:34:37] [Render thread/INFO] (Minecraft) 准备生成区域中：80%
-[01:34:38] [Render thread/INFO] (Minecraft) 准备生成区域中：82%
-[01:34:38] [Render thread/INFO] (Minecraft) 准备生成区域中：83%
-[01:34:39] [Render thread/INFO] (Minecraft) 准备生成区域中：85%
-[01:34:39] [Render thread/INFO] (Minecraft) 准备生成区域中：87%
-[01:34:40] [Render thread/INFO] (Minecraft) 准备生成区域中：89%
-[01:34:40] [Render thread/INFO] (Minecraft) 准备生成区域中：92%
-[01:34:41] [Render thread/INFO] (Minecraft) 准备生成区域中：94%
-[01:34:41] [Render thread/INFO] (Minecraft) 准备生成区域中：97%
-[01:34:42] [Render thread/INFO] (Minecraft) 准备生成区域中：98%
-[01:34:42] [Render thread/INFO] (Minecraft) Time elapsed: 32707 ms
-[01:34:42] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
-[01:34:42] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
-[01:34:44] [Server thread/INFO] (Minecraft) Player829[local:E:b7ffe1ef] logged in with entity id 525 at (4.5, 66.0, 9.5)
-[01:34:44] [Server thread/INFO] (Minecraft) Player829加入了游戏
-[01:34:45] [Render thread/INFO] (Minecraft) Loaded 2 advancements
-[01:34:47] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[01:34:47] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
-[01:34:49] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
-[01:34:49] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
-[01:34:49] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2644ms or 52 ticks behind
-[01:35:11] [Render thread/INFO] (Minecraft) Loaded 3 advancements
-[01:35:43] [Render thread/INFO] (Minecraft) Loaded 6 advancements
-[01:35:45] [Render thread/INFO] (Minecraft) Loaded 8 advancements
-[01:35:53] [Render thread/INFO] (Minecraft) Loaded 9 advancements
-[01:36:19] [Render thread/INFO] (Minecraft) [System] [CHAT] 没有书页。Shift+右键单击添加绑定的传送书页
-[01:36:41] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[01:36:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
-[01:36:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
-[01:36:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
-[01:36:41] [Server thread/INFO] (Minecraft) Player829 lost connection: 连接中断
-[01:36:41] [Server thread/INFO] (Minecraft) Player829退出了游戏
-[01:36:41] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
-[01:36:41] [Server thread/INFO] (Minecraft) Stopping server
-[01:36:41] [Server thread/INFO] (Minecraft) Saving players
-[01:36:41] [Server thread/INFO] (Minecraft) Saving worlds
-[01:36:42] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
-[01:36:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
-[01:36:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
-[01:36:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (新的世界 (1)): All chunks are saved
-[01:36:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[01:36:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[01:36:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
-[01:37:07] [Render thread/INFO] (Minecraft) Stopping!
+[15:22:44] [Render thread/INFO] (Minecraft) Setting user: Player236
+[15:22:45] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[15:22:46] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.1 SNAPSHOT
+[15:22:49] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, fabric (fabric-transitive-access-wideners-v1, fabric-loot-tables-v1, fabric-transfer-api-v1, fabric-models-v0, fabric-commands-v0, fabric-keybindings-v0, fabric-networking-api-v1, fabric-dimensions-v1, fabric-events-interaction-v0, fabric-command-api-v2, fabric-renderer-registries-v1, fabric-particles-v1, fabric-crash-report-info-v1, fabric-mining-level-api-v1, fabric-model-loading-api-v1, fabric-block-view-api-v2, fabric-api-base, warp_book, fabric-blockrenderlayer-v1, fabric-gametest-api-v1, fabric-screen-handler-api-v1, fabric-api, fabric-item-api-v1, fabric-sound-api-v1, fabric-renderer-api-v1, fabric-rendering-data-attachment-v1, fabric-api-lookup-api-v1, fabric-screen-api-v1, fabric-data-generation-api-v1, fabric-recipe-api-v1, fabric-message-api-v1, fabric-object-builder-api-v1, fabric-entity-events-v1, fabric-biome-api-v1, fabric-client-tags-api-v1, fabric-rendering-v1, fabric-lifecycle-events-v1, fabric-data-attachment-api-v1, fabric-game-rule-api-v1, fabric-registry-sync-v0, fabric-loot-api-v2, fabric-key-binding-api-v1, fabricloader, fabric-renderer-indigo, fabric-events-lifecycle-v0, fabric-command-api-v1, fabric-convention-tags-v1, fabric-rendering-fluids-v1, fabric-item-group-api-v1, fabric-networking-v0, fabric-block-api-v1, fabric-resource-conditions-api-v1, fabric-containers-v0, fabric-content-registries-v0, fabric-resource-loader-v0, fabric-rendering-v0)
+[15:22:49] [Worker-Main-6/INFO] (Minecraft) Found unifont_all_no_pua-15.0.06.hex, loading
+[15:22:50] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC
+[15:22:51] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
+[15:22:51] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[15:22:51] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on 耳机 (Realtek(R) Audio)
+[15:22:51] [Render thread/INFO] (Minecraft) Sound engine started
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[15:22:52] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[15:22:52] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[15:23:19] [Render thread/INFO] (Minecraft) Loaded 7 recipes
+[15:23:19] [Render thread/INFO] (Minecraft) Loaded 1279 advancements
+[15:23:20] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.990 ms
+[15:23:20] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.20.1
+[15:23:20] [Server thread/INFO] (Minecraft) Generating keypair
+[15:23:25] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[15:23:26] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
+[15:23:26] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
+[15:23:26] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
+[15:23:26] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
+[15:23:27] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
+[15:23:27] [Render thread/INFO] (Minecraft) 准备生成区域中：0%
+[15:23:28] [Render thread/INFO] (Minecraft) 准备生成区域中：1%
+[15:23:28] [Render thread/INFO] (Minecraft) 准备生成区域中：2%
+[15:23:29] [Render thread/INFO] (Minecraft) 准备生成区域中：3%
+[15:23:29] [Render thread/INFO] (Minecraft) 准备生成区域中：3%
+[15:23:30] [Render thread/INFO] (Minecraft) 准备生成区域中：5%
+[15:23:30] [Render thread/INFO] (Minecraft) 准备生成区域中：5%
+[15:23:31] [Render thread/INFO] (Minecraft) 准备生成区域中：6%
+[15:23:31] [Render thread/INFO] (Minecraft) 准备生成区域中：7%
+[15:23:32] [Render thread/INFO] (Minecraft) 准备生成区域中：9%
+[15:23:32] [Render thread/INFO] (Minecraft) 准备生成区域中：10%
+[15:23:33] [Render thread/INFO] (Minecraft) 准备生成区域中：13%
+[15:23:33] [Render thread/INFO] (Minecraft) 准备生成区域中：15%
+[15:23:34] [Render thread/INFO] (Minecraft) 准备生成区域中：16%
+[15:23:34] [Render thread/INFO] (Minecraft) 准备生成区域中：18%
+[15:23:35] [Render thread/INFO] (Minecraft) 准备生成区域中：21%
+[15:23:35] [Render thread/INFO] (Minecraft) 准备生成区域中：23%
+[15:23:36] [Render thread/INFO] (Minecraft) 准备生成区域中：24%
+[15:23:36] [Render thread/INFO] (Minecraft) 准备生成区域中：27%
+[15:23:37] [Render thread/INFO] (Minecraft) 准备生成区域中：30%
+[15:23:37] [Render thread/INFO] (Minecraft) 准备生成区域中：32%
+[15:23:38] [Render thread/INFO] (Minecraft) 准备生成区域中：34%
+[15:23:38] [Render thread/INFO] (Minecraft) 准备生成区域中：36%
+[15:23:39] [Render thread/INFO] (Minecraft) 准备生成区域中：39%
+[15:23:39] [Render thread/INFO] (Minecraft) 准备生成区域中：42%
+[15:23:40] [Render thread/INFO] (Minecraft) 准备生成区域中：44%
+[15:23:40] [Render thread/INFO] (Minecraft) 准备生成区域中：47%
+[15:23:41] [Render thread/INFO] (Minecraft) 准备生成区域中：50%
+[15:23:41] [Render thread/INFO] (Minecraft) 准备生成区域中：53%
+[15:23:42] [Render thread/INFO] (Minecraft) 准备生成区域中：55%
+[15:23:42] [Render thread/INFO] (Minecraft) 准备生成区域中：55%
+[15:23:43] [Render thread/INFO] (Minecraft) 准备生成区域中：55%
+[15:23:43] [Render thread/INFO] (Minecraft) 准备生成区域中：58%
+[15:23:44] [Render thread/INFO] (Minecraft) 准备生成区域中：61%
+[15:23:44] [Render thread/INFO] (Minecraft) 准备生成区域中：64%
+[15:23:45] [Render thread/INFO] (Minecraft) 准备生成区域中：67%
+[15:23:45] [Render thread/INFO] (Minecraft) 准备生成区域中：70%
+[15:23:46] [Render thread/INFO] (Minecraft) 准备生成区域中：72%
+[15:23:46] [Render thread/INFO] (Minecraft) 准备生成区域中：75%
+[15:23:47] [Render thread/INFO] (Minecraft) 准备生成区域中：79%
+[15:23:47] [Render thread/INFO] (Minecraft) 准备生成区域中：82%
+[15:23:48] [Render thread/INFO] (Minecraft) 准备生成区域中：84%
+[15:23:48] [Render thread/INFO] (Minecraft) 准备生成区域中：86%
+[15:23:49] [Render thread/INFO] (Minecraft) 准备生成区域中：89%
+[15:23:49] [Render thread/INFO] (Minecraft) 准备生成区域中：93%
+[15:23:50] [Render thread/INFO] (Minecraft) 准备生成区域中：96%
+[15:23:50] [Render thread/INFO] (Minecraft) Time elapsed: 25370 ms
+[15:23:50] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
+[15:23:50] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[15:23:52] [Server thread/INFO] (Minecraft) Player236[local:E:21a34559] logged in with entity id 129 at (7.5, 70.0, -7.5)
+[15:23:52] [Server thread/INFO] (Minecraft) Player236加入了游戏
+[15:23:53] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[15:23:55] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2051ms or 41 ticks behind
+[15:24:06] [Render thread/INFO] (Minecraft) Loaded 4 advancements
+[15:24:08] [Render thread/INFO] (Minecraft) Loaded 8 advancements
+[15:24:12] [Render thread/INFO] (Minecraft) Loaded 10 advancements
+[15:24:14] [Render thread/INFO] (Minecraft) Loaded 13 advancements
+[15:24:22] [Render thread/INFO] (Minecraft) Loaded 14 advancements
+[15:24:26] [Render thread/INFO] (Minecraft) Loaded 17 advancements
+[15:25:07] [Render thread/INFO] (Minecraft) Loaded 18 advancements
+[15:25:28] [Render thread/INFO] (Minecraft) Loaded 19 advancements
+[15:25:31] [Render thread/INFO] (Minecraft) Loaded 20 advancements
+[15:25:43] [Render thread/INFO] (Minecraft) [System] [CHAT] 没有书页。Shift+右键单击添加绑定的传送书页
+[15:26:04] [Server thread/INFO] (Minecraft) [Player236: 已将自己的游戏模式设置为生存模式]
+[15:26:04] [Render thread/INFO] (Minecraft) [System] [CHAT] 已将自己的游戏模式设置为生存模式
+[15:26:05] [Render thread/WARN] (Minecraft) Shader invert could not find uniform named InSize in the specified shader program.
+[15:27:30] [Server thread/INFO] (Minecraft) [Player236: 已将10个[面包]给予Player236]
+[15:27:30] [Render thread/INFO] (Minecraft) [System] [CHAT] 已将10个[面包]给予Player236
+[15:27:34] [Render thread/INFO] (Minecraft) Loaded 37 advancements
+[15:28:06] [Server thread/INFO] (Minecraft) [Player236: 已将自己的游戏模式设置为创造模式]
+[15:28:06] [Render thread/INFO] (Minecraft) [System] [CHAT] 已将自己的游戏模式设置为创造模式
+[15:28:30] [Server thread/INFO] (Minecraft) Player236被杀死了
+[15:28:30] [Server thread/INFO] (Minecraft) [Player236: 杀死了Player236]
+[15:28:30] [Render thread/INFO] (Minecraft) [System] [CHAT] Player236被杀死了
+[15:28:30] [Render thread/INFO] (Minecraft) [System] [CHAT] 杀死了Player236
+[15:28:44] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:28:44] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
+[15:28:44] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
+[15:28:44] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
+[15:28:44] [Server thread/INFO] (Minecraft) Player236 lost connection: 连接中断
+[15:28:44] [Server thread/INFO] (Minecraft) Player236退出了游戏
+[15:28:44] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[15:28:45] [Server thread/INFO] (Minecraft) Stopping server
+[15:28:45] [Server thread/INFO] (Minecraft) Saving players
+[15:28:45] [Server thread/INFO] (Minecraft) Saving worlds
+[15:28:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
+[15:28:46] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
+[15:28:46] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
+[15:28:46] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (新的世界 (2)): All chunks are saved
+[15:28:46] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[15:28:46] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[15:28:46] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[15:28:47] [Render thread/INFO] (Minecraft) Stopping!
