@@ -35,7 +35,7 @@ public class Database
 	public static double distanceCoefficient = 1/256d;
 	public static boolean deathPagesEnabled = true;
 	public static boolean onlyOwnerTakesPages = false;
-	public static final boolean WARPING_POTION_TEST = true;
+	public static final boolean WARPING_POTION_TEST = false;
 
 	public static final String ITEM_NAME_WARP_BOOK = "warp_book";
 	public static final String ITEM_NAME_WARP_PAGE_LOCATION = "warp_page_location";
