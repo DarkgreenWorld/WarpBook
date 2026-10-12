@@ -7,9 +7,9 @@ Warp Book
 
 This niche mod allows for easy teleportation between given points without admin privileges. It offers a simple alternative to the standard /home and /warp commands.
 
-This is a continuation of the work done by [Panicnot42](https://github.com/Outurnate) and [FerreusVeritas](https://gitlab.com/ferreusveritas/).
+This is a continuation of the work done by [Panicnot42](https://github.com/Outurnate) and [FerreusVeritas](https://gitlab.com/ferreusveritas/) in 2016.
 It has been ported to Minecraft Java Edition 1.21 based on NeoForge by contributor [ArcAnc](https://github.com/ArcAnc) and [MelonVRneu](https://github.com/MelonVRneu) using version 2.x.
-This version features a multitude of bug fixes, graphic overhauls, and improved features. I have fixed a large number of bugs in the ported version and start adding more features to the Mod.
+This ported version features a multitude of bug fixes, graphic overhauls, and start adding more features.
 
 ### This mod adds several items:
 
