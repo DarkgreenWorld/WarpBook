@@ -1,3 +1,7 @@
+<p align="center">
+<img width="1090" height="256" alt="logo" src="https://github.com/user-attachments/assets/7d9a8e21-b632-4a1d-9b51-109c39f8c049" />
+</p>
+
 Warp Book
 =========
 
