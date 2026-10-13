@@ -30,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -90,7 +91,7 @@ public class EventHandler
         boolean warpLectern = lectern instanceof WarpLecternBlockEntity;
         Component title = warpLectern ? ((WarpLecternBlockEntity) lectern).getName() : book.getHoverName();
         if (!player.isSecondaryUseActive())
-            NetworkEngine.sendToPlayer(serverPlayer, new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : 0));
+            NetworkEngine.sendToPlayer(serverPlayer, new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : ((LecternBlockEntity) lectern).getPage()));
         // Like vanilla, sneaking with an item in hand on a vanilla lectern uses the item instead
         else if (warpLectern || player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
             MenuWarpBook.open(serverPlayer, title, book, pos, warpLectern);

@@ -80,6 +80,7 @@ public class Database
 	public static final String GUI_TEXT_WARP_LECTERN_DO_WARP = rl("gui.text.warp_lectern.do_warp").toLanguageKey();
 	public static final String GUI_TEXT_WARP_BOOK_TOOLTIP = rl("gui.tooltip_warp_book").toLanguageKey();
 	public static final String GUI_TEXT_TAKE_BOOK = "lectern.take_book";
+	public static final String GUI_TEXT_PAGE_INDICATOR = "book.pageIndicator";
 
 	public static final String MESSAGE_ERROR_NO_PAGES = rl("message.error.no_pages").toLanguageKey();
 	public static final String MESSAGE_ERROR_WARP_LECTERN_NO_PAGES = rl("message.error.warp_lectern.no_pages").toLanguageKey();

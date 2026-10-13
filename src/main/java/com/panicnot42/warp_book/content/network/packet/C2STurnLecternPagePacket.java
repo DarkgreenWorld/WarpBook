@@ -10,10 +10,13 @@ package com.panicnot42.warp_book.content.network.packet;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
+import com.panicnot42.warp_book.content.item.WarpBookItem;
 import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 // Sent when a player turns the page of a warp lectern's warp list
@@ -36,8 +39,13 @@ public record C2STurnLecternPagePacket(BlockPos pos, int page) implements IPacke
 	@Override
 	public void handle(@NotNull Player player)
 	{
-		if (pos.closerToCenterThan(player.position(), 8.0) && player.level().getBlockEntity(pos) instanceof WarpLecternBlockEntity lectern)
-			lectern.setPage(page);
+		if (!pos.closerToCenterThan(player.position(), 8.0))
+			return;
+		BlockEntity blockEntity = player.level().getBlockEntity(pos);
+		if (blockEntity instanceof WarpLecternBlockEntity warpLectern)
+			warpLectern.setPage(page);
+		else if (blockEntity instanceof LecternBlockEntity lectern && lectern.getBook().getItem() instanceof WarpBookItem)
+			lectern.createMenu(0, player.getInventory(), player).setData(0, page);
 	}
 
 	@Override

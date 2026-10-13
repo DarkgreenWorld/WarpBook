@@ -9,7 +9,6 @@
 package com.panicnot42.warp_book.content.block;
 
 import com.panicnot42.warp_book.Database;
-import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.Util;
@@ -88,13 +87,12 @@ public class WarpLecternBlockEntity extends BlockEntity implements Nameable
 
 	public int getPage()
 	{
-		return Math.min(page, getPageCount() - 1);
+		return Math.min(page, WarpBookItem.getListPageCount(book) - 1);
 	}
 
-	// Same as turning a page of a vanilla lectern: a redstone pulse below, a page sound and a new comparator output
 	public void setPage(int newPage)
 	{
-		newPage = Mth.clamp(newPage, 0, getPageCount() - 1);
+		newPage = Mth.clamp(newPage, 0, WarpBookItem.getListPageCount(book) - 1);
 		if (level == null || newPage == getPage())
 			return;
 		page = newPage;
@@ -102,18 +100,11 @@ public class WarpLecternBlockEntity extends BlockEntity implements Nameable
 		LecternBlock.signalPageChange(level, worldPosition, getBlockState());
 	}
 
-	// Same formula as LecternBlockEntity.getRedstoneSignal, a warp lectern always has its book
 	public int getRedstoneSignal()
 	{
-		int pages = getPageCount();
+		int pages = WarpBookItem.getListPageCount(book);
 		float progress = pages > 1 ? getPage() / (pages - 1.0F) : 1.0F;
 		return Mth.floor(progress * 14.0F) + 1;
-	}
-
-	private int getPageCount()
-	{
-		long warps = WarpBookItem.getContent(book).stream().filter(stack -> stack.getItem() instanceof IDeclareWarp).count();
-		return Math.max(1, (int) ((warps + Database.WARPS_PER_PAGE - 1) / Database.WARPS_PER_PAGE));
 	}
 
 	// The loot table copies the book and the owners into the item's BlockEntityTag, placing the item loads them back here

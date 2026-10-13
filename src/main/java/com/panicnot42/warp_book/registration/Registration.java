@@ -158,7 +158,7 @@ public class Registration
                                         map(Supplier::get).
                                         filter(item -> !(item instanceof ItemRegistry.IMustBeAddedToCreative toCreative) || toCreative.addToCreative()).
                                         map(Item :: getDefaultInstance).
-                                        collect(Collectors.toSet()))).
+                                        toList())).
                         build()
                 );
 

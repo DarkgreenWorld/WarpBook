@@ -9,6 +9,7 @@ package com.panicnot42.warp_book.content.item;
 
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.client.ClientHooks;
+import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.content.gui.inventory.MenuWarpBook;
 import com.panicnot42.warp_book.registration.Registration;
@@ -112,6 +113,12 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	public static int getCopyCost(@NotNull ItemStack book)
 	{
 		return getContent(book).stream().filter(WarpItem::isCloneable).mapToInt(ItemStack::getCount).sum();
+	}
+
+	public static int getListPageCount(@NotNull ItemStack book)
+	{
+		long warps = getContent(book).stream().filter(stack -> stack.getItem() instanceof IDeclareWarp).count();
+		return Math.max(1, (int) ((warps + Database.WARPS_PER_PAGE - 1) / Database.WARPS_PER_PAGE));
 	}
 
 	// A new book with only the cloneable pages, each in the same slot as before

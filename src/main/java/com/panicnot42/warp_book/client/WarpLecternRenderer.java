@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 public class WarpLecternRenderer implements BlockEntityRenderer<BlockEntity>
 {
 	private static final Material WARP_LECTERN_BOOK = new Material(TextureAtlas.LOCATION_BLOCKS, Database.rl("block/warp_lectern_book"));
-	private static final Material WARP_BOOK_ON_LECTERN = new Material(TextureAtlas.LOCATION_BLOCKS, Database.rl("block/warp_book_on_lectern"));
+	private static final Material WARP_BOOK_ON_LECTERN = new Material(TextureAtlas.LOCATION_BLOCKS, Database.rl("block/warp_lectern_book"));
 
 	private final BookModel bookModel;
 
