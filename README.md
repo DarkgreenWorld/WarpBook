@@ -42,7 +42,7 @@ Warp Quill is an important ingredient for crafting the Warp Scribing Table. Its 
 
 #### Warp Scribing Table
 _(exists in version 4.1.0+)_
-This is the “respawned version” of the Warp Book Cloner.
+This is the “respawned version” of the Warp Book Cloner, but now can use to clone Warp Page too.
 It has new textures and a new crafting recipe, but the GUI and usage logic are basically unchanged.
 
 <img width="243" height="112" alt="屏幕截图 2026-10-11 163141" src="https://github.com/user-attachments/assets/7161e449-6740-413c-b6f9-c37b599961e6" />
