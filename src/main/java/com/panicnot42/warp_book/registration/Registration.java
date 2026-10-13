@@ -13,7 +13,7 @@ import com.panicnot42.warp_book.content.block.WarpLecternBlock;
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
 import com.panicnot42.warp_book.content.block.WarpScribingTableBlock;
 import com.panicnot42.warp_book.content.block.WarpScribingTableBlockEntity;
-import com.panicnot42.warp_book.content.crafting.WarpPageCloningRecipe;
+//import com.panicnot42.warp_book.content.crafting.WarpPageCloningRecipe;
 import com.panicnot42.warp_book.content.crafting.WarpShapedRecipe;
 import com.panicnot42.warp_book.content.crafting.WarpShapelessRecipe;
 import com.panicnot42.warp_book.content.effect.WarpingMobEffect;
@@ -52,7 +52,7 @@ import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+//import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -203,8 +203,10 @@ public class Registration
                 () -> serializer(RecipeSerializer.SHAPED_RECIPE, WarpShapedRecipe::new, recipe -> recipe.warpingPotionTest));
         public static final Supplier<RecipeSerializer<WarpShapelessRecipe>> SHAPELESS = register(BuiltInRegistries.RECIPE_SERIALIZER, Database.RECIPE_NAME_SHAPELESS,
                 () -> serializer(RecipeSerializer.SHAPELESS_RECIPE, WarpShapelessRecipe::new, recipe -> recipe.warpingPotionTest));
+        /*
         public static final Supplier<RecipeSerializer<WarpPageCloningRecipe>> PAGE_CLONING = register(BuiltInRegistries.RECIPE_SERIALIZER, Database.RECIPE_NAME_PAGE_CLONING,
                 () -> new SimpleCraftingRecipeSerializer<>(WarpPageCloningRecipe::new));
+         */
 
         // The vanilla serializer reads the recipe, this one adds the optional warping_potion_test field
         private static <V extends Recipe<?>, T extends V> RecipeSerializer<T> serializer(RecipeSerializer<V> vanilla, BiFunction<V, Optional<Boolean>, T> factory, Function<T, Optional<Boolean>> warpingPotionTest)

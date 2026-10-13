@@ -51,7 +51,7 @@ public class Database
 
 	public static final String POTION_NAME_WARPING = "warping";
 	public static final String EFFECT_NAME_WARPING = "warping";
-	public static final String RECIPE_NAME_PAGE_CLONING = "page_cloning";
+	//public static final String RECIPE_NAME_PAGE_CLONING = "page_cloning";
 	public static final String RECIPE_NAME_SHAPED = "shaped";
 	public static final String RECIPE_NAME_SHAPELESS = "shapeless";
 
