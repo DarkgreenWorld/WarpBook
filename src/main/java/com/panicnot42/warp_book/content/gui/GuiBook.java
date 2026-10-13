@@ -7,6 +7,7 @@
  */
 package com.panicnot42.warp_book.content.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
@@ -22,9 +23,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -68,7 +72,6 @@ public class GuiBook extends Screen
 	private final ResourceLocation background;
 	private final String heading;
 	private final String noPagesMessage;
-	private final boolean warpLectern;
 	// The page the warp lectern was last told about
 	private int lecternPage;
 
@@ -82,7 +85,6 @@ public class GuiBook extends Screen
 		this.background = INV_BG;
 		this.heading = Database.GUI_TEXT_DO_WARP;
 		this.noPagesMessage = Database.MESSAGE_ERROR_NO_PAGES;
-		this.warpLectern = false;
 	}
 
 	public GuiBook(Player entityPlayer, ItemStack book, BlockPos lecternPos, int page)
@@ -92,7 +94,7 @@ public class GuiBook extends Screen
 		hand = InteractionHand.MAIN_HAND;
 		this.bookBearer = () -> book;
 		this.lecternPos = lecternPos;
-		this.warpLectern = entityPlayer.level().getBlockState(lecternPos).is(Registration.BlockRegistry.WARP_LECTERN.get());
+		boolean warpLectern = entityPlayer.level().getBlockState(lecternPos).is(Registration.BlockRegistry.WARP_LECTERN.get());
 		this.background = warpLectern ? WARP_LECTERN_BG : INV_BG;
 		this.heading = warpLectern ? Database.GUI_TEXT_WARP_LECTERN_DO_WARP : Database.GUI_TEXT_DO_WARP;
 		this.noPagesMessage = warpLectern ? Database.MESSAGE_ERROR_WARP_LECTERN_NO_PAGES : Database.MESSAGE_ERROR_NO_PAGES;
@@ -175,12 +177,12 @@ public class GuiBook extends Screen
 		pageCount = (pos.size() - 1) / (warpsPerPage);
 		if (pageCount != 0)
 		{
-			addWidget(prev = new NextPageButton(left + 23, y, false, background, button ->
+			addWidget(prev = new NextPageButton(left + 23, y, false, background, lecternPos == null, button ->
 			{
 				page--;
 				updateButtonStat();
 			}));
-			addWidget(next = new NextPageButton(left + 96, y, true, background, button ->
+			addWidget(next = new NextPageButton(left + 96, y, true, background, lecternPos == null, button ->
 			{
 				page++;
 				updateButtonStat();
@@ -218,8 +220,7 @@ public class GuiBook extends Screen
 			warp.visible = true;
 		}
 
-		// A warp lectern also turns its page on the server, for the redstone pulse and the comparator
-		if (warpLectern && page != lecternPage)
+		if (lecternPos != null && page != lecternPage)
 		{
 			lecternPage = page;
 			NetworkEngine.sendToServer(new C2STurnLecternPagePacket(lecternPos, page));
@@ -250,12 +251,21 @@ public class GuiBook extends Screen
 	{
 		private final boolean isForward;
 		private final ResourceLocation texture;
+		private final boolean playTurnSound;
 
-		public NextPageButton(int x, int y, boolean isForwardIn, ResourceLocation texture, Button.OnPress onPress)
+		public NextPageButton(int x, int y, boolean isForwardIn, ResourceLocation texture, boolean playTurnSound, Button.OnPress onPress)
 		{
 			super(x, y, 23, 13, Component.empty(), onPress, Button.DEFAULT_NARRATION);
 			this.isForward = isForwardIn;
 			this.texture = texture;
+			this.playTurnSound = playTurnSound;
+		}
+
+		@Override
+		public void playDownSound(@NotNull SoundManager soundManager)
+		{
+			if (playTurnSound)
+				soundManager.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0F));
 		}
 
 		/**
@@ -298,22 +308,22 @@ public class GuiBook extends Screen
 			return true;
 		}
 
-		boolean result = super.keyPressed(keyCode, scanCode, modifiers);
-
 		switch (keyCode)
 		{
-			case 203 ->
+			case InputConstants.KEY_LEFT, InputConstants.KEY_PAGEUP ->
 			{
 				page--;
 				updateButtonStat();
+				return true;
 			}
-			case 205 ->
+			case InputConstants.KEY_RIGHT, InputConstants.KEY_PAGEDOWN ->
 			{
 				page++;
 				updateButtonStat();
+				return true;
 			}
 		}
 
-		return result;
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 }

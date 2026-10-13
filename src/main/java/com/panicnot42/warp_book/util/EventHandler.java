@@ -37,6 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -144,7 +145,7 @@ public class EventHandler {
         boolean warpLectern = lectern instanceof WarpLecternBlockEntity;
         Component title = warpLectern ? ((WarpLecternBlockEntity) lectern).getName() : book.getHoverName();
         if (!player.isSecondaryUseActive())
-            NetworkEngine.sendToPlayer(new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : 0), serverPlayer);
+            NetworkEngine.sendToPlayer(new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : ((LecternBlockEntity) lectern).getPage()), serverPlayer);
         // Like vanilla, sneaking with an item in hand on a vanilla lectern uses the item instead
         else if (warpLectern || player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
             NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(

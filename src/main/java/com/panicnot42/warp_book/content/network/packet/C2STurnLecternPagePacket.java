@@ -9,9 +9,12 @@
 package com.panicnot42.warp_book.content.network.packet;
 
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
+import com.panicnot42.warp_book.content.item.WarpBookItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -33,8 +36,13 @@ public record C2STurnLecternPagePacket(BlockPos pos, int page) {
 
         ctx.enqueueWork(() -> {
             ServerPlayer player = ctx.getSender();
-            if (player != null && msg.pos.closerToCenterThan(player.position(), 8.0) && player.level().getBlockEntity(msg.pos) instanceof WarpLecternBlockEntity lectern)
-                lectern.setPage(msg.page);
+            if (player == null || !msg.pos.closerToCenterThan(player.position(), 8.0))
+                return;
+            BlockEntity blockEntity = player.level().getBlockEntity(msg.pos);
+            if (blockEntity instanceof WarpLecternBlockEntity warpLectern)
+                warpLectern.setPage(msg.page);
+            else if (blockEntity instanceof LecternBlockEntity lectern && lectern.getBook().getItem() instanceof WarpBookItem)
+                lectern.createMenu(0, player.getInventory(), player).setData(0, msg.page);
         });
 
         ctx.setPacketHandled(true);

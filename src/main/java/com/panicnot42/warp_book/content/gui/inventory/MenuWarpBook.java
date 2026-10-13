@@ -24,6 +24,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -130,11 +131,14 @@ public class MenuWarpBook extends AbstractContainerMenu
 
 		BlockEntity lectern = lecternPos == null ? null : player.level().getBlockEntity(lecternPos);
 		NonNullList<ItemStack> before = WarpBookItem.getContent(inventory.heldStack);
+		int pages = WarpBookItem.getListPageCount(inventory.heldStack);
 		super.clicked(slotId, button, clickType, player);
 		if (lectern instanceof WarpLecternBlockEntity warpLectern)
 			warpLectern.updateOwners(player, before);
 		else if (lectern != null)
 			lectern.setChanged();
+		if (lectern instanceof LecternBlockEntity vanillaLectern && WarpBookItem.getListPageCount(inventory.heldStack) != pages)
+			vanillaLectern.setBook(vanillaLectern.getBook());
 	}
 
 	// Closes the menu once the book is no longer on the lectern or the player walked away
