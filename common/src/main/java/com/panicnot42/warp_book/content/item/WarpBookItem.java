@@ -15,6 +15,7 @@ import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBoo
 import com.panicnot42.warp_book.content.gui.inventory.container.ContainerWarpBookSpecial;
 import com.panicnot42.warp_book.platform.Services;
 import com.panicnot42.warp_book.registration.Registration;
+import com.panicnot42.warp_book.content.core.IDeclareWarp;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -113,6 +114,12 @@ public class WarpBookItem extends Item implements IColorable, Registration.ItemR
 	public static int getCopyCost(@NotNull ItemStack book)
 	{
 		return getContent(book).nonEmptyStream().filter(WarpItem::isCloneable).mapToInt(ItemStack::getCount).sum();
+	}
+
+	public static int getListPageCount(@NotNull ItemStack book)
+	{
+		long warps = getContent(book).nonEmptyStream().filter(stack -> stack.getItem() instanceof IDeclareWarp).count();
+		return Math.max(1, (int) ((warps + Database.WARPS_PER_PAGE - 1) / Database.WARPS_PER_PAGE));
 	}
 
 	// A new book with only the cloneable pages, each in the same slot as before

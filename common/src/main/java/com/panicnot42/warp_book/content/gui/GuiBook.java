@@ -7,13 +7,14 @@
  */
 package com.panicnot42.warp_book.content.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.panicnot42.warp_book.Database;
 import com.panicnot42.warp_book.content.core.IDeclareWarp;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
 import com.panicnot42.warp_book.content.network.NetworkEngine;
 import com.panicnot42.warp_book.content.network.packet.C2STakeBookPacket;
-import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.content.network.packet.C2STurnLecternPagePacket;
+import com.panicnot42.warp_book.content.network.packet.C2SWarpPacket;
 import com.panicnot42.warp_book.registration.Registration;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -22,9 +23,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -51,21 +55,22 @@ public class GuiBook extends Screen
 	private ArrayList<WarpButton> warps;
 	private ArrayList<ButtonPos> pos;
 	private static final int warpsPerPage = Database.WARPS_PER_PAGE;
+	private static final int bookTop = 14;
 	private final InteractionHand usedHand;
-	
+
 	private record ButtonPos(int id, Component name)
 	{
 
 	}
-	
+
 	private final Supplier<ItemStack> bookBearer;
 	private final @Nullable BlockPos lecternPos;
 	private final ResourceLocation background;
 	private final String heading;
 	private final String noPagesMessage;
-	private final boolean warpLectern;
+	// The page the warp lectern was last told about
 	private int lecternPage;
-	
+
 	public GuiBook(Player entityPlayer, InteractionHand hand)
 	{
 		super(Component.empty());
@@ -76,7 +81,6 @@ public class GuiBook extends Screen
 		this.background = INV_BG;
 		this.heading = Database.GUI_TEXT_DO_WARP;
 		this.noPagesMessage = Database.MESSAGE_ERROR_NO_PAGES;
-		this.warpLectern = false;
 	}
 
 	public GuiBook(Player entityPlayer, ItemStack book, BlockPos lecternPos, int page)
@@ -86,19 +90,18 @@ public class GuiBook extends Screen
 		this.usedHand = InteractionHand.MAIN_HAND;
 		this.bookBearer = () -> book;
 		this.lecternPos = lecternPos;
-
-		this.warpLectern = entityPlayer.level().getBlockState(lecternPos).is(Registration.BlockRegistry.WARP_LECTERN.get());
+		boolean warpLectern = entityPlayer.level().getBlockState(lecternPos).is(Registration.BlockRegistry.WARP_LECTERN.get());
 		this.background = warpLectern ? WARP_LECTERN_BG : INV_BG;
 		this.heading = warpLectern ? Database.GUI_TEXT_WARP_LECTERN_DO_WARP : Database.GUI_TEXT_DO_WARP;
 		this.noPagesMessage = warpLectern ? Database.MESSAGE_ERROR_WARP_LECTERN_NO_PAGES : Database.MESSAGE_ERROR_NO_PAGES;
 		this.page = page;
 		this.lecternPage = page;
 	}
-	
+
 	protected ItemStack procureBook() {
 		return bookBearer.get();
 	}
-	
+
 	@Override
 	public void init()
 	{
@@ -123,7 +126,6 @@ public class GuiBook extends Screen
 			}
 		}
 
-		//boolean canTake = lecternPos != null && player.mayBuild() && player.level().getBlockState(lecternPos).is(Blocks.LECTERN);
 		if (pos.isEmpty())
 		{
 			player.sendSystemMessage(Component.translatable(noPagesMessage));
@@ -131,22 +133,27 @@ public class GuiBook extends Screen
 			return;
 		}
 
-		if (lecternPos != null && player.mayBuild() && player.level().getBlockState(lecternPos).is(Blocks.LECTERN))
+		// Laid out like the vanilla lectern screen
+		boolean takeBook = lecternPos != null && player.mayBuild() && player.level().getBlockState(lecternPos).is(Blocks.LECTERN);
+		addRenderableWidget(Button.builder(Component.translatable(Database.GUI_BUTTON_DONE_TITLE), button -> GuiBook.this.onClose()).
+				bounds(width / 2 - 100, bookTop + ySize + 2, takeBook ? 98 : 200, 20).
+				build());
+		if (takeBook)
 			addRenderableWidget(Button.builder(Component.translatable(Database.GUI_TEXT_TAKE_BOOK), button ->
 					{
 						NetworkEngine.sendToServer(new C2STakeBookPacket(lecternPos));
 						GuiBook.this.onClose();
 					}).
-					bounds(width / 2 - 50, (height / 2) + (ySize / 2) + 18, 100, 20).
+					bounds(width / 2 + 2, bookTop + ySize + 2, 98, 20).
 					build());
-		
+
 		int x = width / 2 - 48;
-		int y = 12 + (height / 2) - (ySize / 2);
+		int y = bookTop + 27;
 		int n = Math.min(warpsPerPage, pos.size());
 		warps = new ArrayList<>();
 		for (int i = 0; i < n; i++)
 		{
-			WarpButton but = new WarpButton(i, x, y + (14 * i), 96, 12, button ->
+			WarpButton but = new WarpButton(i, x, y + (12 * i), 96, 12, button ->
 			{
 				int index = pos.get(((WarpButton)button).getIndex() + (page*warpsPerPage)).id();
 
@@ -157,24 +164,26 @@ public class GuiBook extends Screen
 			addRenderableWidget(but);
 			warps.add(but);
 		}
-		y = (height / 2) + (ySize / 2);
-		
+		// The same spots on the book as the page buttons of a vanilla book
+		int left = (width - xSize) / 2;
+		y = bookTop + 156;
+
 		// Add back and forward buttons
 		pageCount = (pos.size() - 1) / (warpsPerPage);
 		if (pageCount != 0)
 		{
-			addRenderableWidget(prev = new NextPageButton(x, y, false, background, button ->
+			addWidget(prev = new NextPageButton(left + 23, y, false, background, lecternPos == null, button ->
 			{
 				page--;
 				updateButtonStat();
 			}));
-			addRenderableWidget(next = new NextPageButton(x + 64, y, true, background, button ->
+			addWidget(next = new NextPageButton(left + 96, y, true, background, lecternPos == null, button ->
 			{
 				page++;
 				updateButtonStat();
 			}));
 		}
-		
+
 		updateButtonStat();
 	}
 
@@ -191,13 +200,13 @@ public class GuiBook extends Screen
 		}
 		int r = pos.size() - page * warpsPerPage;
 		int n = Math.min(r, warpsPerPage);
-		
+
 		//Hide all of the warp buttons
 		for(WarpButton wb : warps)
 		{
 			wb.visible = false;
 		}
-		
+
 		for (int i = 0; i < n; i++)
 		{
 			int j = page * warpsPerPage + i;
@@ -206,8 +215,7 @@ public class GuiBook extends Screen
 			warp.visible = true;
 		}
 
-		// A warp lectern also turns its page on the server, for the redstone pulse and the comparator
-		if (warpLectern && page != lecternPage)
+		if (lecternPos != null && page != lecternPage)
 		{
 			lecternPage = page;
 			NetworkEngine.sendToServer(new C2STurnLecternPagePacket(lecternPos, page));
@@ -220,20 +228,36 @@ public class GuiBook extends Screen
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		guiGraphics.blit(background, (width - xSize) / 2, (height - ySize) / 2, 20, 1, xSize, ySize);
-		guiGraphics.drawCenteredString(font, Component.translatable(heading), width / 2, (height / 2) - ySize / 2 - 12, 0xFFFFFF);
+		guiGraphics.blit(background, (width - xSize) / 2, bookTop, 20, 1, xSize, ySize);
+		if (prev != null)
+		{
+			prev.render(guiGraphics, mouseX, mouseY, partialTick);
+			next.render(guiGraphics, mouseX, mouseY, partialTick);
+		}
+		Component pageNumber = Component.translatable(Database.GUI_TEXT_PAGE_INDICATOR, page + 1, pageCount + 1);
+		guiGraphics.drawString(font, pageNumber, (width - xSize) / 2 + 128 - font.width(pageNumber), bookTop + 15, 0, false);
+		guiGraphics.drawCenteredString(font, Component.translatable(heading), width / 2, bookTop - 12, 0xFFFFFF);
 	}
 
-    static class NextPageButton extends Button
+	static class NextPageButton extends Button
 	{
 		private final boolean isForward;
 		private final ResourceLocation texture;
+		private final boolean playTurnSound;
 
-		public NextPageButton(int x, int y, boolean isForwardIn, ResourceLocation texture, Button.OnPress onPress)
+		public NextPageButton(int x, int y, boolean isForwardIn, ResourceLocation texture, boolean playTurnSound, Button.OnPress onPress)
 		{
 			super(x, y, 23, 13, Component.empty(), onPress, Button.DEFAULT_NARRATION);
 			this.isForward = isForwardIn;
 			this.texture = texture;
+			this.playTurnSound = playTurnSound;
+		}
+
+		@Override
+		public void playDownSound(@NotNull SoundManager soundManager)
+		{
+			if (playTurnSound)
+				soundManager.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0F));
 		}
 
 		/**
@@ -270,28 +294,28 @@ public class GuiBook extends Screen
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
 		KeyMapping inventoryKey = Minecraft.getInstance().options.keyInventory;
-	    if (inventoryKey.matches(keyCode, scanCode))
-	    {
-	        this.onClose();
-	        return true;
-	    }
-		
-		boolean result = super.keyPressed(keyCode, scanCode, modifiers);
+		if (inventoryKey.matches(keyCode, scanCode))
+		{
+			this.onClose();
+			return true;
+		}
 
 		switch (keyCode)
 		{
-			case 203 ->
+			case InputConstants.KEY_LEFT, InputConstants.KEY_PAGEUP ->
 			{
 				page--;
 				updateButtonStat();
+				return true;
 			}
-			case 205 ->
+			case InputConstants.KEY_RIGHT, InputConstants.KEY_PAGEDOWN ->
 			{
 				page++;
 				updateButtonStat();
+				return true;
 			}
 		}
 
-		return result;
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 }

@@ -22,3 +22,5 @@ type="required" #mandatory (Can be one of "required", "optional", "incompatible"
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+[[mixins]]
+config = "${mod_id}.mixins.json"

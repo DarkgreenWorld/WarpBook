@@ -10,6 +10,7 @@ package com.panicnot42.warp_book.content.block;
 import com.panicnot42.warp_book.content.gui.inventory.MenuWarpScribingTable;
 import com.panicnot42.warp_book.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
@@ -54,7 +55,7 @@ public class WarpScribingTableBlock extends Block implements EntityBlock
 		if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof WarpScribingTableBlockEntity table)
 			Services.PLATFORM.openMenu(serverPlayer, new SimpleMenuProvider(
 					(containerId, inventory, menuPlayer) -> new MenuWarpScribingTable(containerId, inventory, table.items, ContainerLevelAccess.create(level, pos)),
-					getName()), pos, BlockPos.STREAM_CODEC);
+					table.components().getOrDefault(DataComponents.CUSTOM_NAME, getName())), pos, BlockPos.STREAM_CODEC);
 		return InteractionResult.sidedSuccess(level.isClientSide());
 	}
 

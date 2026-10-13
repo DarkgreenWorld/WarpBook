@@ -34,6 +34,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import com.mojang.datafixers.util.Pair;
 
@@ -101,7 +102,7 @@ public class EventHandler
         Component title = warpLectern ? lectern.components().getOrDefault(DataComponents.CUSTOM_NAME, Component.translatable(Database.GUI_TEXT_WARP_LECTERN_INVENTORY_TITLE)) : book.getHoverName();
 
         if (!player.isSecondaryUseActive())
-            NetworkEngine.sendToPlayer(serverPlayer, new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : 0));
+            NetworkEngine.sendToPlayer(serverPlayer, new S2COpenLecternPacket(pos, book, warpLectern ? ((WarpLecternBlockEntity) lectern).getPage() : ((LecternBlockEntity) lectern).getPage()));
             // Like vanilla, sneaking with an item in hand on a vanilla lectern uses the item instead
         else if (warpLectern || player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
             Services.PLATFORM.openMenu(serverPlayer, new SimpleMenuProvider(

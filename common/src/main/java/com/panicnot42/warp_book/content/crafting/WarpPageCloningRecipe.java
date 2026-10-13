@@ -5,6 +5,7 @@
  * This code is licensed under "GPL-v3.0-only"
  * Details can be found in the license file in the root folder of this project
  */
+/*
 package com.panicnot42.warp_book.content.crafting;
 
 import com.panicnot42.warp_book.content.item.UnboundWarpPageItem;
@@ -76,3 +77,4 @@ public class WarpPageCloningRecipe extends CustomRecipe
 		return Registration.RecipeSerializerRegistry.PAGE_CLONING.get();
 	}
 }
+*/

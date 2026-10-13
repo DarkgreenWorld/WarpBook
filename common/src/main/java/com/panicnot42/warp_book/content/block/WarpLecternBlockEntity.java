@@ -90,12 +90,12 @@ public class WarpLecternBlockEntity extends BlockEntity
 
 	public int getPage()
 	{
-		return Math.min(page, getPageCount() - 1);
+		return Math.min(page, WarpBookItem.getListPageCount(book) - 1);
 	}
 
 	public void setPage(int newPage)
 	{
-		newPage = Mth.clamp(newPage, 0, getPageCount() - 1);
+		newPage = Mth.clamp(newPage, 0, WarpBookItem.getListPageCount(book) - 1);
 		if (level == null || newPage == getPage())
 			return;
 		page = newPage;
@@ -105,15 +105,9 @@ public class WarpLecternBlockEntity extends BlockEntity
 
 	public int getRedstoneSignal()
 	{
-		int pages = getPageCount();
+		int pages = WarpBookItem.getListPageCount(book);
 		float progress = pages > 1 ? getPage() / (pages - 1.0F) : 1.0F;
 		return Mth.floor(progress * 14.0F) + 1;
-	}
-
-	private int getPageCount()
-	{
-		long warps = WarpBookItem.getContent(book).nonEmptyStream().filter(stack -> stack.getItem() instanceof IDeclareWarp).count();
-		return Math.max(1, (int) ((warps + Database.WARPS_PER_PAGE - 1) / Database.WARPS_PER_PAGE));
 	}
 
 	@Override

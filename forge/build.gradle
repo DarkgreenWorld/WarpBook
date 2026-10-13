@@ -1,6 +1,11 @@
 plugins {
     id 'multiloader-loader'
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+mixin {
+    config("${mod_id}.mixins.json")
 }
 
 minecraft {
@@ -60,6 +65,7 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
@@ -70,6 +76,9 @@ publishing {
         mavenJava(MavenPublication) {
             fg.component(it)
         }
+    }
+    jar {
+        manifest.attributes(["MixinConfigs": "${mod_id}.mixins.json"])
     }
 }
 
