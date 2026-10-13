@@ -9,6 +9,7 @@ package com.panicnot42.warp_book.content.gui.inventory;
 
 import com.panicnot42.warp_book.content.item.UnboundWarpPageItem;
 import com.panicnot42.warp_book.content.item.WarpBookItem;
+import com.panicnot42.warp_book.content.item.WarpItem;
 import com.panicnot42.warp_book.registration.Registration;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -35,7 +36,7 @@ public class MenuWarpScribingTable extends AbstractContainerMenu
 		this.inputs = inputs;
 		this.access = access;
 
-		addSlot(inputSlot(0, 16, 48, stack -> stack.getItem() instanceof WarpBookItem && WarpBookItem.getCopyCost(stack) > 0));
+		addSlot(inputSlot(0, 16, 48, stack -> copyCost(stack) > 0));
 		addSlot(inputSlot(1, 80, 24, stack -> stack.getItem() instanceof UnboundWarpPageItem));
 		addSlot(inputSlot(2, 80, 72, stack -> stack.getItem() instanceof WarpBookItem && WarpBookItem.inventoryIsEmpty(WarpBookItem.getContent(stack)) && WarpBookItem.getRespawnsLeft(stack) == 0));
 		addSlot(new Slot(result, 0, 144, 48)
@@ -56,9 +57,12 @@ public class MenuWarpScribingTable extends AbstractContainerMenu
 			@Override
 			public void onTake(@NotNull Player player, @NotNull ItemStack stack)
 			{
-				inputs.removeItem(1, WarpBookItem.getCopyCost(inputs.getItem(0)));
-				inputs.removeItem(2, 1);
+				ItemStack template = inputs.getItem(0);
+				inputs.removeItem(1, copyCost(template));
+				if (template.getItem() instanceof WarpBookItem)
+					inputs.removeItem(2, 1);
 				super.onTake(player, stack);
+				result.setItem(0, createResult());
 			}
 		});
 
@@ -82,13 +86,22 @@ public class MenuWarpScribingTable extends AbstractContainerMenu
 		};
 	}
 
+	private static int copyCost(ItemStack template)
+	{
+		if (WarpItem.isCloneable(template))
+			return 1;
+		return template.getItem() instanceof WarpBookItem ? WarpBookItem.getCopyCost(template) : 0;
+	}
+
 	private ItemStack createResult()
 	{
 		ItemStack template = inputs.getItem(0);
-		int cost = WarpBookItem.getCopyCost(template);
-		if (cost == 0 || inputs.getItem(1).getCount() < cost || inputs.getItem(2).isEmpty())
+		int cost = copyCost(template);
+		if (cost == 0 || inputs.getItem(1).getCount() < cost)
 			return ItemStack.EMPTY;
-		return WarpBookItem.copyBook(template);
+		if (WarpItem.isCloneable(template))
+			return template.copyWithCount(1);
+		return inputs.getItem(2).isEmpty() ? ItemStack.EMPTY : WarpBookItem.copyBook(template);
 	}
 
 	// Runs every tick on the server, so every player looking at this table sees the same result

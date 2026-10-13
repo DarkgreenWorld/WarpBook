@@ -14,7 +14,7 @@ import com.panicnot42.warp_book.content.block.WarpLecternBlock;
 import com.panicnot42.warp_book.content.block.WarpLecternBlockEntity;
 import com.panicnot42.warp_book.content.block.WarpScribingTableBlock;
 import com.panicnot42.warp_book.content.block.WarpScribingTableBlockEntity;
-import com.panicnot42.warp_book.content.crafting.WarpPageCloningRecipe;
+//import com.panicnot42.warp_book.content.crafting.WarpPageCloningRecipe;
 import com.panicnot42.warp_book.content.crafting.WarpShapedRecipe;
 import com.panicnot42.warp_book.content.crafting.WarpShapelessRecipe;
 import com.panicnot42.warp_book.content.effect.WarpingMobEffect;
@@ -50,7 +50,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+//import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -211,8 +211,10 @@ public class Registration {
         public static final RegistryObject<RecipeSerializer<WarpShapelessRecipe>> SHAPELESS = RECIPE_SERIALIZERS.register(Database.RECIPE_NAME_SHAPELESS,
                 () -> serializer(RecipeSerializer.SHAPELESS_RECIPE, WarpShapelessRecipe::new, recipe -> recipe.warpingPotionTest));
 
+        /*
         public static final RegistryObject<RecipeSerializer<WarpPageCloningRecipe>> PAGE_CLONING = RECIPE_SERIALIZERS.register(Database.RECIPE_NAME_PAGE_CLONING,
                 () -> new SimpleCraftingRecipeSerializer<>(WarpPageCloningRecipe::new));
+        */
 
         // The vanilla serializer reads the recipe, this one adds the optional warping_potion_test field
         private static <V extends Recipe<?>, T extends V> RecipeSerializer<T> serializer(RecipeSerializer<V> vanilla, BiFunction<V, Optional<Boolean>, T> factory, Function<T, Optional<Boolean>> warpingPotionTest) {
