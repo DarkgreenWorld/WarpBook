@@ -55,13 +55,14 @@ public class GuiBook extends Screen
 	private ArrayList<WarpButton> warps;
 	private ArrayList<ButtonPos> pos;
 	private static final int warpsPerPage = Database.WARPS_PER_PAGE;
+	private static final int bookTop = 14;
 	private static InteractionHand hand;
-	
+
 	private record ButtonPos(int id, Component name)
 	{
 
 	}
-	
+
 	private final Supplier<ItemStack> bookBearer;
 	private final @Nullable BlockPos lecternPos;
 	private final ResourceLocation background;
@@ -70,7 +71,7 @@ public class GuiBook extends Screen
 	private final boolean warpLectern;
 	// The page the warp lectern was last told about
 	private int lecternPage;
-	
+
 	public GuiBook(Player entityPlayer, InteractionHand hand)
 	{
 		super(Component.empty());
@@ -91,7 +92,6 @@ public class GuiBook extends Screen
 		hand = InteractionHand.MAIN_HAND;
 		this.bookBearer = () -> book;
 		this.lecternPos = lecternPos;
-		// A warp book on a vanilla lectern keeps the look of a held book
 		this.warpLectern = entityPlayer.level().getBlockState(lecternPos).is(Registration.BlockRegistry.WARP_LECTERN.get());
 		this.background = warpLectern ? WARP_LECTERN_BG : INV_BG;
 		this.heading = warpLectern ? Database.GUI_TEXT_WARP_LECTERN_DO_WARP : Database.GUI_TEXT_DO_WARP;
@@ -99,11 +99,11 @@ public class GuiBook extends Screen
 		this.page = page;
 		this.lecternPage = page;
 	}
-	
+
 	protected ItemStack procureBook() {
 		return bookBearer.get();
 	}
-	
+
 	@Override
 	public void init()
 	{
@@ -127,7 +127,7 @@ public class GuiBook extends Screen
 				}
 			}
 		}
-		
+
 		if (pos.isEmpty())
 		{
 			player.sendSystemMessage(Component.translatable(noPagesMessage));
@@ -135,23 +135,28 @@ public class GuiBook extends Screen
 			return;
 		}
 
-		// Only a book on a vanilla lectern can be taken, a warp lectern keeps its book
-		if (lecternPos != null && player.mayBuild() && player.level().getBlockState(lecternPos).is(Blocks.LECTERN))
+		// Laid out like the vanilla lectern screen
+		boolean takeBook = lecternPos != null && player.mayBuild() && player.level().getBlockState(lecternPos).is(Blocks.LECTERN);
+		addRenderableWidget(Button.builder(Component.translatable(Database.GUI_BUTTON_DONE_TITLE), button -> GuiBook.this.onClose()).
+				bounds(width / 2 - 100, bookTop + ySize + 2, takeBook ? 98 : 200, 20).
+				build());
+		if (takeBook)
 			addRenderableWidget(Button.builder(Component.translatable(Database.GUI_TEXT_TAKE_BOOK), button ->
 					{
 						NetworkEngine.sendToServer(new C2STakeBookPacket(lecternPos));
 						GuiBook.this.onClose();
 					}).
-					bounds(width / 2 - 50, (height / 2) + (ySize / 2) + 18, 100, 20).
+					bounds(width / 2 + 2, bookTop + ySize + 2, 98, 20).
 					build());
-		
+
 		int x = width / 2 - 48;
-		int y = 12 + (height / 2) - (ySize / 2);
+		// Where a vanilla book starts its text, under the page number
+		int y = bookTop + 27;
 		int n = Math.min(warpsPerPage, pos.size());
 		warps = new ArrayList<>();
 		for (int i = 0; i < n; i++)
 		{
-			WarpButton but = new WarpButton(i, x, y + (14 * i), 96, 12, button ->
+			WarpButton but = new WarpButton(i, x, y + (12 * i), 96, 12, button ->
 			{
 				int index = pos.get(((WarpButton)button).getIndex() + (page*warpsPerPage)).id();
 
@@ -162,24 +167,26 @@ public class GuiBook extends Screen
 			addRenderableWidget(but);
 			warps.add(but);
 		}
-		y = (height / 2) + (ySize / 2);
-		
+		// The same spots on the book as the page buttons of a vanilla book
+		int left = (width - xSize) / 2;
+		y = bookTop + 156;
+
 		// Add back and forward buttons
 		pageCount = (pos.size() - 1) / (warpsPerPage);
 		if (pageCount != 0)
 		{
-			addRenderableWidget(prev = new NextPageButton(x, y, false, background, button ->
+			addWidget(prev = new NextPageButton(left + 23, y, false, background, button ->
 			{
 				page--;
 				updateButtonStat();
 			}));
-			addRenderableWidget(next = new NextPageButton(x + 64, y, true, background, button ->
+			addWidget(next = new NextPageButton(left + 96, y, true, background, button ->
 			{
 				page++;
 				updateButtonStat();
 			}));
 		}
-		
+
 		updateButtonStat();
 	}
 
@@ -196,13 +203,13 @@ public class GuiBook extends Screen
 		}
 		int r = pos.size() - page * warpsPerPage;
 		int n = Math.min(r, warpsPerPage);
-		
+
 		//Hide all of the warp buttons
 		for(WarpButton wb : warps)
 		{
 			wb.visible = false;
 		}
-		
+
 		for (int i = 0; i < n; i++)
 		{
 			int j = page * warpsPerPage + i;
@@ -226,12 +233,20 @@ public class GuiBook extends Screen
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		guiGraphics.blit(background, (width - xSize) / 2, (height - ySize) / 2, 20, 1, xSize, ySize);
-		guiGraphics.drawCenteredString(font, Component.translatable(heading), width / 2, (height / 2) - ySize / 2 - 12, 0xFFFFFF);
+		guiGraphics.blit(background, (width - xSize) / 2, bookTop, 20, 1, xSize, ySize);
+		if (prev != null)
+		{
+			prev.render(guiGraphics, mouseX, mouseY, partialTick);
+			next.render(guiGraphics, mouseX, mouseY, partialTick);
+		}
+		// The same spot and look as the page number of a vanilla book
+		Component pageNumber = Component.translatable(Database.GUI_TEXT_PAGE_INDICATOR, page + 1, pageCount + 1);
+		guiGraphics.drawString(font, pageNumber, (width - xSize) / 2 + 128 - font.width(pageNumber), bookTop + 15, 0, false);
+		guiGraphics.drawCenteredString(font, Component.translatable(heading), width / 2, bookTop - 12, 0xFFFFFF);
 	}
 
-    @OnlyIn(Dist.CLIENT)
-    static class NextPageButton extends Button
+	@OnlyIn(Dist.CLIENT)
+	static class NextPageButton extends Button
 	{
 		private final boolean isForward;
 		private final ResourceLocation texture;
@@ -277,12 +292,12 @@ public class GuiBook extends Screen
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
 		KeyMapping inventoryKey = Minecraft.getInstance().options.keyInventory;
-	    if (inventoryKey.matches(keyCode, scanCode))
-	    {
-	        this.onClose();
-	        return true;
-	    }
-		
+		if (inventoryKey.matches(keyCode, scanCode))
+		{
+			this.onClose();
+			return true;
+		}
+
 		boolean result = super.keyPressed(keyCode, scanCode, modifiers);
 
 		switch (keyCode)

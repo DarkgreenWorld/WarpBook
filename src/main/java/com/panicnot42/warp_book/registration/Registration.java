@@ -148,7 +148,7 @@ public class Registration {
                                 .map(RegistryObject::get)
                                 .filter(item -> !(item instanceof ItemRegistry.IMustBeAddedToCreative toCreative) || toCreative.addToCreative())
                                 .map(ItemStack::new)
-                                .collect(Collectors.toSet())))
+                                .toList()))
                 .build()
         );
 
