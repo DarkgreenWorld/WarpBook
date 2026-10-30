@@ -59,7 +59,7 @@ public class Warp implements IDeclareWarp
 	@OnlyIn(Dist.CLIENT)
 	public WarpColors getColor()
 	{
-		return WarpColors.UNBOUND;
+		return WarpColors.EMPTY;
 	}
-	
+
 }

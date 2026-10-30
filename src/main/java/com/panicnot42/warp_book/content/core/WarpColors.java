@@ -9,7 +9,7 @@ package com.panicnot42.warp_book.content.core;
 
 public enum WarpColors
 {
-	
+	EMPTY(0xFFFFFFFF),
 	UNBOUND(0xFFC3C36A),//The default tawny color of a warp page
 	BOUND(0xFF098C76),//The color of an ender pearl
 	PLAYER(0xFF8e0000),//Red color.. blood maybe?

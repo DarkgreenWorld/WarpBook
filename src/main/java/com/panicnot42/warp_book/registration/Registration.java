@@ -93,26 +93,26 @@ public class Registration {
 
         public static final RegistryObject<WarpBookItem> WARP_BOOK = ITEMS.register(Database.ITEM_NAME_WARP_BOOK, WarpBookItem::new);
 
+        public static final RegistryObject<UnboundWarpPageItem> WARP_PAGE_ITEM_UNBOUND = ITEMS.register(Database.ITEM_NAME_WARP_PAGE_UNBOUND,
+                () -> new UnboundWarpPageItem(new Item.Properties()));
+
+        public static final RegistryObject<WarpPageItem> WARP_PAGE_ITEM_LOCATION = ITEMS.register(Database.ITEM_NAME_WARP_PAGE_LOCATION,
+                () -> new WarpPageItem(new Item.Properties()).setWarp(new WarpLocus()).setCloneable(true));
+
         public static final RegistryObject<WarpPageItem> WARP_PAGE_ITEM_PLAYER = ITEMS.register(Database.ITEM_NAME_WARP_PAGE_PLAYER, 
                 () -> new WarpPageItem(new Item.Properties()).setWarp(new WarpPlayer()).setCloneable(false));
-        
-        public static final RegistryObject<WarpPageItem> WARP_PAGE_ITEM_LOCATION = ITEMS.register(Database.ITEM_NAME_WARP_PAGE_LOCATION, 
-                () -> new WarpPageItem(new Item.Properties()).setWarp(new WarpLocus()).setCloneable(true));
         
         public static final RegistryObject<DeathlyWarpPageItem> WARP_PAGE_ITEM_DEATHLY = ITEMS.register(Database.ITEM_NAME_WARP_PAGE_DEATHLY, 
                 () -> new DeathlyWarpPageItem(new Item.Properties()));
 
-        public static final RegistryObject<UnboundWarpPageItem> WARP_PAGE_ITEM_UNBOUND = ITEMS.register(Database.ITEM_NAME_WARP_PAGE_UNBOUND, 
-                () -> new UnboundWarpPageItem(new Item.Properties()));
-
         public static final RegistryObject<Item> WARP_QUILL = ITEMS.register(Database.ITEM_NAME_WARP_QUILL,
                 () -> new Item(new Item.Properties()));
 
-        public static final RegistryObject<BlockItem> WARP_LECTERN = ITEMS.register(Database.BLOCK_NAME_WARP_LECTERN,
-                () -> new BlockItem(BlockRegistry.WARP_LECTERN.get(), new Item.Properties()));
-
         public static final RegistryObject<BlockItem> WARP_SCRIBING_TABLE = ITEMS.register(Database.BLOCK_NAME_WARP_SCRIBING_TABLE,
                 () -> new BlockItem(BlockRegistry.WARP_SCRIBING_TABLE.get(), new Item.Properties()));
+
+        public static final RegistryObject<BlockItem> WARP_LECTERN = ITEMS.register(Database.BLOCK_NAME_WARP_LECTERN,
+                () -> new BlockItem(BlockRegistry.WARP_LECTERN.get(), new Item.Properties()));
 
         public interface IMustBeAddedToCreative {
             boolean addToCreative();

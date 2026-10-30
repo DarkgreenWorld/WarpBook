@@ -37,6 +37,10 @@ public class Database
 	public static boolean onlyOwnerTakesPages = false;
 	public static final boolean WARPING_POTION_TEST = false;
 
+	public static final String CONFIG_EXHAUSTION_COEFFICIENT = "exhaustionCoefficient";
+	public static final String CONFIG_DEATH_PAGES_ENABLED = "deathPagesEnabled";
+	public static final String CONFIG_ONLY_OWNER_TAKES_PAGES = "onlyOwnerTakesPages";
+
 	public static final String ITEM_NAME_WARP_BOOK = "warp_book";
 	public static final String ITEM_NAME_WARP_PAGE_LOCATION = "warp_page_location";
 	public static final String ITEM_NAME_WARP_PAGE_UNBOUND = "warp_page_unbound";
@@ -52,8 +56,6 @@ public class Database
 	//public static final String RECIPE_NAME_PAGE_CLONING = "page_cloning";
 	public static final String RECIPE_NAME_SHAPED = "shaped";
 	public static final String RECIPE_NAME_SHAPELESS = "shapeless";
-
-	public static final String CONFIG_ONLY_OWNER_TAKES_PAGES = "onlyOwnerTakesPages";
 
 	public static final String SOUND_NAME_DEPART = "depart";
 	public static final String SOUND_NAME_ARRIVE = "arrive";

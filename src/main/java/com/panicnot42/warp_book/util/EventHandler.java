@@ -88,8 +88,10 @@ public class EventHandler {
                     ItemStack item = list.get(q);
                     if (item.is(Registration.ItemRegistry.WARP_BOOK.get()) && WarpBookItem.getRespawnsLeft(item) > 0) {
                         WarpBookItem.decrRespawnsLeft(item);
+                    /*
                     } else if (item.is(Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY.get())) {
                         item.shrink(1);
+                    */
                     } else continue;
 
                     DeathSavedData data = DeathSavedData.getInstance();
