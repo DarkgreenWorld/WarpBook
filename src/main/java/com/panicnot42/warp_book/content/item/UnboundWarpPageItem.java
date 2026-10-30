@@ -111,14 +111,14 @@ public class UnboundWarpPageItem extends WarpItem
 	}
 
 	@Override
-	public WarpPageItem setWarp(Warp warp)
+	public UnboundWarpPageItem setWarp(Warp warp)
 	{
-		return (WarpPageItem) super.setWarp(warp);
+		return (UnboundWarpPageItem) super.setWarp(warp);
 	}
 
 	@Override
-	public WarpPageItem setCloneable(boolean is)
+	public UnboundWarpPageItem setCloneable(boolean is)
 	{
-		return (WarpPageItem) super.setCloneable(is);
+		return (UnboundWarpPageItem) super.setCloneable(is);
 	}
 }
