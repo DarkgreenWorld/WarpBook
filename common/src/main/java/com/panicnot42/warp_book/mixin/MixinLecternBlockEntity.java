@@ -23,6 +23,9 @@ public abstract class MixinLecternBlockEntity
     @Shadow
     public abstract ItemStack getBook();
 
+    @Shadow
+    public abstract boolean hasBook();
+
     @Inject(method = "getPageCount", at = @At("HEAD"), cancellable = true)
     private static void warp_book$countWarpBookPages(ItemStack stack, CallbackInfoReturnable<Integer> cir)
     {
@@ -30,10 +33,10 @@ public abstract class MixinLecternBlockEntity
             cir.setReturnValue(WarpBookItem.getListPageCount(stack));
     }
 
-    @Inject(method = "hasBook", at = @At("HEAD"), cancellable = true)
-    private void warp_book$hasWarpBook(CallbackInfoReturnable<Boolean> cir)
+    @Inject(method = "getRedstoneSignal", at = @At("RETURN"), cancellable = true)
+    private void warp_book$addWarpBookSignal(CallbackInfoReturnable<Integer> cir)
     {
-        if (getBook().getItem() instanceof WarpBookItem)
-            cir.setReturnValue(true);
+        if (!hasBook() && getBook().getItem() instanceof WarpBookItem)
+            cir.setReturnValue(cir.getReturnValue() + 1);
     }
 }

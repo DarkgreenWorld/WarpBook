@@ -39,6 +39,8 @@ public class Database
 	// Warping potion test switch, turns on the brewing and swaps in the warping potion recipes
 	public static final boolean WARPING_POTION_TEST = false;
 
+	public static final String CONFIG_DEATH_PAGES_ENABLED = "deathPagesEnabled";
+	public static final String CONFIG_EXHAUSTION_COEFFICIENT = "exhaustionCoefficient";
 	public static final String CONFIG_ONLY_OWNER_TAKES_PAGES = "onlyOwnerTakesPages";
 
 	public static final String ITEM_NAME_WARP_BOOK = "warp_book";
@@ -117,6 +119,7 @@ public class Database
 					properties.load(reader);
 				}
 			String value = properties.getProperty(CONFIG_ONLY_OWNER_TAKES_PAGES);
+
 			if (value == null)
 			{
 				properties.setProperty(CONFIG_ONLY_OWNER_TAKES_PAGES, String.valueOf(onlyOwnerTakesPages));
@@ -130,6 +133,8 @@ public class Database
 				onlyOwnerTakesPages = Boolean.parseBoolean(value.trim());
 			else
 				LogUtils.getLogger().warn("{} in {} must be true or false, not {}, using {}", CONFIG_ONLY_OWNER_TAKES_PAGES, file, value, onlyOwnerTakesPages);
+
+
 		}
 		catch (IOException | IllegalArgumentException e)
 		{

@@ -1,7 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "minecraft:item/paper",
-		"layer1": "warp_book:item/page_symbol"
+		"layer0": "minecraft:item/paper"
 	}
 }

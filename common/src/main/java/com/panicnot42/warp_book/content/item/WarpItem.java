@@ -30,7 +30,7 @@ public class WarpItem extends Item implements IDeclareWarp, IColorable, Registra
 	
 	public WarpItem(@NotNull Item.Properties props)
 	{
-		super(new Item.Properties());
+		super(props);
 	}
 	
 	public WarpItem setWarp(Warp warp)
