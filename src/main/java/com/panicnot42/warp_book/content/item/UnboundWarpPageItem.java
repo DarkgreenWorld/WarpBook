@@ -8,8 +8,10 @@
 package com.panicnot42.warp_book.content.item;
 
 import com.panicnot42.warp_book.client.ClientHooks;
+import com.panicnot42.warp_book.content.core.WarpColors;
 import com.panicnot42.warp_book.registration.Registration;
 import com.panicnot42.warp_book.util.WarpUtils;
+import com.panicnot42.warp_book.warps.Warp;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -25,11 +27,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class UnboundWarpPageItem extends WarpPageItem
+public class UnboundWarpPageItem extends WarpItem
 {
 
 	public UnboundWarpPageItem(@NotNull Item.Properties props) {
-		super(props);
+		super(props.stacksTo(64));
+	}
+
+	@Override
+	public int getUseDuration(@NotNull ItemStack stack)
+	{
+		return 1;
 	}
 
 	@Override
@@ -52,8 +60,7 @@ public class UnboundWarpPageItem extends WarpPageItem
 					ItemEntity entityItem = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), newPage);
 					player.level().addFreshEntity(entityItem);
 				}
-				
-				stack.shrink(1);
+				if(!player.isCreative()) stack.shrink(1);
 			}
 			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
 		}
@@ -75,5 +82,32 @@ public class UnboundWarpPageItem extends WarpPageItem
 	public boolean canGoInBook()
 	{
 		return false;
+	}
+
+	@Override
+	public int getColor(@NotNull ItemStack stack, int tintIndex)
+	{
+		return switch (tintIndex)
+		{
+			case 0 -> pageColor();
+			default -> 0xFFFFFFFF;
+		};
+	}
+
+	public int pageColor()
+	{
+		return WarpColors.UNBOUND.getColor();
+	}
+
+	@Override
+	public UnboundWarpPageItem setWarp(Warp warp)
+	{
+		return (UnboundWarpPageItem) super.setWarp(warp);
+	}
+
+	@Override
+	public UnboundWarpPageItem setCloneable(boolean is)
+	{
+		return (UnboundWarpPageItem) super.setCloneable(is);
 	}
 }

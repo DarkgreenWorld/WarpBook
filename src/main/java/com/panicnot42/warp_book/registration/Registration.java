@@ -102,20 +102,23 @@ public class Registration
 
         public static final Supplier<WarpBookItem> WARP_BOOK = item(Database.ITEM_NAME_WARP_BOOK, WarpBookItem :: new);
 
-        public static final Supplier<WarpPageItem> WARP_PAGE_ITEM_PLAYER = item(Database.ITEM_NAME_WARP_PAGE_PLAYER, () -> new WarpPageItem(new Item.Properties()).
-                setWarp(new WarpPlayer()).
-                setCloneable(false));
+        public static final Supplier<UnboundWarpPageItem> WARP_PAGE_ITEM_UNBOUND = item(Database.ITEM_NAME_WARP_PAGE_UNBOUND, () -> new UnboundWarpPageItem(new Item.Properties()));
+
         public static final Supplier<WarpPageItem> WARP_PAGE_ITEM_LOCATION = item(Database.ITEM_NAME_WARP_PAGE_LOCATION, () -> new WarpPageItem(new Item.Properties()).
                 setWarp(new WarpLocus()).
                 setCloneable(true));
-        public static final Supplier<DeathlyWarpPageItem> WARP_PAGE_ITEM_DEATHLY = item(Database.ITEM_NAME_WARP_PAGE_DEATHLY, () -> new DeathlyWarpPageItem(new Item.Properties()));
 
-        public static final Supplier<UnboundWarpPageItem> WARP_PAGE_ITEM_UNBOUND = item(Database.ITEM_NAME_WARP_PAGE_UNBOUND, () -> new UnboundWarpPageItem(new Item.Properties()));
+        public static final Supplier<WarpPageItem> WARP_PAGE_ITEM_PLAYER = item(Database.ITEM_NAME_WARP_PAGE_PLAYER, () -> new WarpPageItem(new Item.Properties()).
+                setWarp(new WarpPlayer()).
+                setCloneable(false));
+
+        public static final Supplier<DeathlyWarpPageItem> WARP_PAGE_ITEM_DEATHLY = item(Database.ITEM_NAME_WARP_PAGE_DEATHLY, () -> new DeathlyWarpPageItem(new Item.Properties()));
 
         public static final Supplier<Item> WARP_QUILL = item(Database.ITEM_NAME_WARP_QUILL, () -> new Item(new Item.Properties()));
 
-        public static final Supplier<BlockItem> WARP_LECTERN = item(Database.BLOCK_NAME_WARP_LECTERN, () -> new BlockItem(BlockRegistry.WARP_LECTERN.get(), new Item.Properties()));
         public static final Supplier<BlockItem> WARP_SCRIBING_TABLE = item(Database.BLOCK_NAME_WARP_SCRIBING_TABLE, () -> new BlockItem(BlockRegistry.WARP_SCRIBING_TABLE.get(), new Item.Properties()));
+
+        public static final Supplier<BlockItem> WARP_LECTERN = item(Database.BLOCK_NAME_WARP_LECTERN, () -> new BlockItem(BlockRegistry.WARP_LECTERN.get(), new Item.Properties()));
 
         private static <T extends Item> Supplier<T> item(String name, Supplier<T> factory)
         {

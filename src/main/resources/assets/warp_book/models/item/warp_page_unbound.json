@@ -1,7 +1,6 @@
 {
     "parent": "warp_book:item/warp_page_base",
     "textures": {
-        "layer0": "minecraft:item/paper",
-        "layer1": "warp_book:item/empty"
+        "layer0": "minecraft:item/paper"
     }
 }

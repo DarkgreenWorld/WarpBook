@@ -57,10 +57,12 @@ public class EventHandler
 
                     	WarpBookItem.decrRespawnsLeft(item);
                     }
+                    /*
                     else if(item.is(Registration.ItemRegistry.WARP_PAGE_ITEM_DEATHLY.get()))
                     {
                     	item.shrink(1);
                     }
+                    */
                     else continue;
 
                     DeathSavedData data = DeathSavedData.getInstance(player.getServer());

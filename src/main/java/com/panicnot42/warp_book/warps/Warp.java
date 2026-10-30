@@ -55,7 +55,7 @@ public class Warp implements IDeclareWarp
 
 	public WarpColors getColor()
 	{
-		return WarpColors.UNBOUND;
+		return WarpColors.EMPTY;
 	}
 	
 }

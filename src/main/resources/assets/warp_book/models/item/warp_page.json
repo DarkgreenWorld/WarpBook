@@ -1,3 +1,6 @@
 {
-    "parent": "warp_book:item/warp_page_base"
+    "parent": "warp_book:item/warp_page_base",
+    "textures": {
+        "layer1": "warp_book:item/page_symbol"
+    }
 }

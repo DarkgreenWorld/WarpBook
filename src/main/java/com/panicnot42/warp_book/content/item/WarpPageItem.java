@@ -27,7 +27,7 @@ public class WarpPageItem extends WarpItem
 	
 	public WarpPageItem(@NotNull Item.Properties properties)
 	{
-		super(properties.stacksTo(64));
+		super(properties.stacksTo(16));
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public record C2SCoordsNamePacket(String name, UUID playerId, int hand) implemen
 		if (stack.isEmpty())
 			return;
 
-		stack.shrink(1);
+		if(!targetPlayer.isCreative()) stack.shrink(1);
 		ItemStack newPage = WarpUtils.bindItemStackToLocation(new ItemStack(Registration.ItemRegistry.WARP_PAGE_ITEM_LOCATION.get()), name, targetPlayer);
 		if (!targetPlayer.addItem(newPage))
 		{
