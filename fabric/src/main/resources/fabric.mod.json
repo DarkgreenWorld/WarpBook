@@ -5,11 +5,11 @@
     "name": "${mod_name}",
     "description": "${description}",
     "authors": [
+        "DarkgreenWorld",
         "Panicnot42",
         "FerreusVeritas",
         "MelonVRneu",
-        "ArcAnc",
-        "DarkgreenWorld"
+        "ArcAnc"
     ],
     "contributors": [
         "UtmostStar",
